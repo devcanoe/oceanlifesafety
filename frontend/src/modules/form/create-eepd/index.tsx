@@ -6,11 +6,32 @@ import { useState } from "react";
 import FormColumn from "@/common/model/form_columns.model";
 import Button from "@/common/components/form/button";
 
-
-
 export default function CreateEEPDContent() {
-
     const [rows, setRows] = useState<FormColumn[]>([]);
+    const [ serialNo, setSerialNo] = useState<string>();
+    const [ make, setMake ] = useState<string>();
+    const [ location, setLocation ] = useState<string>();
+    const [ remark, setRemark ] = useState<string>();
+    const [ dateHyd, setDateHyd] = useState<Date>();
+    const [ cylinderCondition, setCylinderCondition ] = useState<string>();
+    const [ testBar, setTestBar ] = useState<string>();
+    const [ refilingBar, setRefilingBar ] = useState<string>();
+
+    const handleAddRow = () => {
+        setRows((state) => [
+            ...state,
+            {
+                serial_no: serialNo,
+                make,
+                location,
+                remark,
+                date_hyd_tested: dateHyd,
+                cylinder_condition: cylinderCondition,
+                testing_bar: testBar,
+                refiling_bar: refilingBar
+            }
+        ])
+    }
 
     return (
         <>
@@ -29,68 +50,93 @@ export default function CreateEEPDContent() {
                     <InputField type={"date"} label="Last Service Date"/>
                     <InputField type={"text"} label="Type"/>
                 </div>
-                <table className={styles.container}>
-                    <tr className={styles.header}>
-                        <td>
-                            Serial No
-                        </td>
-                        <td>
-                            Make
-                        </td>
-                        <td>
-                            Location
-                        </td>
-                        <td>
-                            Data HYD <br/> Tested
-                        </td>
-                        <td>
-                            Cylinder <br/>Condition
-                        </td>
-                        <td>
-                            Testing <br/>Bar
-                        </td>
-                        <td>
-                            Refilling <br/>Bar
-                        </td>
-                        <td>
-                            Remark
-                        </td>
-                        <td>
-                            Action(s)
-                        </td>
-                    </tr>
-                    <tr className={styles.main}>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <InputField type={"text"}/>
-                        </td>
-                        <td>
-                            <Button label="Delete" onClick={function (e: any): void {
-                                throw new Error("Function not implemented.");
-                            } }/>
-                        </td>
-                    </tr>
-                </table>
+                {rows.map((row: FormColumn, index: number)=> {
+                    return (<>
+                        <div className={styles.formcontainer}>
+                        
+                            <div className={styles.buttoncontainer}>
+                                <Button label="Delete" onClick={function (e: any): void {
+                                        throw new Error("Function not implemented.");
+                                    } }
+                                />
+                            </div>
+                            <div className={styles.main}>
+                                <div className={styles.input}>
+                                    <small>Serial No</small>
+                                    <InputField type={"text"}/>
+                                </div>
+                                <div className={styles.input}>
+                                    <small>Make</small>
+                                    <InputField type={"text"}/>
+                                </div>
+                                <div className={styles.input}>
+                                    <small>Location</small>
+                                    <InputField type={"text"}/>
+                                </div>
+                                <div className={styles.input}>
+                                    <small>Date HYD testing</small>
+                                    <InputField type={"date"}/>
+                                </div>
+                                <div className={styles.input}>
+                                    <small>Cylinder condition</small>
+                                    <InputField type={"text"}/>
+                                </div>
+                                <div className={styles.input}>
+                                    <small>Testing bar</small>
+                                    <InputField type={"text"}/>
+                                </div>
+                                <div className={styles.input}>
+                                    <small>Refilling bar</small>
+                                    <InputField type={"text"}/>
+                                </div>
+                                <div className={styles.input}>
+                                    <small>Remark</small>
+                                    <InputField type={"text"}/>
+                                </div>
+                            </div>
+                        </div>
+                    </>)
+                })}
+                <div className={styles.formcontainer}>
+                    <div className={styles.buttoncontainer}>
+                        <Button label="Add" onClick={handleAddRow}
+                        />
+                    </div>
+                    <div className={styles.main}>
+                        <div className={styles.input}>
+                            <small>Serial No</small>
+                            <InputField type={"text"} onChange={(e: any) => {setSerialNo(e.target.value)}}/>
+                        </div>
+                        <div className={styles.input}>
+                            <small>Make</small>
+                            <InputField type={"text"} onChange={(e: any) => {setMake(e.target.value)}}/>
+                        </div>
+                        <div className={styles.input}>
+                            <small>Location</small>
+                            <InputField type={"text"} onChange={(e: any) => {setLocation(e.target.value)}}/>
+                        </div>
+                        <div className={styles.input}>
+                            <small>Date HYD testing</small>
+                            <InputField type={"date"} onChange={(e: any) => {setDateHyd(e.target.value)}}/>
+                        </div>
+                        <div className={styles.input}>
+                            <small>Cylinder condition</small>
+                            <InputField type={"text"} onChange={(e: any) => {setCylinderCondition(e.target.value)}}/>
+                        </div>
+                        <div className={styles.input}>
+                            <small>Testing bar</small>
+                            <InputField type={"text"} onChange={(e: any) => {setTestBar(e.target.value)}}/>
+                        </div>
+                        <div className={styles.input}>
+                            <small>Refilling bar</small>
+                            <InputField type={"text"} onChange={(e: any) => {setRefilingBar(e.target.value)}}/>
+                        </div>
+                        <div className={styles.input}>
+                            <small>Remark</small>
+                            <InputField type={"text"} onChange={(e: any) => {setRemark(e.target.value)}}/>
+                        </div>
+                    </div>
+                </div>
             </section>
         </>
     )
