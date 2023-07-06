@@ -1,0 +1,81 @@
+.unevengrid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto 300px;
+    gap: var(--s2);
+}
+
+/** message section **/
+.messagecontainer {
+    position: relative;
+    height: 65vh;
+    width: 100%;
+    border: 1px solid var(--grey);
+    border-radius: var(--s1);
+}
+
+.messagearea {
+    height: 55vh;
+    z-index: 1;
+    overflow-y: scroll;
+    background-color: #a9a8a823;
+    margin-bottom: 10vh;
+    border-top-right-radius: var(--s1);
+    border-top-left-radius: var(--s1);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+    padding: var(--s1);
+}
+
+.messagearea .receivercard, .messagearea .sendercard {
+    max-width: 70%;
+    padding: var(--s1);
+   
+}
+
+.messagearea .sendercard {
+    background-color: blue;
+    color: var(--white);
+    align-self: flex-end;
+    border-radius: var(--s1) 0px var(--s1) var(--s1);
+}
+
+.messagearea .receivercard {
+    background-color: rgb(213, 224, 224);
+    border-radius: 0px var(--s1) var(--s1) var(--s1);
+}
+
+.messagearea .messageheader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.messagearea .message {
+    font-weight: lighter;
+}
+
+
+.messagefooter {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 10vh;
+    z-index: 2;
+    background-color: #fff;
+    border-top: grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px var(--s3);
+}
+
+
+.profilecontainer {
+    height: 60vh;
+    overflow-y: auto;
+}

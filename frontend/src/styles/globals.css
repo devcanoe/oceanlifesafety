@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+:root {
+  /** colors **/
+  --cover-bg: #00B4D8;
+  --white: #fff;
+  --black: #000;
+  --grey: #bebebe;
+  --primary: rgb(62, 62, 245);
+  --primary-hover:  rgba(62, 62, 245, 0.513);
+  --secondary: #FC8955;
+  --secondary-hover: #934826;
+
+  /** sizes **/
+  --s1: 12px;
+  --s2: 16px;
+  --s3: 25px;
+  --s4: 32px;
+  --s5: 50px;
+  --s6: 72px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+small {
+  font-size: var(--s1);
+}
+
+a {
+  text-decoration: none;
+}
+
+a, p {
+  font-size: var(--s2);
+}
+
+h3 {
+  font-size: var(--s4);
+} 
+
+h2 {
+  font-size: var(--s5);
+}
+
+h1 {
+  font-size: var(--s6);
+}
+
+/**  this is only used in footer **/
+
+ul {
+  display: flex;
+  flex-direction: row;
+  gap: var(--s1);
+  list-style: none;
+}
+
+.red{
+  color: red;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 3px;
+}
+
+@media screen and (max-width: 900px) {
+  :root {
+    /** sizes **/
+    --s1: 12px;
+    --s2: 14px;
+    --s3: 18px;
+    --s4: 25px;
+    --s5: 32px;
+    --s6: 45px;
+  }
+  ul {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+}
+

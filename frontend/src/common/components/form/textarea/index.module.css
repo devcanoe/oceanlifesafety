@@ -1,0 +1,7 @@
+/** desktop **/
+.container {
+    width: 100%;
+    border: 1px solid var(--grey);
+    border-radius: var(--s1);
+    padding: var(--s1);
+}

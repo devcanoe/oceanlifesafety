@@ -1,0 +1,14 @@
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header, .main{
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    gap: 0px;
+}

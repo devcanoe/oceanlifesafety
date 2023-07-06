@@ -1,0 +1,13 @@
+/** desktop **/
+.maincontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: grey;
+}
+
+.container {
+    border: 1px solid var(--grey);
+    border-radius: var(--s1);
+    padding: 15px 10px;
+}

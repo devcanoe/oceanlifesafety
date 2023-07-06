@@ -1,0 +1,25 @@
+/** desktop **/
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: grey;
+}
+
+.input {
+    border: 1px solid var(--grey);
+    border-radius: var(--s1);
+    padding: 15px 10px;
+}
+
+.error {
+    margin: 0;
+    padding: 0;
+    color: red;
+    text-align: start;
+}
+
+/** mobile **/
+@media screen and (max-width: 900px) {
+
+}
