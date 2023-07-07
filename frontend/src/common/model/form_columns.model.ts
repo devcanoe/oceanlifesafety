@@ -7,4 +7,6 @@ export default interface FormColumn{
     testing_bar?: string;
     refiling_bar?: string;
     remark?: string;
+    type?: string;
+    kg?: string;
 }
