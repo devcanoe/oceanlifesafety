@@ -14,7 +14,6 @@ import { Invoice } from "@/common/model/invoice.model";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
-import { useDeleteAccountMutation } from "@/common/services/company.service";
 
 export default function GenerateInvoiceContent() {
   return (
