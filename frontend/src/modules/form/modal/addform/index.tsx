@@ -41,10 +41,10 @@ export default function AddFormContent({ close, companyId }: IAddShipContent) {
         <>
             <section className={styles.container}>
               
-                <Link className={styles.card} href={'/forms/create-eepd'}>Create EEPD</Link>
-               
-                <Link className={styles.card} href={'/forms/create-eepd'}>Create EEPD</Link>
-                
+                <Link className={styles.card} href={`/forms/${companyId}/create-eepd`}>Create EEPD</Link>
+                <Link className={styles.card} href={`/forms/${companyId}/create-bacl`}>Create BACL</Link>
+                <Link className={styles.card} href={`/forms/${companyId}/create-pfecl`}>Create PFECL</Link>
+
             </section>
         </>
     )
