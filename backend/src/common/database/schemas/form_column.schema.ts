@@ -26,4 +26,10 @@ export const formColumnSchema: Schema = new Schema<FormColumn>({
   remark: {
     type: String
   },
+  kg: {
+    type: String
+  },
+  type: {
+    type: String
+  },
 });
