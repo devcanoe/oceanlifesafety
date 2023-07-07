@@ -20,7 +20,6 @@ export default class CreateEEPDService implements IService<Request, Response>{
                 service_date,
                 flag_state,
                 last_service_date,
-                type,
                 specifications
             } = req.body;
 
@@ -31,7 +30,7 @@ export default class CreateEEPDService implements IService<Request, Response>{
                 service_date,
                 flag_state,
                 last_service_date,
-                type
+                type: "EEBD"
             });
 
             specifications.map((specification: FormColumn)=>{
