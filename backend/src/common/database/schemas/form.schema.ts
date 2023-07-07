@@ -27,7 +27,7 @@ const formSchema: Schema = new Schema<Form>({
   },
   type: {
     type: String,
-    enum: ["EEBD"],
+    enum: ["EEBD", "BACL"],
     required: true
   },
   specifications: [formColumnSchema],
