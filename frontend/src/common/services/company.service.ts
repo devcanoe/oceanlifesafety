@@ -29,7 +29,7 @@ export const companyEndpoint = sungloApi.injectEndpoints({
     getCompanies: build.query<IResponse<Company[]>, void>({
       query: () => `${baseUrl}`,
     }),
-    getCompany: build.query<IResponse<Company>, {id: string}>({
+    getOneCompany: build.query<IResponse<Company>, {id: string}>({
       query: ({id}) => `${baseUrl}/${id}`,
     }),
   }),
@@ -40,5 +40,5 @@ export const {
   useUpdateCompanyMutation,
   useDeleteCompanyMutation,
   useGetCompaniesQuery,
-  useGetCompanyQuery
+  useGetOneCompanyQuery
 } = companyEndpoint;
