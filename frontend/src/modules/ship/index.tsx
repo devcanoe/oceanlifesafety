@@ -194,7 +194,7 @@ export default function ShipContent(props:{id: string}) {
         
         <Breadcrumb path={breadcrumbPath} />
         
-        <CompanyDetail id={id} refetchShips={() => refetch()}/>
+        <CompanyDetail id={props.id} refetchShips={() => refetch()}/>
 
         <Tabs headers={headers} contents={contents}/>
       

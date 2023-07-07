@@ -1,4 +1,4 @@
-import { useGetCompanyQuery } from "@/common/services/company.service";
+import { useGetCompanyQuery, useGetOneCompanyQuery } from "@/common/services/company.service";
 import styles from "./index.module.css";
 import Loader from "@/common/components/display/loader";
 import Button from "@/common/components/form/button";
@@ -36,8 +36,8 @@ export default function CompanyDetail(props: ICompanyDetail) {
         setFormModalStatus((state) => !state);
         // refetch();
     };
-    const { data:company, isLoading, isSuccess } = useGetCompanyQuery({id: props.id})
-
+    const { data:company, isLoading, isSuccess } = useGetOneCompanyQuery({id: props.id})
+    console.log(props.id)
     console.log(isSuccess && company?.data)
     return (
         <>
@@ -45,7 +45,7 @@ export default function CompanyDetail(props: ICompanyDetail) {
             <div className={styles.container}>
                 <header className={styles.header}>
                     <div>
-                        AWS  
+                        {isSuccess && company?.data.name}
                     </div>
                     <div className={styles.buttons}>
                         <Button icon={<Icon icon="ic:baseline-plus" />} label="Ship" onClick={shipModalToggleHandler}/>
@@ -58,15 +58,15 @@ export default function CompanyDetail(props: ICompanyDetail) {
                 <main className={styles.content}>
                     <div className={styles.column}>
                         <small className={styles.subheader}>Address:</small>
-                        <p>Ndoki street</p>
+                        <p>{isSuccess && company?.data.address}</p>
                     </div>   
                     <div className={styles.column}>
                         <small className={styles.subheader}>Phone:</small>
-                        <p>+2347016181313</p>
+                        <p></p>
                     </div>  
                     <div className={styles.column}>
                         <small className={styles.subheader}>Email:</small>
-                        <p>aws@gmail.com</p>
+                        <p></p>
                     </div>  
                 </main>
             </div>
