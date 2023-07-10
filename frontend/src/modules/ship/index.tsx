@@ -23,6 +23,8 @@ import { selectShipActive } from "@/common/lib/slice/ship.slice";
 import AddShipContent from "./modals/addship";
 import CompanyDetail from "../company/details";
 import Tabs from "@/common/components/display/tabs";
+import GetFormsContent from "../form/get-forms";
+import RaftContent from "../raft";
 
 export default function ShipContent(props:{id: string}) {
 
@@ -184,7 +186,9 @@ export default function ShipContent(props:{id: string}) {
           onRowSelectionModelChange={(newRowSelectionModel: any) => {
             setRowSelectionModel(newRowSelectionModel);
           }}
-    />
+    />,
+    <RaftContent id={router.query.id}/>,
+    <GetFormsContent/>
   ]
 
   return (

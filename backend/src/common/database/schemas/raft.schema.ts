@@ -1,6 +1,7 @@
 import mongoose, {Schema} from 'mongoose'
+import Raft from '../models/raft.model'
 
-const raftschema: Schema =   new Schema({
+const raftSchema: Schema =   new Schema<Raft>({
   serial_no: {
       type: String,
       required: true
@@ -10,6 +11,11 @@ const raftschema: Schema =   new Schema({
       ref: 'Ship',
       required: true
   },
+  company: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Company',
+    required: true
+},
   capacity: {
       type: Number
   },
@@ -42,4 +48,4 @@ const raftschema: Schema =   new Schema({
   }
 })
 
-export default mongoose.model('Raft', raftschema)
+export default mongoose.model<Raft>('Raft', raftSchema)

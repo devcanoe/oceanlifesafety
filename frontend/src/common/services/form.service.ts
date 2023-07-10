@@ -1,5 +1,6 @@
 import { sungloApi } from "../lib/api";
 import Account from "../model/company.model";
+import Form from "../model/form.model";
 import ILogin from "./interface/auth.interface";
 import IResponse from "./interface/response.interface";
 
@@ -28,7 +29,17 @@ export const formEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
+    getForms: build.query<IResponse<Form>, void>({
+      query: () => `${BASE_URL}`
+    }),
+    deleteForm: build.mutation<IResponse<any>, {id: string}>({
+      query: ({id}) => ({
+        url: `${BASE_URL}/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useCreateEEPDMutation, useCreateBACLMutation, useCreatePFECLMutation } = formEndpoint;
+export const { 
+    useCreateEEPDMutation, useCreateBACLMutation, useCreatePFECLMutation, useGetFormsQuery, useDeleteFormMutation } = formEndpoint;

@@ -1,7 +1,5 @@
-import Loader from "@/common/components/display/loader";
-import Popup, { IHandleMotion } from "@/common/components/display/popup";
+import { IHandleMotion } from "@/common/components/display/popup";
 import Table from "@/common/components/display/table";
-import Breadcrumb, { Item } from "@/common/layout/Breadcrumb";
 import { Icon } from "@iconify/react";
 import {
   GridColDef,
@@ -10,42 +8,35 @@ import {
 } from "@mui/x-data-grid";
 import Link from "next/link";
 import { useState } from "react";
-import { Navbar } from "../clients";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
-import { UpdateaccountContent } from "./modals/updateaccount";
-import { useDeleteCompanyMutation, useGetCompaniesQuery } from "@/common/services/company.service";
-import Company from "@/common/model/company.model";
-import AddCompanyContent from "./modals/addcompany";
-import { useAppDispatch } from "@/common/lib/hooks";
+import Ship from "@/common/model/ship.model";
+import { useDeleteRaftMutation, useGetAllRaftsQuery } from "@/common/services/raft.service";
 
-export default function CompanyContent() {
+export default function RaftContent(props:{id: string}) {
+
+  const router = useRouter();
+
   const { data, isLoading, isSuccess, isError, refetch } =
-    useGetCompaniesQuery();
+    useGetAllRaftsQuery({id: props.id});
 
-  const [deleteCompany, { isLoading: deleteCompanyLoading }] =
-    useDeleteCompanyMutation();
+  const [deleteRaft, { isLoading: deleteShipLoading }] =
+    useDeleteRaftMutation();
 
 
   let rows: any[] = [];
-
-  console.log(isSuccess && data)
-
-  !isLoading &&
-    data?.data.map((company: Company) => {
+ 
+  isSuccess &&
+    data?.data.map((ship: Ship) => {
       rows.push({
-        id: company._id,
-        name: `${company.name}`,
-        address: `${company.address}`,
+        id: ship._id,
+        name: `${ship.name}`,
       });
     });
 
   const [rowSelectionModel, setRowSelectionModel] =
     useState<GridRowSelectionModel>([]);
-  const [modalStatus, setModalStatus] = useState<boolean>(false);
-  
-  const [updateModalStatus, setUpdateModalStatus] = useState<boolean>(false);
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
     visibility: false,
@@ -74,18 +65,8 @@ export default function CompanyContent() {
     setFetchErrorStatus(args);
   };
 
-  const modalToggleHandler = () => {
-    setModalStatus((state) => !state);
-    refetch();
-  };
-
-  const updateModalToggleHandler = () => {
-    setUpdateModalStatus((state) => !state);
-    refetch();
-  };
-
-  const deleteCompanyHandler = (id: string) => {
-    deleteCompany({ id })
+  const deleteRaftHandler = (id: string) => {
+    deleteRaft({ id })
       .then((res: any) => {
         successToastHandler({
           message: res.data.message,
@@ -105,7 +86,6 @@ export default function CompanyContent() {
 
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", width: 130 },
-    { field: "address", headerName: "Address", width: 130 },
     {
       field: "action",
       headerName: "Action",
@@ -113,12 +93,12 @@ export default function CompanyContent() {
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
           <Link href={`/company/${params.id}`} className={styles.link} style={{ marginRight: '10px' }}>
-              <Icon icon="ic:baseline-remove-red-eye" />View
+              <Icon icon="ic:baseline-remove-red-eye" />    View
           </Link>
           <Link
             href={`#`}
             onClick={() => {
-              deleteCompanyHandler(params.id);
+              deleteRaftHandler(params.id);
             }}
             className={"red"}
             style={{ marginRight: "10px" }}
@@ -142,22 +122,9 @@ export default function CompanyContent() {
     },
   ];
 
-
-
   return (
     <>
-      <main className={styles.container}>
-        <Loader status={isLoading} />
-        <Navbar
-          title={"Company"}
-          rowSelectionModel={rowSelectionModel}
-          buttonLabel={"Add Company"}
-          buttonAction={modalToggleHandler}
-          deleteAction={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-        <Table
+      <Table
           rows={rows}
           columns={columns}
           pageSize={5}
@@ -166,8 +133,7 @@ export default function CompanyContent() {
           onRowSelectionModelChange={(newRowSelectionModel: any) => {
             setRowSelectionModel(newRowSelectionModel);
           }}
-        />
-      </main>
+      />
       <SToast
         text={successToastStatus.message}
         severity={"success"}
@@ -200,13 +166,6 @@ export default function CompanyContent() {
           });
         }}
       />
-      <Popup displayStatus={modalStatus} close={modalToggleHandler}>
-        <AddCompanyContent close={modalToggleHandler} />
-      </Popup>
-
-      {/* <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>
-        <UpdateaccountContent close={updateModalToggleHandler} id={props.id} />
-      </Popup> */}
     </>
   );
 }

@@ -1,30 +1,29 @@
 import { injectable } from "tsyringe";
 import IRepository from "../../interfaces/repository.interface";
 import DatabaseHelper from "../../helper/database.helper";
-import Company from "../models/company.model";
-import formSchema from "../schemas/form.schema";
 import Form from "../models/form.model";
+import raftSchema from "../schemas/raft.schema";
 
 @injectable() 
-export default class FormRepository implements IRepository {
+export default class RaftRepository implements IRepository {
     constructor(
         private dataBaseHelper: DatabaseHelper
     ){
     }
     async addData(data: any): Promise<Form> {
-        return await this.dataBaseHelper.createData(formSchema, data);
+        return await this.dataBaseHelper.createData(raftSchema, data);
     }
     async fetchData(data: any): Promise<Form[]> {
-        return await this.dataBaseHelper.readData(formSchema, data).populate("ship");
+        return await this.dataBaseHelper.readData(raftSchema, data).populate("ship");
     }
     async fetchOneData(data: any): Promise<Form> {
-        return await this.dataBaseHelper.readSingleData(formSchema, data);
+        return await this.dataBaseHelper.readSingleData(raftSchema, data);
     }
     async updateData(keyword: any, data: any): Promise<Form> {
-        return await this.dataBaseHelper.updateData(formSchema, keyword, data);
+        return await this.dataBaseHelper.updateData(raftSchema, keyword, data);
     }
     async deleteData(id: string) {
-        await this.dataBaseHelper.deleteData(formSchema, {_id: id});
+        await this.dataBaseHelper.deleteData(raftSchema, {_id: id});
     }
 
 }
