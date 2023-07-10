@@ -29,8 +29,8 @@ export const formEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
-    getForms: build.query<IResponse<Form>, void>({
-      query: () => `${BASE_URL}`
+    getForms: build.query<IResponse<Form>, {id: string}>({
+      query: ({id}) => `${BASE_URL}/${id}`
     }),
     deleteForm: build.mutation<IResponse<any>, {id: string}>({
       query: ({id}) => ({

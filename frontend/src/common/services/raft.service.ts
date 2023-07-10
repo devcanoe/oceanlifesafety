@@ -8,7 +8,7 @@ const baseUrl = "rafts";
 
 export const raftEndpoint = sungloApi.injectEndpoints({
   endpoints: (build) => ({
-    createRaft: build.mutation<IResponse<Raft>, Account>({
+    createRaft: build.mutation<IResponse<Raft>, Raft>({
       query: (body) => ({
         url: `${baseUrl}/create`,
         method: "POST",

@@ -14,8 +14,10 @@ export default class GetFormService implements IService<Request, Response> {
 
     async execute(req: Request, res: Response) {
         try{
+
+            const { company } = req.params;
            
-            const data = await this.formRepository.fetchData({});
+            const data = await this.formRepository.fetchData({company});
             
             this.httpHelper.Response({
                 res,

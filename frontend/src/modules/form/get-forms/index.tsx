@@ -8,9 +8,12 @@ import { useDeleteFormMutation, useGetFormsQuery } from "@/common/services/form.
 import { Icon } from "@iconify/react";
 import { GridColDef, GridRenderCellParams, GridRowSelectionModel } from "@mui/x-data-grid";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function GetFormsContent() {
+    const router = useRouter();
+
     const [rowSelectionModel, setRowSelectionModel] =
     useState<GridRowSelectionModel>([]);
     const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
@@ -32,7 +35,7 @@ export default function GetFormsContent() {
         setErrorToastStatus(args);
       };
 
-    const { data, isLoading, isSuccess, refetch } = useGetFormsQuery();
+    const { data, isLoading, isSuccess, refetch } = useGetFormsQuery({id: router.query.id});
     
     const [deleteForm] = useDeleteFormMutation()
 

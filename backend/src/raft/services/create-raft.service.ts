@@ -15,7 +15,7 @@ export default class CreateRaftService implements IService<Request, Response> {
 
     async execute(req: Request, res: Response){
         try{
-
+            console.log(req.body)
             const data = await this.raftRepository.addData(req.body);
 
             this.httpHelper.Response({

@@ -9,10 +9,13 @@ import AddShipContent from "@/modules/ship/modals/addship";
 import { useRouter } from "next/router";
 import { StringLiteral } from "typescript";
 import AddFormContent from "@/modules/form/modal/addform";
+import AddRaftContent from "@/modules/raft/modals/addraft";
 
 interface ICompanyDetail {
     id: string;
-    refetchShips: () => void
+    refetchShips?: () => void;
+    refetchRaft?: () => void;
+    refetchForm?: () => void
 }
 
 export default function CompanyDetail(props: ICompanyDetail) {
@@ -29,16 +32,15 @@ export default function CompanyDetail(props: ICompanyDetail) {
 
     const raftModalToggleHandler = () => {
         setRaftModalStatus((state) => !state);
-        // refetch();
+     
     };
 
     const formModalToggleHandler = () => {
         setFormModalStatus((state) => !state);
-        // refetch();
+       
     };
     const { data:company, isLoading, isSuccess } = useGetOneCompanyQuery({id: props.id})
-    console.log(props.id)
-    console.log(isSuccess && company?.data)
+  
     return (
         <>
             <Loader status={isLoading}/>
@@ -49,9 +51,7 @@ export default function CompanyDetail(props: ICompanyDetail) {
                     </div>
                     <div className={styles.buttons}>
                         <Button icon={<Icon icon="ic:baseline-plus" />} label="Ship" onClick={shipModalToggleHandler}/>
-                        <Button icon={<Icon icon="ic:baseline-plus" />} label="Raft" onClick={function (e: any): void {
-                            throw new Error("Function not implemented.");
-                        } }/>
+                        <Button icon={<Icon icon="ic:baseline-plus" />} label="Raft" onClick={raftModalToggleHandler}/>
                         <Button icon={<Icon icon="ic:baseline-plus" />} label="form" onClick={formModalToggleHandler}/>
                     </div>
                 </header>
@@ -75,6 +75,9 @@ export default function CompanyDetail(props: ICompanyDetail) {
             </Popup>
             <Popup displayStatus={formModalStatus} close={formModalToggleHandler}>
                 <AddFormContent companyId={router.query.id} close={formModalToggleHandler} />
+            </Popup>
+            <Popup displayStatus={raftModalStatus} close={raftModalToggleHandler}>
+                <AddRaftContent companyId={router.query.id} close={raftModalToggleHandler} />
             </Popup>
         </>
     )
