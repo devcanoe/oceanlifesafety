@@ -9,7 +9,7 @@ import { useAppSelector } from "@/common/lib/hooks";
 import { User, selectCurrentUser } from "@/common/lib/slice/authslice";
 import { useEffect, useState } from "react";
 import Popup from "@/common/components/display/popup";
-import GenerateInvoiceContent from "../generateInvoice";
+import GenerateInvoiceContent from "../../invoice/modal/generateInvoice";
 import {
   useGetMessagesQuery,
   usePostMessageMutation,

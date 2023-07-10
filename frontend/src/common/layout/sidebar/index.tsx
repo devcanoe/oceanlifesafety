@@ -8,7 +8,7 @@ export default function Sidebar() {
     <>
       <aside className={styles.sidebarcontainer}>
         <header className={styles.sidebarheader}>
-          <h4>Promptcomputers</h4>
+          <h4>Oceanlifesafety</h4>
         </header>
         <MenuItem
           url={"/dashboard"}
@@ -20,12 +20,12 @@ export default function Sidebar() {
           title={"Company"}
           icon={"mdi:user-group"}
         />
-        {/* <MenuItem
-          url={"/form"}
-          title={"Tickets"}
+        <MenuItem
+          url={"/invoice"}
+          title={"Invoice"}
           icon={"majesticons:tickets-line"}
         />
-        <MenuItem url={"/customers"} title={"Customers"} icon={"mdi:user"} />
+        {/* <MenuItem url={"/customers"} title={"Customers"} icon={"mdi:user"} />
         <MenuItem url={"/types"} title={"Types"} icon={"mdi:user"} /> */}
       </aside>
     </>
