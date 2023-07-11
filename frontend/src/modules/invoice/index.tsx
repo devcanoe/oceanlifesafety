@@ -14,26 +14,26 @@ import styles from "./index.module.css";
 import SToast from "@/common/components/display/toast/toast";
 import { useDeleteCompanyMutation, useGetCompaniesQuery } from "@/common/services/company.service";
 import GenerateInvoiceContent from "./modal/generateInvoice";
+import { useDeleteInvoiceMutation, useFetchInvoicesQuery } from "@/common/services/invoice.service";
+import { Invoice } from "@/common/model/invoice.model";
 
 export default function InvoiceContent() {
   const { data, isLoading, isSuccess, isError, refetch } =
-    useGetCompaniesQuery();
+    useFetchInvoicesQuery();
 
   const [deleteCompany, { isLoading: deleteCompanyLoading }] =
-    useDeleteCompanyMutation();
+    useDeleteInvoiceMutation();
 
 
   let rows: any[] = [];
 
-
-  // !isLoading &&
-  //   data?.data.map((company: Company) => {
-  //     rows.push({
-  //       id: company._id,
-  //       name: `${company.name}`,
-  //       address: `${company.address}`,
-  //     });
-  //   });
+  !isLoading &&
+    data?.data.map((invoice: Invoice) => {
+      rows.push({
+        id: invoice._id,
+        reference_no: `${invoice.ref_no}`,
+      });
+    });
 
   const [rowSelectionModel, setRowSelectionModel] =
     useState<GridRowSelectionModel>([]);
@@ -98,8 +98,7 @@ export default function InvoiceContent() {
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 130 },
-    { field: "address", headerName: "Address", width: 130 },
+    { field: "reference_no", headerName: "Reference Number", width: 200 },
     {
       field: "action",
       headerName: "Action",
