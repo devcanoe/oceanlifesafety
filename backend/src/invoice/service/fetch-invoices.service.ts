@@ -5,7 +5,7 @@ import Http from "../../common/helper/http.helper";
 import IService from "../../common/interfaces/service.interface";
 
 @injectable()
-export default class FetchInvoiceService implements IService<Request, Response> {
+export default class FetchInvoicesService implements IService<Request, Response> {
     constructor(
         private httpHelper: Http,
         private invoiceRepository: InvoiceRepository
@@ -13,14 +13,12 @@ export default class FetchInvoiceService implements IService<Request, Response> 
     async execute(req: Request, res: Response): Promise<void> {
         try {
 
-            const { id } = req.params;
-
-            const data = await this.invoiceRepository.fetchData({_id: id});
+            const data = await this.invoiceRepository.fetchData({});
 
             this.httpHelper.Response({
                 res,
                 status: "success",
-                message: "Successfully fetch invoice",
+                message: "Successfully fetch all invoices",
                 data
             });
 

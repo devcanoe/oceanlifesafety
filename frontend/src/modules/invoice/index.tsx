@@ -194,7 +194,7 @@ export default function InvoiceContent() {
         }}
       />
       <Popup displayStatus={modalStatus} close={modalToggleHandler}>
-        <GenerateInvoiceContent/>
+        <GenerateInvoiceContent refetch={refetch}/>
       </Popup>
 
       {/* <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>

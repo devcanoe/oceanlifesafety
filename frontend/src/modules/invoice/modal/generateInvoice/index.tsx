@@ -6,7 +6,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import {
   useDeleteInvoiceMutation,
-  useFetchInvoiceQuery,
+  useFetchInvoicesQuery,
+  useFetchOneInvoiceQuery,
   useGenerateInvoiceMutation,
 } from "@/common/services/invoice.service";
 import { useRouter } from "next/router";
@@ -15,11 +16,15 @@ import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
 
-export default function GenerateInvoiceContent() {
+interface IGenerate {
+  refetch: () => void
+}
+
+export default function GenerateInvoiceContent(props: IGenerate) {
   return (
     <>
       <section>
-        <InvoiceRow />
+        <InvoiceRow refetch={props.refetch} />
       </section>
     </>
   );
@@ -32,7 +37,8 @@ interface IInvoiceRow {
   total?: number;
 }
 
-export function InvoiceRow() {
+
+export function InvoiceRow(props: IGenerate) {
   const router = useRouter();
   const [rows, setRows] = useState<IInvoiceRow[]>([]);
   const [tab, setTab] = useState<"CREATE" | "VIEW" | "">("");
@@ -53,7 +59,9 @@ export function InvoiceRow() {
     data,
     isLoading: invoiceLoading,
     refetch,
-  } = useFetchInvoiceQuery({ id: router.query.id });
+  } = useFetchOneInvoiceQuery({ id: '' });
+
+
   const [deleteInvoiceMutation, { isLoading: deleteInvoice }] =
     useDeleteInvoiceMutation();
 
@@ -136,8 +144,7 @@ export function InvoiceRow() {
 
   const generateInvoice = () => {
     generateInvoiceMutation({
-      ticket: router.query.id,
-      fields: rows,
+      items: []
     })
       .then((res: any) => {
         if (res.data.status === "success") {
@@ -148,6 +155,7 @@ export function InvoiceRow() {
             status: true,
           });
           setRows([]);
+          props.refetch()
         } else {
           errorToastHandler({
             message: res.data.message,
@@ -312,7 +320,7 @@ export function InvoiceRow() {
               </div>
             </header>
             <div>
-              {data?.data.map((record: Invoice, index: any) => {
+              {/* {data?.data.map((record: Invoice, index: any) => {
                 const sub_total = record.amount * record.quantity;
                 total_amount += sub_total;
                 return (
@@ -332,7 +340,7 @@ export function InvoiceRow() {
                     </div>
                   </>
                 );
-              })}
+              })} */}
               <div className={styles.totalcontainer}>
                 <div>Total:</div>
                 <div>${total_amount}</div>

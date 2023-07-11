@@ -6,7 +6,8 @@ const invoiceRouter = Router();
 const invoiceController = container.resolve(InvoiceController);
 
 invoiceRouter.post('/create', (req, res)=>invoiceController.generateInvoice(req, res));
-invoiceRouter.get('/', (req, res)=>invoiceController.fetchInvoice(req, res));
+invoiceRouter.get('/', (req, res)=>invoiceController.fetchInvoices(req, res));
+invoiceRouter.get('/:id', (req, res)=>invoiceController.fetchInvoice(req, res));
 invoiceRouter.delete('/:id', (req, res)=>invoiceController.deleteInvoice(req, res));
 
 export default invoiceRouter;
