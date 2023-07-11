@@ -21,7 +21,7 @@ export default function InvoiceContent() {
   const { data, isLoading, isSuccess, isError, refetch } =
     useFetchInvoicesQuery();
 
-  const [deleteCompany, { isLoading: deleteCompanyLoading }] =
+  const [deleteInvoice, { isLoading: deleteCompanyLoading }] =
     useDeleteInvoiceMutation();
 
 
@@ -78,8 +78,8 @@ export default function InvoiceContent() {
     // refetch();
   };
 
-  const deleteCompanyHandler = (id: string) => {
-    deleteCompany({ id })
+  const deleteInvoiceHandler = (id: string) => {
+    deleteInvoice({ id })
       .then((res: any) => {
         successToastHandler({
           message: res.data.message,
@@ -111,7 +111,7 @@ export default function InvoiceContent() {
           <Link
             href={`#`}
             onClick={() => {
-              deleteCompanyHandler(params.id);
+              deleteInvoiceHandler(params.id);
             }}
             className={"red"}
             style={{ marginRight: "10px" }}
