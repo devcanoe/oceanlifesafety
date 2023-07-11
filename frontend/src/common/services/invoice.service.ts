@@ -3,7 +3,7 @@ import { Invoice } from "../model/invoice.model";
 import IGenerateInvoice from "./interface/invoice.interface";
 import IResponse, { IResponseBase } from "./interface/response.interface";
 
-const baseUrl = "invoice";
+const baseUrl = "invoices";
 
 export const invoiceEndpoint = sungloApi.injectEndpoints({
   endpoints: (build) => ({
@@ -14,7 +14,10 @@ export const invoiceEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
-    fetchInvoice: build.query<IResponse<Invoice[]>, { id: string }>({
+    fetchInvoices: build.query<IResponse<Invoice[]>, void>({
+      query: () => `${baseUrl}`,
+    }),
+    fetchOneInvoice: build.query<IResponse<Invoice>, { id: string }>({
       query: ({ id }) => `${baseUrl}/${id}`,
     }),
     deleteInvoice: build.mutation<IResponseBase, { id: string }>({
