@@ -2,6 +2,7 @@ import Base from "./base.model";
 import FormColumn from "./form_columns.model";
 
 export default interface Form extends Base {
+    items: any;
     company?: string;
     ship?: string;
     location_of_vessel?: string;
