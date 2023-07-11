@@ -16,10 +16,10 @@ export default class GetRaftsService implements IService<Request, Response> {
     async execute(req: Request, res: Response){
         try{
 
-            const { company } = req.params;
-
-            const data = await this.raftRepository.fetchData({company});
-
+            const { id } = req.params;
+            console.log(id)
+            const data = await this.raftRepository.fetchData({company: id});
+            console.log(data)
             this.httpHelper.Response({
                 res,
                 status: "success",

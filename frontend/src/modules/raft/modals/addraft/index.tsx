@@ -13,6 +13,7 @@ import { useCreateShipMutation, useGetAllShipsQuery } from '@/common/services/sh
 import Raft from '@/common/model/raft.model';
 import Dropdown, { Iitem } from '@/common/components/form/dropdown';
 import Loader from '@/common/components/display/loader';
+import { useCreateRaftMutation } from '@/common/services/raft.service';
 
 interface IAddRaftContent {
     close: () => void;
@@ -39,7 +40,7 @@ export default function AddRaftContent({ close, companyId }: IAddRaftContent) {
         setErrorToastStatus(args);
     }
 
-    const [create, { isLoading }] = useCreateShipMutation();
+    const [create, { isLoading }] = useCreateRaftMutation();
 
     const { data, isLoading: shipLoading, isSuccess}  = useGetAllShipsQuery({id: companyId});
 

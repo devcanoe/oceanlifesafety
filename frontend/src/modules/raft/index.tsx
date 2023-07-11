@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
 import Ship from "@/common/model/ship.model";
 import { useDeleteRaftMutation, useGetAllRaftsQuery } from "@/common/services/raft.service";
+import Raft from "@/common/model/raft.model";
 
 export default function RaftContent(props:{id: string}) {
 
@@ -26,12 +27,13 @@ export default function RaftContent(props:{id: string}) {
 
 
   let rows: any[] = [];
+ console.log(isSuccess && data.data);
  
   isSuccess &&
-    data?.data.map((ship: Ship) => {
+    data?.data.map((raft: Raft) => {
       rows.push({
-        id: ship._id,
-        name: `${ship.name}`,
+        id: raft._id,
+        serial_no: `${raft.serial_no}`,
       });
     });
 
@@ -85,7 +87,7 @@ export default function RaftContent(props:{id: string}) {
   };
 
   const columns: GridColDef[] = [
-    { field: "name", headerName: "Name", width: 130 },
+    { field: "serial_no", headerName: "Serial Number", width: 130 },
     {
       field: "action",
       headerName: "Action",
