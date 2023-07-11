@@ -31,6 +31,6 @@ export const invoiceEndpoint = sungloApi.injectEndpoints({
 
 export const {
   useGenerateInvoiceMutation,
-  useFetchInvoiceQuery,
+  useFetchInvoicesQuery,
   useDeleteInvoiceMutation,
 } = invoiceEndpoint;
