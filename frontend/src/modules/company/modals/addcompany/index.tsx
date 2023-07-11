@@ -42,18 +42,24 @@ export default function AddCompanyContent({ close }: IAddCompanyContent) {
         address: yup
             .string()
             .required('Address is required'),
+        email: yup.string(),
+        phone: yup.string()
     });
 
     const formik = useFormik({
         initialValues: {
             name: '',
             address: '',
+            email: '',
+            phone: ''
         },
         validationSchema: validationSchema,
         onSubmit: (values: Company) => { 
             const payload = {
                 address: values.address,
                 name: values.name,
+                phone: values.phone,
+                email: values.email
             };
 
             create(payload).then((res: any) => {
@@ -102,6 +108,25 @@ export default function AddCompanyContent({ close }: IAddCompanyContent) {
                     onChange={formik.handleChange}
                     error={formik.touched.address && Boolean(formik.errors.address)}
                     helperText={formik.touched.address && formik.errors.address}
+                />
+
+                <InputField
+                    type={'text'}
+                    placeholder="Email"
+                    name="email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
+                />
+                <InputField
+                    type={'text'}
+                    placeholder="Phone"
+                    name="phone"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    error={formik.touched.phone && Boolean(formik.errors.phone)}
+                    helperText={formik.touched.phone && formik.errors.phone}
                 />
                 <SToast text={successToastStatus.message} severity={'success'} open={successToastStatus.visibility} onClose={function (): void {
                     setSuccessToastStatus({

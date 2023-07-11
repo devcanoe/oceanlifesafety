@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import { useAppDispatch, useAppSelector } from "@/common/lib/hooks";
 import { User, logOut, selectCurrentUser } from "@/common/lib/slice/authslice";
 import { useEffect, useState } from "react";
+import InputField from "@/common/components/form/inputfield";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -28,8 +29,7 @@ export default function Navbar() {
     <>
       <div className={styles.navbarcontainer}>
         <div className={styles.leftside}>
-          <h5>Welcome back</h5>
-          <small className={styles.small}>{username} </small>
+            <InputField type={"text"} placeholder={"Search...."}/>
         </div>
 
         <div className={styles.logout} onClick={handleLogout}>

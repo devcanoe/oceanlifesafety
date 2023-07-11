@@ -10,6 +10,12 @@ const companySchema: Schema =  new Schema<Company>({
     type: String,
     required: true
   },
+  email: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
   created_at: {
       type: Date,
       default: function() {

@@ -2,14 +2,37 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Icon } from "@iconify/react";
 import styles from "./index.module.css";
+import { useAppDispatch, useAppSelector } from "@/common/lib/hooks";
+import { User, selectCurrentUser } from "@/common/lib/slice/authslice";
+import { useEffect, useState } from "react";
 
 export default function Sidebar() {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const user: User = useAppSelector(selectCurrentUser);
+  
+  const [username, setUsername] = useState<string>();
+  const [email, setEmail] = useState<string>();
+
+  useEffect(() => {
+    if (router.isReady) {
+      setUsername(`Hello ${user.firstname}`);
+      setEmail(`${user.email}`)
+    }
+  }, [router.isReady]);
   return (
     <>
       <aside className={styles.sidebarcontainer}>
         <header className={styles.sidebarheader}>
           <h4>Oceanlifesafety</h4>
         </header>
+        <div className={styles.avatarbox}>
+          <div className={styles.avatar}>
+
+          </div>
+          <p>{username}</p>
+          <small>{email}</small>
+        </div>
         <MenuItem
           url={"/dashboard"}
           title={"Dashboard"}
