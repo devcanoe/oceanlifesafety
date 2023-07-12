@@ -4,16 +4,16 @@ import { getFromLocalStorage } from "@/common/utils/localstorage";
 
 export interface User {
   firstname: string,
+  lastname: string,
   id: string,
   email: string,
-  role: string
 }
 
 const defaultUser: User = {
   firstname: '',
   id: '',
   email: '',
-  role: ''
+  lastname: ''
 }
 
 interface AuthState {
