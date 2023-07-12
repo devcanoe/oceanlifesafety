@@ -29,7 +29,7 @@ export default function Navbar() {
     <>
       <div className={styles.navbarcontainer}>
         <div className={styles.leftside}>
-            <InputField type={"text"} placeholder={"Search...."}/>
+            {/* <InputField type={"text"} placeholder={"Search...."}/> */}
         </div>
 
         <div className={styles.logout} onClick={handleLogout}>
