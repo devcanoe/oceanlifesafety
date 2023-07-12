@@ -57,6 +57,8 @@ export default class LoginService implements IService<Request, Response> {
                     token: generatedToken,
                     user: {
                         firstname: user.firstname,
+                        lastname: user.lastname,
+                        email: user.email,
                         id: user._id,
                     }
                 }
