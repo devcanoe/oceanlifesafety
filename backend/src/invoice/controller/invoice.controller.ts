@@ -4,6 +4,7 @@ import GenerateInvoiceService from "../service/generate-invoice.service";
 import FetchInvoicesService from "../service/fetch-invoices.service";
 import DeleteInvoiceService from "../service/delete-invoice.service";
 import FetchInvoiceService from "../service/fetch-invoice.service";
+import DeleteInvoiceItemService from "../service/delete-invoice-item.service";
 
 @injectable()
 export default class InvoiceController {
@@ -11,6 +12,7 @@ export default class InvoiceController {
         private generaateInvoiceService: GenerateInvoiceService,
         private fetchInvoicesService: FetchInvoicesService,
         private deleteInvoiceService: DeleteInvoiceService,
+        private deleteInvoiceItemService: DeleteInvoiceItemService,
         private fetchInvoiceService: FetchInvoiceService
     ){}
 
@@ -28,5 +30,9 @@ export default class InvoiceController {
 
     async deleteInvoice(req: Request, res: Response) {
         await this.deleteInvoiceService.execute(req, res)
+    }
+
+    async deleteInvoiceItem(req: Request, res: Response) {
+        await this.deleteInvoiceItemService.execute(req, res)
     }
 }
