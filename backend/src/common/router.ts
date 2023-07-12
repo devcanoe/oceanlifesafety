@@ -15,5 +15,5 @@ export const setAppRouter = (app: Application) => {
     app.use("/api/v2/forms", formRouter);
     app.use("/api/v2/rafts", raftRouter);
     app.use(`${BASE_URL}/invoices`, invoiceRouter);
-    app.use(`${BASE_URL}/dashboard`, dashboardRouterRouter);
+    app.use(`${BASE_URL}/dashboard`, dashboardRouter);
 }
