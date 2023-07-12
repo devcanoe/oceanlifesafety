@@ -17,15 +17,12 @@ export default class GenerateInvoiceService implements IService<Request, Respons
     async execute(req: Request, res: Response) {
         try{
             const { items } = req.body;
-
+            
             const generatedInvReference = generateReference("INV");
 
             const createInvoice = await this.invoiceRepository.addData({
-                ref_no: generatedInvReference
-            });
-
-            items.map((item: any)=> {
-                createInvoice.items?.push(item)
+                ref_no: generatedInvReference,
+                items
             });
 
             this.httpHelper.Response({
