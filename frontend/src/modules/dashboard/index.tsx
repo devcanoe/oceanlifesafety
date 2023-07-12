@@ -117,22 +117,22 @@ function DashboardCards(props: IDashboardCards) {
         <>
             <section className={styles.cardscontainer}>
                 <div className={styles.card}>
-                    <p className={styles.cardp}>Completed Tickets</p>
+                    <p className={styles.cardp}>Total Companies</p>
                     <h3>{props.completedTickets}</h3>
                     <small className={styles.cardsmall}></small>
                 </div>
                 <div className={styles.card}>
-                    <p className={styles.cardp}>Unassigned Ticket</p>
+                    <p className={styles.cardp}>Total Ships</p>
                     <h3>{props.unassignedTickets}</h3>
                     <small className={styles.cardsmall}></small>
                 </div>
                 <div className={styles.card}>
-                    <p className={styles.cardp}>On-going Ticket</p>
+                    <p className={styles.cardp}>Total Raft</p>
                     <h3>{props.ongoingTickets}</h3>
                     <small className={styles.cardsmall}></small>
                 </div>
                 <div className={styles.card}>
-                    <p className={styles.cardp}>Total Agents</p>
+                    <p className={styles.cardp}>Total Documents</p>
                     <h3>{props.totalAgents}</h3>
                     <small className={styles.cardsmall}></small>
                 </div>
