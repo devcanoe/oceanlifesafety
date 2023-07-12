@@ -5,7 +5,7 @@ export default function Dashboard() {
     return (
         <>
             <DashboardLayout>
-                {/* <DashboardContent /> */}
+                <DashboardContent />
             </DashboardLayout>
         </>
     )

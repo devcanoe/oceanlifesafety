@@ -10,18 +10,18 @@ import Loader from '@/common/components/display/loader';
 export default function DashboardContent() {
 
     // get dashboard data
-    const { data, isLoading } = useGetDashboardQuery();
-    console.log(!isLoading && data)
+    // const { data, isLoading } = useGetDashboardQuery();
+    // console.log(!isLoading && data)
     let rows: any[] = [];
-    !isLoading && data?.data.tickets.map((ticket: any) => {
-        rows.push({
-            id: ticket._id,
-            status: ticket.status,
-            type: ticket.type,
-            priority: ticket.priority,
-            agent: ticket.agent.email
-        })
-    });
+    // !isLoading && data?.data.tickets.map((ticket: any) => {
+    //     rows.push({
+    //         id: ticket._id,
+    //         status: ticket.status,
+    //         type: ticket.type,
+    //         priority: ticket.priority,
+    //         agent: ticket.agent.email
+    //     })
+    // });
 
     const [rowSelectionModel, setRowSelectionModel] =
         useState<GridRowSelectionModel>([]);
@@ -59,22 +59,22 @@ export default function DashboardContent() {
     return (
         <>
             <DashboardNavbar />
-            <Loader status={isLoading}/>
-            {data && (
+            <Loader status={false}/>
+            {true && (
                 <>
                 <div className={styles.grid2}>
                     <br/>
                     <DashboardCards 
-                        completedTickets={data.data.completedTicket} 
-                        unassignedTickets={data.data.unassignedTicket} 
-                        ongoingTickets={data.data.ongoingTicket} 
-                        totalAgents={data.data.agents} 
+                        completedTickets={0} 
+                        unassignedTickets={0} 
+                        ongoingTickets={0} 
+                        totalAgents={0} 
                     />
                 </div>
                 <br />
                 <br/>
                 <section>
-                    <h3>Unassigned Tickets</h3>
+                    <h3>Activity Log</h3>
                     <br/>
                     <Table
                         rows={rows}
