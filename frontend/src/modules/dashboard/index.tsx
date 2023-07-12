@@ -11,7 +11,7 @@ export default function DashboardContent() {
 
     // get dashboard data
     const { data, isLoading, isSuccess } = useGetDashboardQuery();
-    // console.log(!isLoading && data)
+    console.log(isSuccess && data)
     let rows: any[] = [];
     // !isLoading && data?.data.map((ticket: any) => {
     //     rows.push({
