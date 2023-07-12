@@ -11,20 +11,21 @@ import {
   useGenerateInvoiceMutation,
 } from "@/common/services/invoice.service";
 import { useRouter } from "next/router";
-import { Invoice } from "@/common/model/invoice.model";
+import { Invoice, InvoiceItem } from "@/common/model/invoice.model";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
 
 interface IGenerate {
-  refetch: () => void
+  refetch: () => void,
+  state?: boolean,
 }
 
 export default function GenerateInvoiceContent(props: IGenerate) {
   return (
     <>
       <section>
-        <InvoiceRow refetch={props.refetch} />
+        <InvoiceRow refetch={props.refetch} status={true}/>
       </section>
     </>
   );
@@ -58,9 +59,11 @@ export function InvoiceRow(props: IGenerate) {
   const {
     data,
     isLoading: invoiceLoading,
+    isSuccess,
     refetch,
-  } = useFetchOneInvoiceQuery({ id: '' });
+  } = useFetchOneInvoiceQuery({ id: router.query.id });
 
+  console.log(isSuccess && data)
 
   const [deleteInvoiceMutation, { isLoading: deleteInvoice }] =
     useDeleteInvoiceMutation();
@@ -144,7 +147,7 @@ export function InvoiceRow(props: IGenerate) {
 
   const generateInvoice = () => {
     generateInvoiceMutation({
-      items: []
+      items: rows
     })
       .then((res: any) => {
         if (res.data.status === "success") {
@@ -320,15 +323,16 @@ export function InvoiceRow(props: IGenerate) {
               </div>
             </header>
             <div>
-              {/* {data?.data.map((record: Invoice, index: any) => {
-                const sub_total = record.amount * record.quantity;
+              {data.data?.items.map((record: InvoiceItem, index: any) => {
+                console.log(record)
+                const sub_total = record.price * record.quantity;
                 total_amount += sub_total;
                 return (
                   <>
                     <div className={styles.contentcontainer} key={index}>
-                      <div className={styles.part}>{record.service}</div>
+                      <div className={styles.part}>{record.description}</div>
                       <div className={styles.part}>{record.quantity}</div>
-                      <div className={styles.part}>{record.amount}</div>
+                      <div className={styles.part}>{record.price}</div>
                       <div className={styles.part}>{sub_total}</div>
 
                       <div className={styles.part}>
@@ -340,7 +344,7 @@ export function InvoiceRow(props: IGenerate) {
                     </div>
                   </>
                 );
-              })} */}
+              })}
               <div className={styles.totalcontainer}>
                 <div>Total:</div>
                 <div>${total_amount}</div>
@@ -362,7 +366,8 @@ export function InvoiceRow(props: IGenerate) {
           )}
           {tab === "" && (
             <>
-              <Button label={"View Invoice"} onClick={viewInvoice} />
+            {props.status === false && (<Button label={"View Invoice"} onClick={viewInvoice} />)}
+              
               <Button label={"Generate Invoice"} onClick={generateInvoice} />
             </>
           )}
