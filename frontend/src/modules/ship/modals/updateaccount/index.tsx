@@ -152,7 +152,7 @@ export function UpdateaccountContent({ id, close }: IUpdateaccountContent) {
                     setSuccessToastStatus({
                         visibility: false
                     })
-                }} />
+            }} />
                 
             <SToast text={errorToastStatus.message} severity={'error'} open={errorToastStatus.visibility} onClose={function (): void {
                 setErrorToastStatus({
