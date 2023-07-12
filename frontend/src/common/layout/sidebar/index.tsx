@@ -16,7 +16,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     if (router.isReady) {
-      setUsername(`Hello ${user.firstname}`);
+      setUsername(`${user.firstname} ${user.lastname}`);
       setEmail(`${user.email}`)
     }
   }, [router.isReady]);
