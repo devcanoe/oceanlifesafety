@@ -105,8 +105,12 @@ export default function InvoiceContent() {
       type: "actions",
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
-          <Link href={`/company/${params.id}`} className={styles.link} style={{ marginRight: '10px' }}>
-              <Icon icon="ic:baseline-remove-red-eye" />View
+          <Link 
+            href={`/invoice/${params.id}`} 
+            className={styles.link} 
+            style={{ marginRight: '10px' }}
+          >
+            <Icon icon="ic:baseline-remove-red-eye" />View
           </Link>
           <Link
             href={`#`}
