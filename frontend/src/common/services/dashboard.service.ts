@@ -4,7 +4,7 @@ import IResponse from "./interface/response.interface";
 
 export const authEndpoint = sungloApi.injectEndpoints({
   endpoints: (build) => ({
-    getDashboard: build.query<IResponse<IDashboard>, void>({
+    getDashboard: build.query<IResponse<any>, void>({
       query: () => `/dashboard`,
     }),
   }),

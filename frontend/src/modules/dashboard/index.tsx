@@ -10,10 +10,10 @@ import Loader from '@/common/components/display/loader';
 export default function DashboardContent() {
 
     // get dashboard data
-    // const { data, isLoading } = useGetDashboardQuery();
+    const { data, isLoading, isSuccess } = useGetDashboardQuery();
     // console.log(!isLoading && data)
     let rows: any[] = [];
-    // !isLoading && data?.data.tickets.map((ticket: any) => {
+    // !isLoading && data?.data.map((ticket: any) => {
     //     rows.push({
     //         id: ticket._id,
     //         status: ticket.status,
@@ -59,16 +59,16 @@ export default function DashboardContent() {
     return (
         <>
             <DashboardNavbar />
-            <Loader status={false}/>
+            <Loader status={isLoading}/>
             {true && (
                 <>
                 <div className={styles.grid2}>
                     <br/>
                     <DashboardCards 
-                        completedTickets={0} 
-                        unassignedTickets={0} 
-                        ongoingTickets={0} 
-                        totalAgents={0} 
+                        completedTickets={isSuccess && data.data.company} 
+                        unassignedTickets={isSuccess && data.data.ship} 
+                        ongoingTickets={isSuccess && data.data.raft} 
+                        totalAgents={isSuccess && data.data.form} 
                     />
                 </div>
                 <br />
