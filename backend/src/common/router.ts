@@ -1,5 +1,5 @@
 import { Application } from "express";
-import authRouter from "../auth/routes/auth.route";
+import authRouter, { dashboardRouter } from "../auth/routes/auth.route";
 import companyRouter from "../company/routes/company.route";
 import shipRouter from "../ship/routes/ship.route";
 import formRouter from "../forms/routes/form.route";
@@ -15,4 +15,5 @@ export const setAppRouter = (app: Application) => {
     app.use("/api/v2/forms", formRouter);
     app.use("/api/v2/rafts", raftRouter);
     app.use(`${BASE_URL}/invoices`, invoiceRouter);
+    app.use(`${BASE_URL}/dashboard`, dashboardRouterRouter);
 }

@@ -10,3 +10,10 @@ authRouter.post('/login', (req, res)=>authController.login(req, res));
 authRouter.post('/register', (req, res)=>authController.register(req, res));
 
 export default authRouter
+
+const dashboardRouter = Router();
+
+// routes for ticket types
+dashboardRouter.get('/', (req, res)=>authController.dashboard(req, res));
+
+export {dashboardRouter}
