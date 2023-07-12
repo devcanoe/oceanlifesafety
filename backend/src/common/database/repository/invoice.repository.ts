@@ -3,6 +3,7 @@ import IRepository from "../../interfaces/repository.interface";
 import DatabaseHelper from "../../helper/database.helper";
 import Form from "../models/form.model";
 import invoiceSchema from "../schemas/invoice.schema";
+import Invoice from "../models/invoice.model";
 
 @injectable() 
 export default class InvoiceRepository implements IRepository {
@@ -10,16 +11,16 @@ export default class InvoiceRepository implements IRepository {
         private dataBaseHelper: DatabaseHelper
     ){
     }
-    async addData(data: any): Promise<Form> {
+    async addData(data: any): Promise<Invoice> {
         return await this.dataBaseHelper.createData(invoiceSchema, data);
     }
-    async fetchData(data: any): Promise<Form[]> {
+    async fetchData(data: any): Promise<Invoice[]> {
         return await this.dataBaseHelper.readData(invoiceSchema, data);
     }
-    async fetchOneData(data: any): Promise<Form> {
+    async fetchOneData(data: any): Promise<Invoice> {
         return await this.dataBaseHelper.readSingleData(invoiceSchema, data);
     }
-    async updateData(keyword: any, data: any): Promise<Form> {
+    async updateData(keyword: any, data: any): Promise<Invoice> {
         return await this.dataBaseHelper.updateData(invoiceSchema, keyword, data);
     }
     async deleteData(id: string) {
