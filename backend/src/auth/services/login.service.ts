@@ -6,6 +6,7 @@ import Http from "../../common/helper/http.helper";
 import Token from "../../common/helper/token.helper";
 import { User } from "../../common/database/models/user.model";
 import UserRepository from "../../common/database/repository/user.repository";
+import LogRepository from "../../common/database/repository/log.repository";
 
 const SECRET_KEY = process.env.SECRET_KEY || "";
 
@@ -14,6 +15,7 @@ export default class LoginService implements IService<Request, Response> {
     constructor(
         private userRepository: UserRepository,
         private encryptionHelper: Encryption,
+        private logRepository: LogRepository,
         private tokenHelper: Token,
         private httpHelper: Http
     ){
@@ -48,6 +50,11 @@ export default class LoginService implements IService<Request, Response> {
             }
     
             const generatedToken = await this.tokenHelper.generate(userdetails, SECRET_KEY);
+
+            await this.logRepository.addData({
+                description: `${user.email} successfully logged in`,
+                user: user._id
+            });
 
             this.httpHelper.Response({
                 res,
