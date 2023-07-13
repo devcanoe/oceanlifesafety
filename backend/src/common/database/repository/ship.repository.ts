@@ -3,6 +3,7 @@ import IRepository from "../../interfaces/repository.interface";
 import DatabaseHelper from "../../helper/database.helper";
 import { User } from "../models/user.model";
 import shipSchema from "../schemas/ship.schema";
+import Ship from "../models/ship.model";
 
 @injectable() 
 export default class ShipRepository implements IRepository {
@@ -10,7 +11,7 @@ export default class ShipRepository implements IRepository {
         private dataBaseHelper: DatabaseHelper
     ){
     }
-    async addData(data: any): Promise<User> {
+    async addData(data: any): Promise<Ship> {
         return await this.dataBaseHelper.createData(shipSchema, data);
     }
     async fetchData(data: any): Promise<User[]> {
