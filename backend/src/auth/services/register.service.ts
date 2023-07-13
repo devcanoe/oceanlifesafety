@@ -6,6 +6,7 @@ import Http from "../../common/helper/http.helper";
 import Token from "../../common/helper/token.helper";
 import { User } from "../../common/database/models/user.model";
 import UserRepository from "../../common/database/repository/user.repository";
+import LogRepository from "../../common/database/repository/log.repository";
 
 const SECRET_KEY = process.env.SECRET_KEY || "";
 
@@ -13,6 +14,7 @@ const SECRET_KEY = process.env.SECRET_KEY || "";
 export default class RegisterService implements IService<Request, Response> {
     constructor(
         private userRepository: UserRepository,
+        private logRepository: LogRepository,
         private encryptionHelper: Encryption,
         private httpHelper: Http
     ){
@@ -39,6 +41,11 @@ export default class RegisterService implements IService<Request, Response> {
             const data = await this.userRepository.addData({
                 ...req.body,
                 password: hashedPassword
+            });
+
+            await this.logRepository.addData({
+                description: `${data.email} successfully registered an account`,
+                user: data._id
             });
 
             this.httpHelper.Response({
