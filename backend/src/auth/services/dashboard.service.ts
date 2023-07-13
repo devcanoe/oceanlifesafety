@@ -6,6 +6,7 @@ import CompanyRepository from "../../common/database/repository/company.reposito
 import ShipRepository from "../../common/database/repository/ship.repository";
 import RaftRepository from "../../common/database/repository/raft.repository";
 import FormRepository from "../../common/database/repository/form.repository";
+import LogRepository from "../../common/database/repository/log.repository";
 
 @injectable()
 export default class DashboardService implements IService<Request, Response> {
@@ -14,7 +15,8 @@ export default class DashboardService implements IService<Request, Response> {
         private companyRepository: CompanyRepository,
         private shipRepository: ShipRepository,
         private raftRepository: RaftRepository,
-        private formRepository: FormRepository
+        private formRepository: FormRepository,
+        private logRepository: LogRepository
     ){}
 
     async execute(req: Request, res: Response) {
@@ -27,6 +29,8 @@ export default class DashboardService implements IService<Request, Response> {
             const raft = await this.raftRepository.fetchData({});
 
             const form = await this.formRepository.fetchData({});
+
+            const tableData = await this.logRepository.fetchData({})
             
             this.httpHelper.Response({
                 res,
@@ -36,7 +40,8 @@ export default class DashboardService implements IService<Request, Response> {
                     company: company.length,
                     ship: ship.length,
                     raft: raft.length,
-                    form: form.length
+                    form: form.length,
+                    table: tableData
                 }
             });
         }catch(err: any){
