@@ -3,11 +3,13 @@ import { Request, Response } from "express";
 import IService from "../../common/interfaces/service.interface";
 import Http from "../../common/helper/http.helper";
 import CompanyRepository from "../../common/database/repository/company.repository";
+import LogRepository from "../../common/database/repository/log.repository";
 
 @injectable()
 export default class CreateCompanyService implements IService<Request, Response> {
     constructor(
         private companyRepository: CompanyRepository,
+        private logRepository: LogRepository,
         private httpHelper: Http
     ){
 
@@ -17,7 +19,8 @@ export default class CreateCompanyService implements IService<Request, Response>
         try{
         
             const {
-                name
+                name,
+                user
             } = req.body;
 
             const company = await this.companyRepository.fetchOneData({name});
@@ -27,6 +30,11 @@ export default class CreateCompanyService implements IService<Request, Response>
             }
 
             const createCompany = await this.companyRepository.addData(req.body);
+
+            await this.logRepository.addData({
+                description: `${user.email} just added ${createCompany.name} to companies`,
+                user: user._id
+            });
 
             this.httpHelper.Response({
                 res,
