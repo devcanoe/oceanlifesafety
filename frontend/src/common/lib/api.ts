@@ -9,7 +9,7 @@ export interface BaseModel {
 
 export const sungloApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://oceanlifeservice.onrender.com/api/v2/",
+    baseUrl: "http://localhost:5000/api/v2/",
     prepareHeaders: (headers, { getState }) => {
       // By default, if we have a token in the state,
       const token: string = (getState() as RootState).auth.token;

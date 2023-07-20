@@ -14,13 +14,16 @@ import { Navbar } from "../clients";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
-import { UpdateaccountContent } from "./modals/updateaccount";
+import { UpdateCompanyContent, UpdateaccountContent } from "./modals/updateaccount";
 import { useDeleteCompanyMutation, useGetCompaniesQuery } from "@/common/services/company.service";
 import Company from "@/common/model/company.model";
 import AddCompanyContent from "./modals/addcompany";
 import { useAppDispatch } from "@/common/lib/hooks";
 
 export default function CompanyContent() {
+
+  const [ id, setId ] = useState<string | undefined>()
+
   const { data, isLoading, isSuccess, isError, refetch } =
     useGetCompaniesQuery();
 
@@ -125,7 +128,7 @@ export default function CompanyContent() {
           >
             <Icon icon="ph:trash-bold" /> Delete
           </Link>
-          {/* <Link
+          <Link
             href={`#`}
             className={styles.link}
             onClick={() => {
@@ -135,7 +138,7 @@ export default function CompanyContent() {
           >
             <Icon icon="uil:pen" />
             Edit
-          </Link> */}
+          </Link>
         </>
       ),
       width: 300,
@@ -204,9 +207,9 @@ export default function CompanyContent() {
         <AddCompanyContent close={modalToggleHandler} />
       </Popup>
 
-      {/* <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>
-        <UpdateaccountContent close={updateModalToggleHandler} id={props.id} />
-      </Popup> */}
+      <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>
+        <UpdateCompanyContent close={updateModalToggleHandler} id={id} />
+      </Popup>
     </>
   );
 }

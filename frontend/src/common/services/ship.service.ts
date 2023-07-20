@@ -7,21 +7,31 @@ const baseUrl = "ships";
 
 export const shipEndpoint = sungloApi.injectEndpoints({
   endpoints: (build) => ({
-    createShip: build.mutation<IResponse<Ship>, Account>({
+    createShip: build.mutation<IResponse<Ship>, Ship>({
       query: (body) => ({
         url: `${baseUrl}/create`,
         method: "POST",
         body,
       }),
     }),
-    deleteShip: build.mutation<IResponseBase, { id: string }>({
+    updateShip: build.mutation<IResponse<Ship>, {id: string | undefined, body: Ship}>({
+      query: ({id, body}) => ({
+        url: `${baseUrl}/${id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
+    deleteShip: build.mutation<IResponseBase, { id: string | undefined }>({
       query: ({ id }) => ({
         url: `${baseUrl}/${id}`,
         method: "DELETE",
       }),
     }),
-    getAllShips: build.query<IResponse<Ship[]>, { id: string }>({
+    getAllShips: build.query<IResponse<Ship[]>, { id: string | undefined }>({
       query: ({id}) => `${baseUrl}/company/${id}`,
+    }),
+    getShip: build.query<IResponse<Ship>, { id: string | undefined }>({
+      query: ({id}) => `${baseUrl}/${id}`,
     }),
   }),
 });
@@ -29,5 +39,7 @@ export const shipEndpoint = sungloApi.injectEndpoints({
 export const {
   useCreateShipMutation,
   useDeleteShipMutation,
-  useGetAllShipsQuery
+  useUpdateShipMutation,
+  useGetAllShipsQuery,
+  useGetShipQuery
 } = shipEndpoint;

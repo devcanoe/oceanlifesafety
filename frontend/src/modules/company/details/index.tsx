@@ -62,11 +62,11 @@ export default function CompanyDetail(props: ICompanyDetail) {
                     </div>   
                     <div className={styles.column}>
                         <small className={styles.subheader}>Phone:</small>
-                        <p></p>
+                        <p>{isSuccess && company?.data.phone}</p>
                     </div>  
                     <div className={styles.column}>
                         <small className={styles.subheader}>Email:</small>
-                        <p></p>
+                        <p>{isSuccess && company?.data.email}</p>
                     </div>  
                 </main>
             </div>

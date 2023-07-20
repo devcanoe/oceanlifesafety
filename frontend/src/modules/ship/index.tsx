@@ -14,7 +14,7 @@ import { Navbar } from "../clients";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
-import { UpdateaccountContent } from "./modals/updateaccount";
+import { UpdateShipContent } from "./modals/updateship";
 import AddCompanyContent from "./modals/addship";
 import { useDeleteShipMutation, useGetAllShipsQuery } from "@/common/services/ship.service";
 import Ship from "@/common/model/ship.model";
@@ -138,7 +138,7 @@ export default function ShipContent(props:{id: string}) {
           >
             <Icon icon="ph:trash-bold" /> Delete
           </Link>
-          {/* <Link
+          <Link
             href={`#`}
             className={styles.link}
             onClick={() => {
@@ -148,7 +148,7 @@ export default function ShipContent(props:{id: string}) {
           >
             <Icon icon="uil:pen" />
             Edit
-          </Link> */}
+          </Link>
         </>
       ),
       width: 300,
@@ -236,11 +236,11 @@ export default function ShipContent(props:{id: string}) {
         }}
       />
       <Popup displayStatus={modalStatus} close={modalToggleHandler}>
-        <AddShipContent companyId={router.query.id} close={modalToggleHandler} />
+        <AddShipContent companyId={router.query?.id} close={modalToggleHandler} />
       </Popup>
 
       <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>
-        <UpdateaccountContent close={updateModalToggleHandler} id={id} />
+        <UpdateShipContent close={updateModalToggleHandler} shipId={id} />
       </Popup>
     </>
   );
