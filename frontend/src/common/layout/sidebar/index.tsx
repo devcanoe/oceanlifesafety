@@ -10,14 +10,14 @@ export default function Sidebar() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const user: User = useAppSelector(selectCurrentUser);
-  
+
   const [username, setUsername] = useState<string>();
   const [email, setEmail] = useState<string>();
 
   useEffect(() => {
     if (router.isReady) {
       setUsername(`${user.firstname} ${user.lastname}`);
-      setEmail(`${user.email}`)
+      setEmail(`${user.email}`);
     }
   }, [router.isReady]);
   return (
@@ -27,9 +27,7 @@ export default function Sidebar() {
           <h4>Oceanlifesafety</h4>
         </header>
         <div className={styles.avatarbox}>
-          <div className={styles.avatar}>
-
-          </div>
+          <div className={styles.avatar}></div>
           <p>{username}</p>
           <small>{email}</small>
         </div>
@@ -38,11 +36,7 @@ export default function Sidebar() {
           title={"Dashboard"}
           icon={"material-symbols:dashboard"}
         />
-        <MenuItem
-          url={"/company"}
-          title={"Company"}
-          icon={"mdi:user-group"}
-        />
+        <MenuItem url={"/company"} title={"Company"} icon={"mdi:user-group"} />
         <MenuItem
           url={"/invoice"}
           title={"Invoice"}

@@ -5,23 +5,22 @@ import InputField from "@/common/components/form/inputfield";
 import styles from "./index.module.css";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import {
+  useCreateAccountMutation,
+  useGetAccountQuery,
+} from "@/common/services/company.service";
+import { useState } from "react";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import { account_type } from "@/common/constants/dropdown-items";
-import Company from "@/common/model/company.model";
-import {
-  useGetCompaniesQuery,
-  useGetOneCompanyQuery,
-  useUpdateCompanyMutation,
-} from "@/common/services/company.service";
 
 interface IUpdateaccountContent {
-  id: string | undefined;
+  id: string;
   close: () => void;
 }
 
-export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
+export function UpdateRaftContent({ id, close }: IUpdateaccountContent) {
+  const [role, setRole] = useState<string>("");
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
     visibility: false,
@@ -32,9 +31,6 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
     visibility: false,
     status: false,
   });
-
-  const [loading, setLoading] = useState<boolean>(true);
-
   const successToastHandler = (args: IHandleMotion) => {
     setSuccessToastStatus(args);
   };
@@ -43,53 +39,48 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
     setErrorToastStatus(args);
   };
 
-  const { data, isLoading, isSuccess } = useGetOneCompanyQuery({ id });
+  const { data, isLoading } = useGetAccountQuery({ id });
 
-  const [updateCompany, { isLoading: companyLoading }] =
-    useUpdateCompanyMutation();
+  const [update, { isLoading: updateLoading }] = useCreateAccountMutation();
 
   const validationSchema = yup.object({
-    name: yup.string().required("Name is required"),
-    address: yup.string().required("Address is required"),
-    email: yup.string(),
-    phone: yup.string(),
+    firstname: yup.string().required("Firstname is required"),
+    lastname: yup.string().required("Lastname is required"),
+    role: yup.string().required("Role is required"),
+    email: yup
+      .string()
+      .email("Enter a valid email")
+      .required("Email is required"),
+    phone: yup.string().required("Phone is required"),
   });
 
   const formik = useFormik({
     initialValues: {
-      name: ``,
-      address: "",
-      email: "",
-      phone: "",
+      firstname: !isLoading && data.data.firstname,
+      lastname: !isLoading && data.data.lastname,
+      email: !isLoading && data.data.email,
+      phone: !isLoading && data.data.phone,
+      role: !isLoading && data.data.role,
     },
     validationSchema: validationSchema,
-    onSubmit: (values: Company) => {
+    onSubmit: (values) => {
+      console.log(values);
       const payload = {
-        id,
-        body: {
-          address: values.address,
-          name: values.name,
-          phone: values.phone,
-          email: values.email,
-        },
+        firstname: values.firstname,
+        lastname: values.lastname,
+        email: values.email,
+        phone: values.phone,
+        role: values.role,
       };
 
-      updateCompany(payload)
+      update(payload)
         .then((res: any) => {
-          if (res.data.status === "success") {
-            close();
-            successToastHandler({
-              message: res.data.message,
-              visibility: true,
-              status: true,
-            });
-          } else {
-            errorToastHandler({
-              message: res.data.message,
-              visibility: true,
-              status: false,
-            });
-          }
+          close();
+          successToastHandler({
+            message: res.data.message,
+            visibility: true,
+            status: true,
+          });
         })
         .catch((err: any) => {
           errorToastHandler({
@@ -101,44 +92,40 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
     },
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      formik.setValues({
-        name: data?.data.name,
-        email: data?.data.email,
-        phone: data?.data.phone,
-        address: data?.data.address,
-      });
-
-      setLoading(false);
-    }
-  }, [isSuccess]);
-
   return (
     <>
-      <Loader status={loading} />
+      <Loader status={isLoading} />
       <section className={styles.container}>
-        <InputField
-          type={"text"}
-          placeholder="Name"
-          name="name"
-          value={formik.values.name}
+        <Dropdown
+          label={"Account type"}
+          disabled={false}
+          items={account_type}
+          name="role"
+          value={formik.values.role}
           onChange={formik.handleChange}
-          error={formik.touched.name && Boolean(formik.errors.name)}
-          helperText={formik.touched.name && formik.errors.name}
+          error={formik.touched.role && Boolean(formik.errors.role)}
+          helperText={formik.touched.role && formik.errors.role}
         />
         <InputField
           type={"text"}
-          placeholder="Address"
-          name="address"
-          value={formik.values.address}
+          placeholder="First name"
+          name="firstname"
+          value={formik.values.firstname}
           onChange={formik.handleChange}
-          error={formik.touched.address && Boolean(formik.errors.address)}
-          helperText={formik.touched.address && formik.errors.address}
+          error={formik.touched.firstname && Boolean(formik.errors.firstname)}
+          helperText={formik.touched.firstname && formik.errors.firstname}
         />
-
         <InputField
           type={"text"}
+          placeholder="Last name"
+          name="lastname"
+          value={formik.values.lastname}
+          onChange={formik.handleChange}
+          error={formik.touched.lastname && Boolean(formik.errors.lastname)}
+          helperText={formik.touched.lastname && formik.errors.lastname}
+        />
+        <InputField
+          type={"email"}
           placeholder="Email"
           name="email"
           value={formik.values.email}
@@ -155,33 +142,13 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
           error={formik.touched.phone && Boolean(formik.errors.phone)}
           helperText={formik.touched.phone && formik.errors.phone}
         />
-        <SToast
-          text={successToastStatus.message}
-          severity={"success"}
-          open={successToastStatus.visibility}
-          onClose={function (): void {
-            setSuccessToastStatus({
-              visibility: false,
-            });
-          }}
-        />
-
-        <SToast
-          text={errorToastStatus.message}
-          severity={"error"}
-          open={errorToastStatus.visibility}
-          onClose={function (): void {
-            setErrorToastStatus({
-              visibility: false,
-            });
-          }}
-        />
         <Button
-          isLoading={companyLoading}
-          label={"update Company"}
+          isLoading={updateLoading}
+          label={"Update Account"}
           onClick={formik.handleSubmit}
         />
       </section>
+
       <SToast
         text={successToastStatus.message}
         severity={"success"}

@@ -12,9 +12,15 @@ import { useState } from "react";
 import { Navbar } from "../clients";
 import styles from "./index.module.css";
 import SToast from "@/common/components/display/toast/toast";
-import { useDeleteCompanyMutation, useGetCompaniesQuery } from "@/common/services/company.service";
+import {
+  useDeleteCompanyMutation,
+  useGetCompaniesQuery,
+} from "@/common/services/company.service";
 import GenerateInvoiceContent from "./modal/generateInvoice";
-import { useDeleteInvoiceMutation, useFetchInvoicesQuery } from "@/common/services/invoice.service";
+import {
+  useDeleteInvoiceMutation,
+  useFetchInvoicesQuery,
+} from "@/common/services/invoice.service";
 import { Invoice } from "@/common/model/invoice.model";
 
 export default function InvoiceContent() {
@@ -23,7 +29,6 @@ export default function InvoiceContent() {
 
   const [deleteInvoice, { isLoading: deleteCompanyLoading }] =
     useDeleteInvoiceMutation();
-
 
   let rows: any[] = [];
 
@@ -38,7 +43,7 @@ export default function InvoiceContent() {
   const [rowSelectionModel, setRowSelectionModel] =
     useState<GridRowSelectionModel>([]);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
-  
+
   const [updateModalStatus, setUpdateModalStatus] = useState<boolean>(false);
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
@@ -105,12 +110,13 @@ export default function InvoiceContent() {
       type: "actions",
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
-          <Link 
-            href={`/invoice/${params.id}`} 
-            className={styles.link} 
-            style={{ marginRight: '10px' }}
+          <Link
+            href={`/invoice/${params.id}`}
+            className={styles.link}
+            style={{ marginRight: "10px" }}
           >
-            <Icon icon="ic:baseline-remove-red-eye" />View
+            <Icon icon="ic:baseline-remove-red-eye" />
+            View
           </Link>
           <Link
             href={`#`}
@@ -138,8 +144,6 @@ export default function InvoiceContent() {
       width: 300,
     },
   ];
-
-
 
   return (
     <>
@@ -198,7 +202,7 @@ export default function InvoiceContent() {
         }}
       />
       <Popup displayStatus={modalStatus} close={modalToggleHandler}>
-        <GenerateInvoiceContent refetch={refetch}/>
+        <GenerateInvoiceContent refetch={refetch} />
       </Popup>
 
       {/* <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>

@@ -4,15 +4,11 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 export default function ViewType() {
-
-
-
-
-    return (
-        <>
-            <DashboardLayout>
-                <ViewticketContent/>
-            </DashboardLayout>
-        </>
-    )
+  return (
+    <>
+      <DashboardLayout>
+        <ViewticketContent />
+      </DashboardLayout>
+    </>
+  );
 }

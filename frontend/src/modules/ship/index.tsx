@@ -16,7 +16,10 @@ import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
 import { UpdateShipContent } from "./modals/updateship";
 import AddCompanyContent from "./modals/addship";
-import { useDeleteShipMutation, useGetAllShipsQuery } from "@/common/services/ship.service";
+import {
+  useDeleteShipMutation,
+  useGetAllShipsQuery,
+} from "@/common/services/ship.service";
 import Ship from "@/common/model/ship.model";
 import { useAppSelector } from "@/common/lib/hooks";
 import { selectShipActive } from "@/common/lib/slice/ship.slice";
@@ -26,19 +29,18 @@ import Tabs from "@/common/components/display/tabs";
 import GetFormsContent from "../form/get-forms";
 import RaftContent from "../raft";
 
-export default function ShipContent(props:{id: string}) {
-
+export default function ShipContent(props: { id: string }) {
   const router = useRouter();
 
-  const { data, isLoading, isSuccess, isError, refetch } =
-    useGetAllShipsQuery({id: props.id});
+  const { data, isLoading, isSuccess, isError, refetch } = useGetAllShipsQuery({
+    id: props.id,
+  });
 
   const [deleteCompany, { isLoading: deleteShipLoading }] =
     useDeleteShipMutation();
 
-
   let rows: any[] = [];
- 
+
   isSuccess &&
     data?.data.map((ship: Ship) => {
       rows.push({
@@ -125,8 +127,12 @@ export default function ShipContent(props:{id: string}) {
       type: "actions",
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
-          <Link href={`/company/${params.id}`} className={styles.link} style={{ marginRight: '10px' }}>
-              <Icon icon="ic:baseline-remove-red-eye" />    View
+          <Link
+            href={`/company/${params.id}`}
+            className={styles.link}
+            style={{ marginRight: "10px" }}
+          >
+            <Icon icon="ic:baseline-remove-red-eye" /> View
           </Link>
           <Link
             href={`#`}
@@ -170,38 +176,33 @@ export default function ShipContent(props:{id: string}) {
     },
   ];
 
-  const headers: string[] = [
-    "Ships",
-    "Rafts",
-    "Forms"
-  ];
+  const headers: string[] = ["Ships", "Rafts", "Forms"];
 
   const contents: ReactNode[] = [
     <Table
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={5}
-          rowSelectionModel={rowSelectionModel}
-          onRowSelectionModelChange={(newRowSelectionModel: any) => {
-            setRowSelectionModel(newRowSelectionModel);
-          }}
+      rows={rows}
+      columns={columns}
+      pageSize={5}
+      rowsPerPageOptions={5}
+      rowSelectionModel={rowSelectionModel}
+      onRowSelectionModelChange={(newRowSelectionModel: any) => {
+        setRowSelectionModel(newRowSelectionModel);
+      }}
     />,
-    <RaftContent id={router.query.id}/>,
-    <GetFormsContent/>
-  ]
+    <RaftContent id={router.query.id} />,
+    <GetFormsContent />,
+  ];
 
   return (
     <>
       <main className={styles.container}>
         <Loader status={isLoading} />
-        
-        <Breadcrumb path={breadcrumbPath} />
-        
-        <CompanyDetail id={props.id} refetchShips={() => refetch()}/>
 
-        <Tabs headers={headers} contents={contents}/>
-      
+        <Breadcrumb path={breadcrumbPath} />
+
+        <CompanyDetail id={props.id} refetchShips={() => refetch()} />
+
+        <Tabs headers={headers} contents={contents} />
       </main>
       <SToast
         text={successToastStatus.message}
@@ -236,7 +237,10 @@ export default function ShipContent(props:{id: string}) {
         }}
       />
       <Popup displayStatus={modalStatus} close={modalToggleHandler}>
-        <AddShipContent companyId={router.query?.id} close={modalToggleHandler} />
+        <AddShipContent
+          companyId={router.query?.id}
+          close={modalToggleHandler}
+        />
       </Popup>
 
       <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>

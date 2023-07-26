@@ -3,30 +3,32 @@ import { RootState } from "../store";
 
 export interface ShipActive {
   companyId: string;
-  loading:boolean;
+  loading: boolean;
 }
 
 const defaultType: ShipActive = {
   companyId: "",
-  loading: false
-}
+  loading: false,
+};
 
 interface ShipState {
-  shipActive: ShipActive ;
-};
+  shipActive: ShipActive;
+}
 
 const slice = createSlice({
   name: "ship",
   initialState: {
-    shipActive: defaultType
+    shipActive: defaultType,
   } as ShipState,
   reducers: {
     setShipActive: (state, action: PayloadAction<ShipState>) => {
-      state.shipActive = action.payload.shipActive
+      state.shipActive = action.payload.shipActive;
     },
   },
 });
 
 export const { setShipActive } = slice.actions;
 export default slice.reducer;
-export const selectShipActive: any = (state: RootState) => { return state.ship.shipActive };
+export const selectShipActive: any = (state: RootState) => {
+  return state.ship.shipActive;
+};

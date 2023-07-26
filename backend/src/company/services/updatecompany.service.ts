@@ -19,12 +19,12 @@ export default class UpdateCompanyService implements IService<Request, Response>
             const { id } = req.params;
 
             const { user } = req.body;
-
+          
             const updateCompany = await this.companyRepository.updateData({_id: id}, req.body);
 
             await this.logRepository.addData({
-                description: `${user.email} updated ${updateCompany.name} details`,
-                user: user._id
+                description: `${user.email} updated Company (${updateCompany.name}) details`,
+                user: user.id
             });
 
             this.httpHelper.Response({

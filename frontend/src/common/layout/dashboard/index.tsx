@@ -11,10 +11,8 @@ export default function DashboardLayout({ children }: IDashboardLayout) {
   return (
     <>
       <section className={styles.container}>
-       
-          <Sidebar />
-      
-       
+        <Sidebar />
+
         <div className={styles.main}>
           <Navbar />
           <div className={styles.content}>{children}</div>

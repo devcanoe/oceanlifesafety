@@ -14,15 +14,20 @@ import { Navbar } from "../clients";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
-import { UpdateCompanyContent, UpdateaccountContent } from "./modals/updateaccount";
-import { useDeleteCompanyMutation, useGetCompaniesQuery } from "@/common/services/company.service";
+import {
+  UpdateCompanyContent,
+  UpdateaccountContent,
+} from "./modals/updateaccount";
+import {
+  useDeleteCompanyMutation,
+  useGetCompaniesQuery,
+} from "@/common/services/company.service";
 import Company from "@/common/model/company.model";
 import AddCompanyContent from "./modals/addcompany";
 import { useAppDispatch } from "@/common/lib/hooks";
 
 export default function CompanyContent() {
-
-  const [ id, setId ] = useState<string | undefined>()
+  const [id, setId] = useState<string | undefined>();
 
   const { data, isLoading, isSuccess, isError, refetch } =
     useGetCompaniesQuery();
@@ -30,10 +35,9 @@ export default function CompanyContent() {
   const [deleteCompany, { isLoading: deleteCompanyLoading }] =
     useDeleteCompanyMutation();
 
-
   let rows: any[] = [];
 
-  console.log(isSuccess && data)
+  console.log(isSuccess && data);
 
   !isLoading &&
     data?.data.map((company: Company) => {
@@ -47,7 +51,7 @@ export default function CompanyContent() {
   const [rowSelectionModel, setRowSelectionModel] =
     useState<GridRowSelectionModel>([]);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
-  
+
   const [updateModalStatus, setUpdateModalStatus] = useState<boolean>(false);
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
@@ -115,8 +119,13 @@ export default function CompanyContent() {
       type: "actions",
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
-          <Link href={`/company/${params.id}`} className={styles.link} style={{ marginRight: '10px' }}>
-              <Icon icon="ic:baseline-remove-red-eye" />View
+          <Link
+            href={`/company/${params.id}`}
+            className={styles.link}
+            style={{ marginRight: "10px" }}
+          >
+            <Icon icon="ic:baseline-remove-red-eye" />
+            View
           </Link>
           <Link
             href={`#`}
@@ -144,8 +153,6 @@ export default function CompanyContent() {
       width: 300,
     },
   ];
-
-
 
   return (
     <>

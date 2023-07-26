@@ -33,7 +33,6 @@ export default class DeleteRaftService implements IService<Request, Response> {
                 res,
                 status: "success",
                 message: "Successfully deleted raft",
-               
             })
 
         }catch(err: any){

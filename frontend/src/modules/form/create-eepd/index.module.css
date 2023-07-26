@@ -1,37 +1,37 @@
 .container {
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .buttoncontainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.formcontainer{
-    display: grid;
-    grid-template-columns: auto 150px ;
-    gap: 10px;
-    border: 1px solid grey;
-    padding: 10px;
-    border-radius: 10px;
+.formcontainer {
+  display: grid;
+  grid-template-columns: auto 150px;
+  gap: 10px;
+  border: 1px solid grey;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.main{
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    gap: 10px;
+.main {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 10px;
 }
 
 .main .input {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }

@@ -46,6 +46,7 @@ export default class LoginService implements IService<Request, Response> {
             //generate user token for authorization
             const userdetails = {
                 firstname: user.firstname,
+                email: user.email,
                 id: user._id,
             }
     

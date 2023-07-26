@@ -12,23 +12,25 @@ import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
 import Ship from "@/common/model/ship.model";
-import { useDeleteRaftMutation, useGetAllRaftsQuery } from "@/common/services/raft.service";
+import {
+  useDeleteRaftMutation,
+  useGetAllRaftsQuery,
+} from "@/common/services/raft.service";
 import Raft from "@/common/model/raft.model";
 
-export default function RaftContent(props:{id: string}) {
-
+export default function RaftContent(props: { id: string }) {
   const router = useRouter();
 
-  const { data, isLoading, isSuccess, isError, refetch } =
-    useGetAllRaftsQuery({id: props.id});
+  const { data, isLoading, isSuccess, isError, refetch } = useGetAllRaftsQuery({
+    id: props.id,
+  });
 
   const [deleteRaft, { isLoading: deleteShipLoading }] =
     useDeleteRaftMutation();
 
-
   let rows: any[] = [];
- console.log(isSuccess && data.data);
- 
+  console.log(isSuccess && data.data);
+
   isSuccess &&
     data?.data.map((raft: Raft) => {
       rows.push({
@@ -94,8 +96,12 @@ export default function RaftContent(props:{id: string}) {
       type: "actions",
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
-          <Link href={`/company/${params.id}`} className={styles.link} style={{ marginRight: '10px' }}>
-              <Icon icon="ic:baseline-remove-red-eye" />    View
+          <Link
+            href={`/company/${params.id}`}
+            className={styles.link}
+            style={{ marginRight: "10px" }}
+          >
+            <Icon icon="ic:baseline-remove-red-eye" /> View
           </Link>
           <Link
             href={`#`}
@@ -127,14 +133,14 @@ export default function RaftContent(props:{id: string}) {
   return (
     <>
       <Table
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={5}
-          rowSelectionModel={rowSelectionModel}
-          onRowSelectionModelChange={(newRowSelectionModel: any) => {
-            setRowSelectionModel(newRowSelectionModel);
-          }}
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={5}
+        rowSelectionModel={rowSelectionModel}
+        onRowSelectionModelChange={(newRowSelectionModel: any) => {
+          setRowSelectionModel(newRowSelectionModel);
+        }}
       />
       <SToast
         text={successToastStatus.message}

@@ -1,5 +1,5 @@
 export default interface Base {
-    _id?: string;
-    created_at?: Date,
-    updated_at?: Date
+  _id?: string;
+  created_at?: Date;
+  updated_at?: Date;
 }

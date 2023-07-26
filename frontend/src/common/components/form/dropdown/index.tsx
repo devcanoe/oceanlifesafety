@@ -32,7 +32,7 @@ export default function Dropdown(props: IDropdown) {
 
   return (
     <>
-     <div className={styles.maincontainer}>
+      <div className={styles.maincontainer}>
         <small>{props.label}</small>
         <select
           name={props.name}
@@ -45,10 +45,10 @@ export default function Dropdown(props: IDropdown) {
           <option>{props.label}</option>
           {options}
         </select>
-      {props.error && (
-        <small className={styles.error}>{props.helperText}</small>
-      )}
-    </div>
+        {props.error && (
+          <small className={styles.error}>{props.helperText}</small>
+        )}
+      </div>
     </>
   );
 }

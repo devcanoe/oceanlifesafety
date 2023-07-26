@@ -17,15 +17,15 @@ import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
 
 interface IGenerate {
-  refetch: () => void,
-  state?: boolean,
+  refetch: () => void;
+  state?: boolean;
 }
 
 export default function GenerateInvoiceContent(props: IGenerate) {
   return (
     <>
       <section>
-        <InvoiceRow refetch={props.refetch} status={true}/>
+        <InvoiceRow refetch={props.refetch} status={true} />
       </section>
     </>
   );
@@ -37,7 +37,6 @@ interface IInvoiceRow {
   price: number;
   total?: number;
 }
-
 
 export function InvoiceRow(props: IGenerate) {
   const router = useRouter();
@@ -63,7 +62,7 @@ export function InvoiceRow(props: IGenerate) {
     refetch,
   } = useFetchOneInvoiceQuery({ id: router.query.id });
 
-  console.log(isSuccess && data)
+  console.log(isSuccess && data);
 
   const [deleteInvoiceMutation, { isLoading: deleteInvoice }] =
     useDeleteInvoiceMutation();
@@ -147,7 +146,7 @@ export function InvoiceRow(props: IGenerate) {
 
   const generateInvoice = () => {
     generateInvoiceMutation({
-      items: rows
+      items: rows,
     })
       .then((res: any) => {
         if (res.data.status === "success") {
@@ -158,7 +157,7 @@ export function InvoiceRow(props: IGenerate) {
             status: true,
           });
           setRows([]);
-          props.refetch()
+          props.refetch();
         } else {
           errorToastHandler({
             message: res.data.message,
@@ -324,7 +323,7 @@ export function InvoiceRow(props: IGenerate) {
             </header>
             <div>
               {data.data?.items.map((record: InvoiceItem, index: any) => {
-                console.log(record)
+                console.log(record);
                 const sub_total = record.price * record.quantity;
                 total_amount += sub_total;
                 return (
@@ -366,8 +365,10 @@ export function InvoiceRow(props: IGenerate) {
           )}
           {tab === "" && (
             <>
-            {props.status === false && (<Button label={"View Invoice"} onClick={viewInvoice} />)}
-              
+              {props.status === false && (
+                <Button label={"View Invoice"} onClick={viewInvoice} />
+              )}
+
               <Button label={"Generate Invoice"} onClick={generateInvoice} />
             </>
           )}

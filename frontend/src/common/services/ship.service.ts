@@ -14,8 +14,11 @@ export const shipEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
-    updateShip: build.mutation<IResponse<Ship>, {id: string | undefined, body: Ship}>({
-      query: ({id, body}) => ({
+    updateShip: build.mutation<
+      IResponse<Ship>,
+      { id: string | undefined; body: Ship }
+    >({
+      query: ({ id, body }) => ({
         url: `${baseUrl}/${id}`,
         method: "PATCH",
         body,
@@ -28,10 +31,10 @@ export const shipEndpoint = sungloApi.injectEndpoints({
       }),
     }),
     getAllShips: build.query<IResponse<Ship[]>, { id: string | undefined }>({
-      query: ({id}) => `${baseUrl}/company/${id}`,
+      query: ({ id }) => `${baseUrl}/company/${id}`,
     }),
     getShip: build.query<IResponse<Ship>, { id: string | undefined }>({
-      query: ({id}) => `${baseUrl}/${id}`,
+      query: ({ id }) => `${baseUrl}/${id}`,
     }),
   }),
 });
@@ -41,5 +44,5 @@ export const {
   useDeleteShipMutation,
   useUpdateShipMutation,
   useGetAllShipsQuery,
-  useGetShipQuery
+  useGetShipQuery,
 } = shipEndpoint;

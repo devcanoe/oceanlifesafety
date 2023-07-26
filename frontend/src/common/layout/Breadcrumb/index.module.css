@@ -1,16 +1,15 @@
 .container {
-    padding: 10px 0px;
-    display: flex;;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
+  padding: 10px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
 .listcontainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
 }
-

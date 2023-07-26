@@ -13,7 +13,10 @@ export const companyEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
-    updateCompany: build.mutation<IResponse<Company>, { id: string | undefined; body: Company }>({
+    updateCompany: build.mutation<
+      IResponse<Company>,
+      { id: string | undefined; body: Company }
+    >({
       query: ({ id, body }) => ({
         url: `${baseUrl}/${id}`,
         method: "PATCH",
@@ -30,7 +33,7 @@ export const companyEndpoint = sungloApi.injectEndpoints({
       query: () => `${baseUrl}`,
     }),
     getOneCompany: build.query<IResponse<Company>, { id: string | undefined }>({
-      query: ({id}) => `${baseUrl}/${id}`,
+      query: ({ id }) => `${baseUrl}/${id}`,
     }),
   }),
 });
@@ -40,5 +43,5 @@ export const {
   useUpdateCompanyMutation,
   useDeleteCompanyMutation,
   useGetCompaniesQuery,
-  useGetOneCompanyQuery
+  useGetOneCompanyQuery,
 } = companyEndpoint;
