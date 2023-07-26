@@ -36,6 +36,9 @@ export default function RaftContent(props: { id: string }) {
       rows.push({
         id: raft._id,
         serial_no: `${raft.serial_no}`,
+        cert_no: `${raft.cert_no}`,
+        capacity: raft.capacity,
+        last_service_date: raft.last_service_date
       });
     });
 
@@ -90,6 +93,9 @@ export default function RaftContent(props: { id: string }) {
 
   const columns: GridColDef[] = [
     { field: "serial_no", headerName: "Serial Number", width: 130 },
+    { field: "cert_no", headerName: "Cert No", width: 130 },
+    { field: "capacity", headerName: "Capacity", width: 130 },
+    { field: "last_service_date", headerName: "Last service date", width: 130 },
     {
       field: "action",
       headerName: "Action",
@@ -113,7 +119,7 @@ export default function RaftContent(props: { id: string }) {
           >
             <Icon icon="ph:trash-bold" /> Delete
           </Link>
-          {/* <Link
+          <Link
             href={`#`}
             className={styles.link}
             onClick={() => {
@@ -123,7 +129,7 @@ export default function RaftContent(props: { id: string }) {
           >
             <Icon icon="uil:pen" />
             Edit
-          </Link> */}
+          </Link>
         </>
       ),
       width: 300,

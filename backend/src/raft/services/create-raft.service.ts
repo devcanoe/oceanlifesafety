@@ -17,14 +17,16 @@ export default class CreateRaftService implements IService<Request, Response> {
 
     async execute(req: Request, res: Response){
         try{
-            
+            console.log(req.body)
+
             const data = await this.raftRepository.addData(req.body);
 
             await this.logRepository.addData({
-                description: `${req.body.user.email} add ${data.serial_no} raft`,
-                user: req.body.user._id
+                description: `${req.body.user.email} added ${data.serial_no} raft`,
+                user: req.body.user.id
             });
 
+            
             this.httpHelper.Response({
                 res,
                 status: "success",
