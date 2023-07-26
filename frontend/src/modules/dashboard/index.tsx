@@ -16,12 +16,13 @@ export default function DashboardContent() {
   const { data, isLoading, isSuccess } = useGetDashboardQuery();
   console.log(isSuccess && data);
   let rows: any[] = [];
-  !isLoading && data?.data.table.map((activity: any) => {
+  !isLoading &&
+    data?.data.table.map((activity: any) => {
       rows.push({
-          id: activity._id,
-          description: activity.description
-      })
-  });
+        id: activity._id,
+        description: activity.description,
+      });
+    });
 
   const [rowSelectionModel, setRowSelectionModel] =
     useState<GridRowSelectionModel>([]);

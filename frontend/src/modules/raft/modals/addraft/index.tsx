@@ -109,7 +109,7 @@ export default function AddRaftContent({ close, companyId }: IAddRaftContent) {
           }
         })
         .catch((err: any) => {
-          console.log(err.message)
+          console.log(err.message);
           errorToastHandler({
             message: err.message,
             visibility: true,
