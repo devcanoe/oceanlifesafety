@@ -24,6 +24,16 @@ export const raftEndpoint = sungloApi.injectEndpoints({
     getAllRafts: build.query<IResponse<Raft[]>, { id: string }>({
       query: ({ id }) => `${baseUrl}/${id}`,
     }),
+    getRaft: build.query<IResponse<Raft>, { id: string }>({
+      query: ({ id }) => `${baseUrl}/view/${id}`,
+    }),
+    updateRaft: build.mutation<IResponse<Raft>, { id: string, body: Raft }>({
+      query: ({ id, body }) => ({
+        url: `${baseUrl}/${id}`,
+        method: "PATCH",
+        body
+      }),
+    }),
   }),
 });
 
@@ -31,4 +41,6 @@ export const {
   useCreateRaftMutation,
   useDeleteRaftMutation,
   useGetAllRaftsQuery,
+  useUpdateRaftMutation,
+  useGetRaftQuery
 } = raftEndpoint;

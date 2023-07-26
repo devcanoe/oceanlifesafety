@@ -1,4 +1,4 @@
-import { IHandleMotion } from "@/common/components/display/popup";
+import Popup, { IHandleMotion } from "@/common/components/display/popup";
 import Table from "@/common/components/display/table";
 import { Icon } from "@iconify/react";
 import {
@@ -17,6 +17,7 @@ import {
   useGetAllRaftsQuery,
 } from "@/common/services/raft.service";
 import Raft from "@/common/model/raft.model";
+import { UpdateRaftContent } from "./modals/updateraft";
 
 export default function RaftContent(props: { id: string }) {
   const router = useRouter();
@@ -25,11 +26,14 @@ export default function RaftContent(props: { id: string }) {
     id: props.id,
   });
 
+  const [updateModalStatus, setUpdateModalStatus] = useState<boolean>(false);
+
+  const [id, setId] = useState<string | undefined>();
+
   const [deleteRaft, { isLoading: deleteShipLoading }] =
     useDeleteRaftMutation();
 
   let rows: any[] = [];
-  console.log(isSuccess && data.data);
 
   isSuccess &&
     data?.data.map((raft: Raft) => {
@@ -70,6 +74,11 @@ export default function RaftContent(props: { id: string }) {
 
   const fetchErrorHandler = (args: IHandleMotion) => {
     setFetchErrorStatus(args);
+  };
+
+  const updateModalToggleHandler = () => {
+    setUpdateModalStatus((state) => !state);
+    refetch();
   };
 
   const deleteRaftHandler = (id: string) => {
@@ -180,6 +189,10 @@ export default function RaftContent(props: { id: string }) {
           });
         }}
       />
+
+      <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>
+        <UpdateRaftContent close={updateModalToggleHandler} id={id} />
+      </Popup>
     </>
   );
 }

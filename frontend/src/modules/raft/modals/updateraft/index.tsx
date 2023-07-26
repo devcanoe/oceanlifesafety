@@ -1,26 +1,22 @@
 import Loader from "@/common/components/display/loader";
 import Button from "@/common/components/form/button";
-import Dropdown, { Iitem } from "@/common/components/form/dropdown";
 import InputField from "@/common/components/form/inputfield";
 import styles from "./index.module.css";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import {
-  useCreateAccountMutation,
-  useGetAccountQuery,
-} from "@/common/services/company.service";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
-import { account_type } from "@/common/constants/dropdown-items";
+import Raft from "@/common/model/raft.model";
+import { useGetRaftQuery, useUpdateRaftMutation } from "@/common/services/raft.service";
 
-interface IUpdateaccountContent {
-  id: string;
+interface IUpdateRaftContent {
+  id: string | undefined;
   close: () => void;
 }
 
-export function UpdateRaftContent({ id, close }: IUpdateaccountContent) {
-  const [role, setRole] = useState<string>("");
+export function UpdateRaftContent({ id, close }: IUpdateRaftContent) {
+
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
     visibility: false,
@@ -31,6 +27,7 @@ export function UpdateRaftContent({ id, close }: IUpdateaccountContent) {
     visibility: false,
     status: false,
   });
+  const [loading, setLoading] = useState<boolean>(true);
   const successToastHandler = (args: IHandleMotion) => {
     setSuccessToastStatus(args);
   };
@@ -39,41 +36,37 @@ export function UpdateRaftContent({ id, close }: IUpdateaccountContent) {
     setErrorToastStatus(args);
   };
 
-  const { data, isLoading } = useGetAccountQuery({ id });
-
-  const [update, { isLoading: updateLoading }] = useCreateAccountMutation();
+  const { data, isLoading, isSuccess } = useGetRaftQuery({id});
+  console.log(!isLoading && data)
+  const [ updateRaft, { isLoading: raftLoading }] = useUpdateRaftMutation()
 
   const validationSchema = yup.object({
-    firstname: yup.string().required("Firstname is required"),
-    lastname: yup.string().required("Lastname is required"),
-    role: yup.string().required("Role is required"),
-    email: yup
-      .string()
-      .email("Enter a valid email")
-      .required("Email is required"),
-    phone: yup.string().required("Phone is required"),
+    serial_no: yup.string().required("Serial No is required"),
+    capacity: yup.number().required("Capacity is required"),
+    man_date: yup.date().required("Man Date is required"),
+    last_service_date: yup.date().required("Last Service Date is required"),
+    make: yup.string().required("Make is required"),
+    type: yup.string().required("Type is required"),
+    cert_no: yup.string().required("Cert No is required"),
   });
 
   const formik = useFormik({
     initialValues: {
-      firstname: !isLoading && data.data.firstname,
-      lastname: !isLoading && data.data.lastname,
-      email: !isLoading && data.data.email,
-      phone: !isLoading && data.data.phone,
-      role: !isLoading && data.data.role,
+      serial_no: "",
+      capacity: 0,
+      man_date: new Date(),
+      last_service_date: new Date(),
+      make: "",
+      type: "",
+      cert_no: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      const payload = {
-        firstname: values.firstname,
-        lastname: values.lastname,
-        email: values.email,
-        phone: values.phone,
-        role: values.role,
-      };
+    onSubmit: (values: Raft) => {
 
-      update(payload)
+      updateRaft({
+        id,
+        body: values
+      })
         .then((res: any) => {
           close();
           successToastHandler({
@@ -92,59 +85,98 @@ export function UpdateRaftContent({ id, close }: IUpdateaccountContent) {
     },
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data?.data)
+      formik.setValues({
+        serial_no: data?.data?.serial_no,
+        capacity: data?.data?.capacity,
+        man_date: data?.data?.man_date,
+        last_service_date: data?.data?.last_service_date,
+        make: data?.data?.make,
+        type: data?.data?.type,
+        cert_no: data?.data?.cert_no,
+      });
+
+      setLoading(false);
+    }
+  }, [isSuccess]);
+
   return (
     <>
-      <Loader status={isLoading} />
+      <Loader status={loading} />
       <section className={styles.container}>
-        <Dropdown
-          label={"Account type"}
-          disabled={false}
-          items={account_type}
-          name="role"
-          value={formik.values.role}
-          onChange={formik.handleChange}
-          error={formik.touched.role && Boolean(formik.errors.role)}
-          helperText={formik.touched.role && formik.errors.role}
-        />
         <InputField
+          label="Serial Number"
           type={"text"}
-          placeholder="First name"
-          name="firstname"
-          value={formik.values.firstname}
+          name="serial_no"
+          value={formik.values.serial_no}
           onChange={formik.handleChange}
-          error={formik.touched.firstname && Boolean(formik.errors.firstname)}
-          helperText={formik.touched.firstname && formik.errors.firstname}
+          error={formik.touched.serial_no && Boolean(formik.errors.serial_no)}
+          helperText={formik.touched.serial_no && formik.errors.serial_no}
         />
         <InputField
+          label="Capacity"
+          type={"number"}
+          name="capacity"
+          value={formik.values.capacity}
+          onChange={formik.handleChange}
+          error={formik.touched.capacity && Boolean(formik.errors.capacity)}
+          helperText={formik.touched.capacity && formik.errors.capacity}
+        />
+        <InputField
+          label="Man Date"
+          type={"date"}
+          name="man_date"
+          value={formik.values.man_date}
+          onChange={formik.handleChange}
+          error={formik.touched.man_date && Boolean(formik.errors.man_date)}
+          helperText={formik.touched.man_date && formik.errors.man_date}
+        />
+        <InputField
+          label="Last Service Date"
+          type={"date"}
+          name="last_service_date"
+          value={formik.values.last_service_date}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.last_service_date &&
+            Boolean(formik.errors.last_service_date)
+          }
+          helperText={
+            formik.touched.last_service_date && formik.errors.last_service_date
+          }
+        />
+        <InputField
+          label="Make"
           type={"text"}
-          placeholder="Last name"
-          name="lastname"
-          value={formik.values.lastname}
+          name="make"
+          value={formik.values.make}
           onChange={formik.handleChange}
-          error={formik.touched.lastname && Boolean(formik.errors.lastname)}
-          helperText={formik.touched.lastname && formik.errors.lastname}
+          error={formik.touched.make && Boolean(formik.errors.make)}
+          helperText={formik.touched.make && formik.errors.make}
         />
         <InputField
-          type={"email"}
-          placeholder="Email"
-          name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
-        <InputField
+          label="Type"
           type={"text"}
-          placeholder="Phone"
-          name="phone"
-          value={formik.values.phone}
+          name="type"
+          value={formik.values.type}
           onChange={formik.handleChange}
-          error={formik.touched.phone && Boolean(formik.errors.phone)}
-          helperText={formik.touched.phone && formik.errors.phone}
+          error={formik.touched.type && Boolean(formik.errors.type)}
+          helperText={formik.touched.type && formik.errors.type}
+        />
+        <InputField
+          label="Cert No"
+          type={"text"}
+          name="cert_no"
+          value={formik.values.cert_no}
+          onChange={formik.handleChange}
+          error={formik.touched.cert_no && Boolean(formik.errors.cert_no)}
+          helperText={formik.touched.cert_no && formik.errors.cert_no}
         />
         <Button
-          isLoading={updateLoading}
-          label={"Update Account"}
+          isLoading={raftLoading}
+          label={"Update Raft"}
           onClick={formik.handleSubmit}
         />
       </section>
