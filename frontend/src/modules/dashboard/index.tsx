@@ -21,6 +21,7 @@ export default function DashboardContent() {
       rows.push({
         id: activity._id,
         description: activity.description,
+        created_at: activity.created_at
       });
     });
 
@@ -28,24 +29,8 @@ export default function DashboardContent() {
     useState<GridRowSelectionModel>([]);
 
   const columns: GridColDef[] = [
-    { field: "description", headerName: "Description", width: 530 },
-    {
-      field: "action",
-      headerName: "Action",
-      type: "actions",
-      renderCell: (params: GridRenderCellParams<Date>) => (
-        <>
-          <Link
-            href={`/tickets/${params.id}`}
-            className={styles.link}
-            style={{ marginRight: "10px" }}
-          >
-            <Icon icon="ic:baseline-remove-red-eye" /> View
-          </Link>
-        </>
-      ),
-      width: 300,
-    },
+    { field: "description", headerName: "Description", width: 630 },
+    { field: "created_at", headerName: "Created Date", width: 530 },
   ];
 
   return (
