@@ -6,6 +6,9 @@
   "scripts": {
     "serve": "node src/index.ts",
     "dev:start": "nodemon src/index.ts",
+    "docker:start": "docker-compose up -d",
+    "docker:stop": "docker-compose down",
+    "docker:build": "docker-compose build --no-cache --pull",
     "test": "jest"
   },
   "keywords": [],
