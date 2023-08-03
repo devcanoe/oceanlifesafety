@@ -240,7 +240,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"text"}
                       value={row.serial_no}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].serial_no = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -248,7 +254,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"text"}
                       value={row.make}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].make = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -256,7 +268,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"text"}
                       value={row.location}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].location = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -264,7 +282,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"date"}
                       value={row.date_hyd_tested}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].date_hyd_tested = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -272,7 +296,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"text"}
                       value={row.cylinder_condition}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].cylinder_condition = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -280,7 +310,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"text"}
                       value={row.testing_bar}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].testing_bar = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -288,7 +324,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"text"}
                       value={row.refiling_bar}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].refiling_bar = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -296,7 +338,13 @@ export default function CreateBACLContent(props: ICreateBACL) {
                     <InputField
                       type={"text"}
                       value={row.remark}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].remark = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                 </div>

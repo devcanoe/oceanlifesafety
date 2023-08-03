@@ -241,7 +241,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"text"}
                       value={row.serial_no}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].serial_no = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -249,7 +255,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"text"}
                       value={row.make}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].make = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -257,7 +269,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"text"}
                       value={row.location}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].location = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -265,7 +283,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"date"}
                       value={row.date_hyd_tested}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].date_hyd_tested = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -273,7 +297,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"text"}
                       value={row.cylinder_condition}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].cylinder_condition = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -281,7 +311,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"text"}
                       value={row.type}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].type = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -289,7 +325,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"text"}
                       value={row.kg}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].kg = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                   <div className={styles.input}>
@@ -297,7 +339,13 @@ export default function CreatePFECLContent(props: ICreatePFECL) {
                     <InputField
                       type={"text"}
                       value={row.remark}
-                      onChange={(e: any) => {}}
+                      onChange={(e: any) => {
+                        let data: FormColumn[] = [...rows];
+
+                        data[index].remark = e.target.value;
+
+                        setRows(() => data);
+                      }}
                     />
                   </div>
                 </div>
