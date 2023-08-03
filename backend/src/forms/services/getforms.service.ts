@@ -6,7 +6,7 @@ import IService from "../../common/interfaces/service.interface";
 
 
 @injectable()
-export default class GetFormService implements IService<Request, Response> {
+export default class GetFormsService implements IService<Request, Response> {
     constructor(
         private httpHelper: Http,
         private formRepository: FormRepository

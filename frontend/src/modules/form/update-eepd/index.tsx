@@ -16,11 +16,12 @@ import SToast from "@/common/components/display/toast/toast";
 import { IHandleMotion } from "@/common/components/display/popup";
 import { useRouter } from "next/router";
 
-interface ICreateEEPD {
+interface IUpdateEEPD {
   companyId: string;
+  formId?: string
 }
 
-export default function CreateEEPDContent(props: ICreateEEPD) {
+export default function UpdateEEPDContent(props: IUpdateEEPD) {
   const [rows, setRows] = useState<FormColumn[]>([]);
   const [serialNo, setSerialNo] = useState<string>();
   const [make, setMake] = useState<string>();
@@ -52,6 +53,12 @@ export default function CreateEEPDContent(props: ICreateEEPD) {
   const { data, isLoading, isSuccess } = useGetAllShipsQuery({
     id: props.companyId,
   });
+
+  const { data: formData, isLoading: formLoading } = useGetFormQuery({
+    id: props.formId,
+  });
+
+  console.log(!isLoading && formData);
 
   let shipArray: Iitem[] = [];
 

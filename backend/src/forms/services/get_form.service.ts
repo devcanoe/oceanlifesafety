@@ -17,7 +17,7 @@ export default class GetFormService implements IService<Request, Response>{
         try{
 
             const { id } = req.params;
-
+            console.log(id)
             const data = await this.formRepository.fetchOneData({_id: id});
             
             this.httpHelper.Response({

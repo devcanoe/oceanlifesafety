@@ -9,7 +9,8 @@ const formController = container.resolve(FormController);
 formRouter.post('/create-eepd', userAuth, (req, res)=>formController.createEEBD(req, res));
 formRouter.post('/create-bacl', userAuth, (req, res)=>formController.createBACL(req, res));
 formRouter.post('/create-pfecl', userAuth, (req, res)=>formController.createPFECL(req, res));
-formRouter.get('/:company', userAuth, (req, res)=>formController.getForms(req, res));
+formRouter.get('/company/:company', userAuth, (req, res)=>formController.getForms(req, res));
+formRouter.get('/one/:id', userAuth, (req, res)=>formController.getForm(req, res));
 formRouter.delete('/:id', userAuth, (req, res)=>formController.deleteForm(req, res));
 
 export default formRouter;

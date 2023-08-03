@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 import CreateEEPDService from "../services/create_eepd.service";
 import CreateBACLService from "../services/create-bacl.service";
 import CreatePFECLService from "../services/create-pfecl.service";
-import GetFormService from "../services/getforms.service";
+import GetFormsService from "../services/getforms.service";
 import DeleteFormService from "../services/delete-form.service";
+import GetFormService from "../services/get_form.service";
 
 @injectable()
 export default class FormController {
@@ -12,7 +13,8 @@ export default class FormController {
         private createEEPDService: CreateEEPDService,
         private createBACLService: CreateBACLService,
         private createPFECLService: CreatePFECLService,
-        private getFormsService: GetFormService,
+        private getFormsService: GetFormsService,
+        private getFormService: GetFormService,
         private deleteFormService: DeleteFormService
     ){}
 
@@ -30,6 +32,10 @@ export default class FormController {
 
     async getForms(req: Request, res: Response){
         await this.getFormsService.execute(req, res);
+    }
+
+    async getForm(req: Request, res: Response){
+        await this.getFormService.execute(req, res);
     }
 
     async deleteForm(req: Request, res: Response){

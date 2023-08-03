@@ -29,8 +29,11 @@ export const formEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
-    getForms: build.query<IResponse<Form>, { id: string }>({
-      query: ({ id }) => `${BASE_URL}/${id}`,
+    getForms: build.query<IResponse<Form>, { id: string | undefined }>({
+      query: ({ id }) => `${BASE_URL}/company/${id}`,
+    }),
+    getForm: build.query<IResponse<Form>, { id: string | undefined }>({
+      query: ({ id }) => `${BASE_URL}/one/${id}`,
     }),
     deleteForm: build.mutation<IResponse<any>, { id: string }>({
       query: ({ id }) => ({
@@ -46,5 +49,6 @@ export const {
   useCreateBACLMutation,
   useCreatePFECLMutation,
   useGetFormsQuery,
+  useGetFormQuery,
   useDeleteFormMutation,
 } = formEndpoint;
