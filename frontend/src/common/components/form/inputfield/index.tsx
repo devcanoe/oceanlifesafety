@@ -2,7 +2,7 @@ import styles from "./index.module.css";
 
 interface IInputfield {
   placeholder?: string;
-  value?: string | number;
+  value?: string | number ;
   disabled?: boolean;
   label?: string;
   name?: string;

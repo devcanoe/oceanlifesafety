@@ -2,7 +2,7 @@ import Breadcrumb from "@/common/layout/Breadcrumb";
 import styles from "./index.module.css";
 import Dropdown, { Iitem } from "@/common/components/form/dropdown";
 import InputField from "@/common/components/form/inputfield";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormColumn from "@/common/model/form_columns.model";
 import Button from "@/common/components/form/button";
 import * as yup from "yup";
@@ -54,11 +54,11 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     id: props.companyId,
   });
 
-  const { data: formData, isLoading: formLoading } = useGetFormQuery({
+  const { data: formData, isLoading: formLoading, isSuccess: formSuccess   } = useGetFormQuery({
     id: props.formId,
   });
 
-  console.log(!isLoading && formData);
+  console.log(!formLoading && formData);
 
   let shipArray: Iitem[] = [];
 
@@ -121,14 +121,12 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     initialValues: {
       ship: "",
       location_of_vessel: "",
-      service_date: new Date(),
+      service_date: new Date().toISOString().split('T')[0],
       flag_state: "",
-      last_service_date: new Date(),
+      last_service_date: new Date().toISOString().split('T')[0],
     },
     validationSchema: validationSchema,
     onSubmit: (values: Form) => {
-      console.log(rows);
-
       createEEPD({
         ...values,
         specifications: rows,
@@ -160,6 +158,19 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
         });
     },
   });
+
+  useEffect(()=>{
+    if(formSuccess){
+      setRows(formData?.data?.specifications);
+      formik.setValues({
+        ship: formData?.data?.ship,
+        location_of_vessel: formData?.data?.location_of_vessel,
+        service_date: formData?.data?.service_date,
+        flag_state: formData?.data?.flag_state,
+        last_service_date: formData?.data?.last_service_date,
+      })
+    }
+  },[formSuccess])
 
   return (
     <>
