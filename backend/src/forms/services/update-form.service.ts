@@ -30,7 +30,7 @@ export default class UpdateFormService implements IService<Request, Response>{
                 specifications,
                 user
             } = req.body;
-            console.log(req.body)
+       
             const data = await this.formRepository.updateData({_id: id}, {
                 company,
                 ship,

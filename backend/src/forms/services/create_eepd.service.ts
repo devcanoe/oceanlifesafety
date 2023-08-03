@@ -39,7 +39,7 @@ export default class CreateEEPDService implements IService<Request, Response>{
 
             await this.logRepository.addData({
                 description: `${user.email} created eepd form`,
-                user: user._id
+                user: user.id
             });
             
             this.httpHelper.Response({
