@@ -21,7 +21,7 @@ export default function DashboardContent() {
       rows.push({
         id: activity._id,
         description: activity.description,
-        created_at: activity.created_at
+        created_at: activity.created_at,
       });
     });
 

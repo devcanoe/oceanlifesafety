@@ -42,7 +42,7 @@ export default function RaftContent(props: { id: string }) {
         serial_no: `${raft.serial_no}`,
         cert_no: `${raft.cert_no}`,
         capacity: raft.capacity,
-        last_service_date: raft.last_service_date
+        last_service_date: raft.last_service_date,
       });
     });
 

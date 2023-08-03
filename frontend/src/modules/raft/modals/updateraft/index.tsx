@@ -8,7 +8,10 @@ import { useEffect, useState } from "react";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import Raft from "@/common/model/raft.model";
-import { useGetRaftQuery, useUpdateRaftMutation } from "@/common/services/raft.service";
+import {
+  useGetRaftQuery,
+  useUpdateRaftMutation,
+} from "@/common/services/raft.service";
 
 interface IUpdateRaftContent {
   id: string | undefined;
@@ -16,7 +19,6 @@ interface IUpdateRaftContent {
 }
 
 export function UpdateRaftContent({ id, close }: IUpdateRaftContent) {
-
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
     visibility: false,
@@ -36,9 +38,9 @@ export function UpdateRaftContent({ id, close }: IUpdateRaftContent) {
     setErrorToastStatus(args);
   };
 
-  const { data, isLoading, isSuccess } = useGetRaftQuery({id});
-  console.log(!isLoading && data)
-  const [ updateRaft, { isLoading: raftLoading }] = useUpdateRaftMutation()
+  const { data, isLoading, isSuccess } = useGetRaftQuery({ id });
+  console.log(!isLoading && data);
+  const [updateRaft, { isLoading: raftLoading }] = useUpdateRaftMutation();
 
   const validationSchema = yup.object({
     serial_no: yup.string().required("Serial No is required"),
@@ -62,10 +64,9 @@ export function UpdateRaftContent({ id, close }: IUpdateRaftContent) {
     },
     validationSchema: validationSchema,
     onSubmit: (values: Raft) => {
-
       updateRaft({
         id,
-        body: values
+        body: values,
       })
         .then((res: any) => {
           close();
@@ -87,7 +88,7 @@ export function UpdateRaftContent({ id, close }: IUpdateRaftContent) {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data?.data)
+      console.log(data?.data);
       formik.setValues({
         serial_no: data?.data?.serial_no,
         capacity: data?.data?.capacity,
