@@ -25,7 +25,7 @@ export default class CreateEEPDService implements IService<Request, Response>{
                 specifications,
                 user
             } = req.body;
-
+            console.log(specifications)
             const createForm = await this.formRepository.addData({
                 company,
                 ship,
@@ -33,11 +33,8 @@ export default class CreateEEPDService implements IService<Request, Response>{
                 service_date,
                 flag_state,
                 last_service_date,
-                type: "EEBD"
-            });
-
-            specifications.map((specification: FormColumn)=>{
-                createForm.specifications?.push(specification)
+                type: "EEBD",
+                specifications
             });
 
             await this.logRepository.addData({
