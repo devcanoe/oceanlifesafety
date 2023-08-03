@@ -33,11 +33,8 @@ export default class CreateBACLService implements IService<Request, Response>{
                 service_date,
                 flag_state,
                 last_service_date,
+                specifications,
                 type: "BACL"
-            });
-
-            specifications.map((specification: FormColumn)=>{
-                createForm.specifications?.push(specification)
             });
 
             await this.logRepository.addData({
