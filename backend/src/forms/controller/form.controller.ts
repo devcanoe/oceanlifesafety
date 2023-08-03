@@ -6,6 +6,7 @@ import CreatePFECLService from "../services/create-pfecl.service";
 import GetFormsService from "../services/getforms.service";
 import DeleteFormService from "../services/delete-form.service";
 import GetFormService from "../services/get_form.service";
+import UpdateFormService from "../services/update-form.service";
 
 @injectable()
 export default class FormController {
@@ -15,7 +16,8 @@ export default class FormController {
         private createPFECLService: CreatePFECLService,
         private getFormsService: GetFormsService,
         private getFormService: GetFormService,
-        private deleteFormService: DeleteFormService
+        private deleteFormService: DeleteFormService,
+        private updateFormService: UpdateFormService
     ){}
 
     async createEEBD(req: Request, res: Response){
@@ -40,5 +42,9 @@ export default class FormController {
 
     async deleteForm(req: Request, res: Response){
         await this.deleteFormService.execute(req, res);
+    }
+
+    async updateForm(req: Request, res: Response){
+        await this.updateFormService.execute(req, res);
     }
 }

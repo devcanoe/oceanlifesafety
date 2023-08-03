@@ -11,7 +11,7 @@ import Form from "@/common/model/form.model";
 import { useGetAllShipsQuery } from "@/common/services/ship.service";
 import Loader from "@/common/components/display/loader";
 import Ship from "@/common/model/ship.model";
-import { useCreateEEPDMutation, useGetFormQuery } from "@/common/services/form.service";
+import { useCreateEEPDMutation, useGetFormQuery, useUpdateFormMutation } from "@/common/services/form.service";
 import SToast from "@/common/components/display/toast/toast";
 import { IHandleMotion } from "@/common/components/display/popup";
 import { useRouter } from "next/router";
@@ -117,6 +117,8 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
 
   const [createEEPD, { isLoading: eepdLoading }] = useCreateEEPDMutation();
 
+  const [updateForm, { isLoading: formUpdateLoading }] = useUpdateFormMutation()
+
   const formik = useFormik({
     initialValues: {
       ship: "",
@@ -127,10 +129,9 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     },
     validationSchema: validationSchema,
     onSubmit: (values: Form) => {
-      createEEPD({
-        ...values,
-        specifications: rows,
-        company: props.companyId,
+      updateForm({
+        id: props.formId,
+        body: values
       })
         .then((res: any) => {
           if (res.data.status === "success") {

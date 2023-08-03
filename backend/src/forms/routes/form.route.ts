@@ -12,5 +12,6 @@ formRouter.post('/create-pfecl', userAuth, (req, res)=>formController.createPFEC
 formRouter.get('/company/:company', userAuth, (req, res)=>formController.getForms(req, res));
 formRouter.get('/one/:id', userAuth, (req, res)=>formController.getForm(req, res));
 formRouter.delete('/:id', userAuth, (req, res)=>formController.deleteForm(req, res));
+formRouter.patch('/:id', userAuth, (req, res)=>formController.updateForm(req, res));
 
 export default formRouter;

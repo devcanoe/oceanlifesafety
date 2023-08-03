@@ -41,6 +41,13 @@ export const formEndpoint = sungloApi.injectEndpoints({
         method: "DELETE",
       }),
     }),
+    updateForm: build.mutation<IResponse<any>, { id: string, body: Form}>({
+      query: ({ id, body}) => ({
+        url: `${BASE_URL}/${id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -51,4 +58,5 @@ export const {
   useGetFormsQuery,
   useGetFormQuery,
   useDeleteFormMutation,
+  useUpdateFormMutation
 } = formEndpoint;
