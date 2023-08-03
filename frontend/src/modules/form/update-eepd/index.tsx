@@ -115,8 +115,6 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     last_service_date: yup.date().required("Last service date is required"),
   });
 
-  const [createEEPD, { isLoading: eepdLoading }] = useCreateEEPDMutation();
-
   const [updateForm, { isLoading: formUpdateLoading }] = useUpdateFormMutation()
 
   const formik = useFormik({
@@ -131,7 +129,10 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     onSubmit: (values: Form) => {
       updateForm({
         id: props.formId,
-        body: values
+        body: {
+          ...values,
+          specifications: rows
+        }
       })
         .then((res: any) => {
           if (res.data.status === "success") {
@@ -479,7 +480,7 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
         <div>
           <Button
             label="Submit"
-            isLoading={eepdLoading}
+            isLoading={formUpdateLoading}
             onClick={formik.handleSubmit}
           />
         </div>
