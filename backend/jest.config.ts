@@ -2,9 +2,8 @@ import type {Config} from '@jest/types';
 
 // Sync object
 const config: Config.InitialOptions = {
-  verbose: true,
-  roots: ["<rootDir>/src/", "<rootDir>/__tests__/"],
-  coverageDirectory: '__tests__',
+  preset:"ts-jest",
+  rootDir: '.',
   transform: {
   "^.+\\.ts?$": "ts-jest",
   },

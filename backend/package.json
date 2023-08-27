@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "serve": "node src/index.ts",
+    "build": "tsc",
     "dev:start": "nodemon src/index.ts",
     "docker:start": "docker-compose up -d",
     "docker:stop": "docker-compose down",
