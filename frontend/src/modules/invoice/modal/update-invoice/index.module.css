@@ -1,0 +1,36 @@
+.container,
+.contentcontainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.container {
+  margin-bottom: 10px;
+}
+
+.contentcontainer {
+  border-bottom: 2px solid grey;
+  padding: 10px 0px;
+}
+
+.part {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.submitbtncontainer,
+.totalcontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.totalcontainer {
+  padding: 10px 0px;
+}

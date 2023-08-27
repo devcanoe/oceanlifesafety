@@ -17,15 +17,22 @@ import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
 
 interface IGenerate {
-  refetch: () => void;
-  state?: boolean;
+  invoiceId: string | undefined
 }
 
-export default function GenerateInvoiceContent(props: IGenerate) {
+export default function UpdateInvoiceContent(props: IGenerate) {
+  const {
+    data,
+    isLoading: invoiceLoading,
+    isSuccess,
+    refetch,
+  } = useFetchOneInvoiceQuery({ id: props.invoiceId });
   return (
     <>
       <section>
-        <InvoiceRow refetch={props.refetch} status={true} />
+        {isSuccess &&
+        <InvoiceRow data={data?.data?.items}  />
+        }
       </section>
     </>
   );
@@ -38,9 +45,9 @@ interface IInvoiceRow {
   total?: number;
 }
 
-export function InvoiceRow(props: IGenerate) {
+export function InvoiceRow(props: { data: any}) {
   const router = useRouter();
-  const [rows, setRows] = useState<IInvoiceRow[]>([]);
+  const [rows, setRows] = useState<IInvoiceRow[]>(props.data);
   const [tab, setTab] = useState<"CREATE" | "VIEW" | "">("");
 
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
@@ -55,14 +62,6 @@ export function InvoiceRow(props: IGenerate) {
   });
 
   const [generateInvoiceMutation, { isLoading }] = useGenerateInvoiceMutation();
-  const {
-    data,
-    isLoading: invoiceLoading,
-    isSuccess,
-    refetch,
-  } = useFetchOneInvoiceQuery({ id: router.query.id });
-
-  console.log(isSuccess && data);
 
   const [deleteInvoiceMutation, { isLoading: deleteInvoice }] =
     useDeleteInvoiceMutation();
@@ -157,7 +156,7 @@ export function InvoiceRow(props: IGenerate) {
             status: true,
           });
           setRows([]);
-          props.refetch();
+      
         } else {
           errorToastHandler({
             message: res.data.message,
@@ -188,7 +187,7 @@ export function InvoiceRow(props: IGenerate) {
   return (
     <>
       <section>
-        {tab === "" && (
+   
           <>
             <header className={styles.container}>
               <div className={styles.part}>
@@ -215,13 +214,15 @@ export function InvoiceRow(props: IGenerate) {
                     <div className={styles.container} key={index}>
                       <div className={styles.part}>
                         <InputField
-                          type={"test"}
+                          type={"text"}
                           value={record.description}
                           onChange={(e: any) => {
+                            console.log(rows)
+                          
                             let data: IInvoiceRow[] = [...rows];
-    
+                            
                             data[index].description = e.target.value;
-    
+                            
                             setRows(() => data);
                           }}
                         />
@@ -319,77 +320,12 @@ export function InvoiceRow(props: IGenerate) {
               </div>
             </div>
           </>
-        )}
-        {tab === "VIEW" && (
-          <>
-            <header className={styles.container}>
-              <div className={styles.part}>
-                <p>Description</p>
-              </div>
-              <div className={styles.part}>
-                <p>Quantity</p>
-              </div>
-              <div className={styles.part}>
-                <p>Price($)</p>
-              </div>
-              <div className={styles.part}>
-                <p>Sub Total</p>
-              </div>
-              <div className={styles.part}>
-                <p>Action</p>
-              </div>
-            </header>
-            <div>
-              {data.data?.items.map((record: InvoiceItem, index: any) => {
-                console.log(record);
-                const sub_total = record.price * record.quantity;
-                total_amount += sub_total;
-                return (
-                  <>
-                    <div className={styles.contentcontainer} key={index}>
-                      <div className={styles.part}>{record.description}</div>
-                      <div className={styles.part}>{record.quantity}</div>
-                      <div className={styles.part}>{record.price}</div>
-                      <div className={styles.part}>{sub_total}</div>
+     
 
-                      <div className={styles.part}>
-                        <Button
-                          icon={<Icon icon="ph:trash-bold" color="white" />}
-                          onClick={() => deleteInvoiceHandler(record._id)}
-                        />
-                      </div>
-                    </div>
-                  </>
-                );
-              })}
-              <div className={styles.totalcontainer}>
-                <div>Total:</div>
-                <div>${total_amount}</div>
-              </div>
-            </div>
-          </>
-        )}
         <div className={styles.submitbtncontainer}>
-          {tab === "VIEW" && (
-            <>
-              <Button label={"Go Back"} onClick={goBack} />
-              <Button
-                icon={<Icon icon="mdi:reload" />}
-                onClick={() => {
-                  refetch();
-                }}
-              />
-            </>
-          )}
-          {tab === "" && (
-            <>
-              {props.status === false && (
-                <Button label={"View Invoice"} onClick={viewInvoice} />
-              )}
 
-              <Button label={"Generate Invoice"} onClick={generateInvoice} />
-            </>
-          )}
+           <Button label={"Generate Invoice"} onClick={generateInvoice} />
+          
         </div>
       </section>
       <SToast
