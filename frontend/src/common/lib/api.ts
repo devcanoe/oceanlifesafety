@@ -9,7 +9,7 @@ export interface BaseModel {
 
 export const sungloApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:5000/api/v2/",
+    baseUrl: `${process.env.NEXT_PUBLIC_API_HOST}`,
     prepareHeaders: (headers, { getState }) => {
       // By default, if we have a token in the state,
       const token: string = (getState() as RootState).auth.token;
