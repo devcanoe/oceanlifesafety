@@ -15,6 +15,15 @@
   background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.card .icons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .cardp {

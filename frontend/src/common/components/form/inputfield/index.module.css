@@ -8,7 +8,7 @@
 
 .input {
   border: 1px solid var(--grey);
-  border-radius: var(--s1);
+  border-radius: 6px;
   padding: 15px 10px;
 }
 

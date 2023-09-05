@@ -1,8 +1,8 @@
 /** desktop **/
 .container {
   border: none;
-  border-radius: var(--s1);
-  padding: 9px var(--s2);
+  border-radius: 6px;
+  padding: 15px var(--s2);
   background-color: var(--primary);
   color: var(--white);
   display: flex;

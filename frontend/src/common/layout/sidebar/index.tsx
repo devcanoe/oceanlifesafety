@@ -26,11 +26,7 @@ export default function Sidebar() {
         <header className={styles.sidebarheader}>
           <h4>Oceanlifesafety</h4>
         </header>
-        <div className={styles.avatarbox}>
-          <div className={styles.avatar}></div>
-          <p>{username}</p>
-          <small>{email}</small>
-        </div>
+        <div className={styles.menulist}>
         <MenuItem
           url={"/dashboard"}
           title={"Dashboard"}
@@ -42,6 +38,7 @@ export default function Sidebar() {
           title={"Invoice"}
           icon={"majesticons:tickets-line"}
         />
+        </div>
         {/* <MenuItem url={"/customers"} title={"Customers"} icon={"mdi:user"} />
         <MenuItem url={"/types"} title={"Types"} icon={"mdi:user"} /> */}
       </aside>

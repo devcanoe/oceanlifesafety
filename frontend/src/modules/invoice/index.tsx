@@ -22,8 +22,11 @@ import {
   useFetchInvoicesQuery,
 } from "@/common/services/invoice.service";
 import { Invoice } from "@/common/model/invoice.model";
+import { useRouter } from "next/router";
 
 export default function InvoiceContent() {
+  const router = useRouter();
+  
   const { data, isLoading, isSuccess, isError, refetch } =
     useFetchInvoicesQuery();
 
@@ -74,7 +77,7 @@ export default function InvoiceContent() {
   };
 
   const modalToggleHandler = () => {
-    setModalStatus((state) => !state);
+    router.push('/invoice/create')
     // refetch();
   };
 
@@ -201,9 +204,9 @@ export default function InvoiceContent() {
           });
         }}
       />
-      <Popup displayStatus={modalStatus} close={modalToggleHandler}>
+      {/* <Popup displayStatus={modalStatus} close={modalToggleHandler}>
         <GenerateInvoiceContent refetch={refetch} />
-      </Popup>
+      </Popup> */}
 
       {/* <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>
         <UpdateaccountContent close={updateModalToggleHandler} id={props.id} />

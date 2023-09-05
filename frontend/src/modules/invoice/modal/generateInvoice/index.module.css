@@ -6,6 +6,24 @@
   gap: 10px;
 }
 
+.card {
+  border-radius: 6px;
+  padding: 35px;
+  background-color: var(--white);
+}
+
+.address {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.receiver, .sender {
+  width: 30%;
+}
+
 .container {
   margin-bottom: 10px;
 }

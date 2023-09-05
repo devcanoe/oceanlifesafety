@@ -21,11 +21,11 @@ interface IGenerate {
   state?: boolean;
 }
 
-export default function GenerateInvoiceContent(props: IGenerate) {
+export default function GenerateInvoiceContent() {
   return (
     <>
       <section>
-        <InvoiceRow refetch={props.refetch} status={true} />
+        <InvoiceRow />
       </section>
     </>
   );
@@ -38,7 +38,7 @@ interface IInvoiceRow {
   total?: number;
 }
 
-export function InvoiceRow(props: IGenerate) {
+export function InvoiceRow() {
   const router = useRouter();
   const [rows, setRows] = useState<IInvoiceRow[]>([]);
   const [tab, setTab] = useState<"CREATE" | "VIEW" | "">("");
@@ -157,7 +157,6 @@ export function InvoiceRow(props: IGenerate) {
             status: true,
           });
           setRows([]);
-          props.refetch();
         } else {
           errorToastHandler({
             message: res.data.message,
@@ -187,7 +186,37 @@ export function InvoiceRow(props: IGenerate) {
 
   return (
     <>
-      <section>
+      <section className={styles.card}>
+        <div className={styles.address}>
+          <aside className={styles.receiver}>
+          <InputField
+            type={"text"}
+            placeholder="name of receiver"
+          />
+          <InputField
+            type={"text"}
+            placeholder="company of receiver"
+          />
+          <InputField
+            type={"text"}
+            placeholder="address of company"
+          />
+          </aside>
+          <aside className={styles.sender}>
+            <InputField
+              type={"text"}
+              placeholder="name of sender"
+            />
+            <InputField
+              type={"text"}
+              placeholder="company of sender"
+            />
+            <InputField
+              type={"text"}
+              placeholder="address of company"
+            />
+          </aside>
+        </div>
         {tab === "" && (
           <>
             <header className={styles.container}>
@@ -215,7 +244,7 @@ export function InvoiceRow(props: IGenerate) {
                     <div className={styles.container} key={index}>
                       <div className={styles.part}>
                         <InputField
-                          type={"test"}
+                          type={"text"}
                           value={record.description}
                           onChange={(e: any) => {
                             let data: IInvoiceRow[] = [...rows];
@@ -261,7 +290,7 @@ export function InvoiceRow(props: IGenerate) {
                       </div>
                       <div className={styles.part}>
                         <Button
-                          label={"DELETE"}
+                          icon={<Icon icon="material-symbols:delete" />}
                           onClick={() => deleteRow(record)}
                         />
                       </div>
@@ -314,7 +343,7 @@ export function InvoiceRow(props: IGenerate) {
                 </div>
                 <div className={styles.part}></div>
                 <div className={styles.part}>
-                  <Button label={"ADD"} onClick={formik.handleSubmit} />
+                  <Button   icon={<Icon icon="material-symbols:add" />} onClick={formik.handleSubmit} />
                 </div>
               </div>
             </div>
@@ -342,7 +371,7 @@ export function InvoiceRow(props: IGenerate) {
             <div>
               {data.data?.items.map((record: InvoiceItem, index: any) => {
                 console.log(record);
-                const sub_total = record.price * record.quantity;
+                const sub_total = record?.price * record?.quantity;
                 total_amount += sub_total;
                 return (
                   <>
@@ -355,7 +384,7 @@ export function InvoiceRow(props: IGenerate) {
                       <div className={styles.part}>
                         <Button
                           icon={<Icon icon="ph:trash-bold" color="white" />}
-                          onClick={() => deleteInvoiceHandler(record._id)}
+                          onClick={() => deleteInvoiceHandler(record?._id)}
                         />
                       </div>
                     </div>
@@ -381,15 +410,7 @@ export function InvoiceRow(props: IGenerate) {
               />
             </>
           )}
-          {tab === "" && (
-            <>
-              {props.status === false && (
-                <Button label={"View Invoice"} onClick={viewInvoice} />
-              )}
-
-              <Button label={"Generate Invoice"} onClick={generateInvoice} />
-            </>
-          )}
+         
         </div>
       </section>
       <SToast

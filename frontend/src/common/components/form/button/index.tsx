@@ -20,7 +20,7 @@ export default function Button(props: IButton) {
         disabled={props.disabled}
       >
         {props.isLoading ? (
-          <Icon icon="eos-icons:loading" color="white" />
+          "Loading..."
         ) : (
           <>
             {props.icon && props.icon}

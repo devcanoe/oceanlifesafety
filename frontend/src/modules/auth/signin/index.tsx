@@ -95,6 +95,9 @@ export default function SigninContent() {
     <>
       <main className={styles.container}>
         <div className={styles.card}>
+          <div className={styles.header}>
+              <h4 className={styles.h4}>SIGN IN</h4>
+          </div>
           <InputField
             type="email"
             name={"email"}
@@ -115,7 +118,7 @@ export default function SigninContent() {
           />
           <Button
             isLoading={isLoading}
-            label={"Sign In"}
+            label={"Sign Into your Account"}
             onClick={formik.handleSubmit}
           />
         </div>

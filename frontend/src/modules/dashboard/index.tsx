@@ -92,24 +92,44 @@ function DashboardCards(props: IDashboardCards) {
     <>
       <section className={styles.cardscontainer}>
         <div className={styles.card}>
-          <p className={styles.cardp}>Total Companies</p>
-          <h3>{props.completedTickets}</h3>
-          <small className={styles.cardsmall}></small>
+          <div className={styles.icons}>
+            <Icon icon="mdi:company" width="30" height="30" color="orange" />
+          </div>
+          <div className={styles.carddetails}>
+            <p className={styles.cardp}>Total Companies</p>
+            <h3>{props.completedTickets}</h3>
+            <small className={styles.cardsmall}></small>
+          </div>
         </div>
         <div className={styles.card}>
-          <p className={styles.cardp}>Total Ships</p>
-          <h3>{props.unassignedTickets}</h3>
-          <small className={styles.cardsmall}></small>
+        <div className={styles.icons}>
+            <Icon icon="tabler:ship" width="30" height="30" color="purple" />
+          </div>
+          <div className={styles.carddetails}>
+            <p className={styles.cardp}>Total Ships</p>
+            <h3>{props.unassignedTickets}</h3>
+            <small className={styles.cardsmall}></small>
+          </div>
         </div>
         <div className={styles.card}>
-          <p className={styles.cardp}>Total Raft</p>
-          <h3>{props.ongoingTickets}</h3>
-          <small className={styles.cardsmall}></small>
+        <div className={styles.icons}>
+            <Icon icon="map:rafting" width="30" height="30" color="green" />
+          </div>
+          <div className={styles.carddetails}>
+            <p className={styles.cardp}>Total Raft</p>
+            <h3>{props.ongoingTickets}</h3>
+            <small className={styles.cardsmall}></small>
+          </div>
         </div>
         <div className={styles.card}>
+        <div className={styles.icons}>
+            <Icon icon="carbon:document" width="30" height="30" color="blue" />
+          </div>
+          <div className={styles.carddetails}>
           <p className={styles.cardp}>Total Documents</p>
           <h3>{props.totalAgents}</h3>
           <small className={styles.cardsmall}></small>
+          </div>
         </div>
       </section>
     </>
