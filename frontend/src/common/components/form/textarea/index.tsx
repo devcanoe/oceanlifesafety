@@ -16,12 +16,9 @@ export default function TextArea(props: ITextArea) {
         value={props.value}
         name={props.name}
         onChange={props.onChange}
-        className={styles.container}
+        className={props.error ? styles.error : styles.container}
         rows={4}
       ></textarea>
-      {props.error && (
-        <small className={styles.error}>{props.helperText}</small>
-      )}
     </>
   );
 }

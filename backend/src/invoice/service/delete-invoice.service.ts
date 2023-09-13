@@ -1,18 +1,18 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import Http from "../../common/helper/http.helper";
 import IService from "../../common/interfaces/service.interface";
 import InvoiceRepository from "../../common/database/repository/invoice.repository";
 
 
 @injectable()
-export default class DeleteInvoiceService implements IService<Request, Response> {
+export default class DeleteInvoiceService implements IService<Request, Response, NextFunction> {
     constructor(
         private httpHelper: Http,
         private invoiceRepository: InvoiceRepository
     ){}
 
-    async execute(req: Request, res: Response) {
+    async execute(req: Request, res: Response, next: NextFunction) {
         try{
 
             const {id} = req.params;
@@ -26,11 +26,7 @@ export default class DeleteInvoiceService implements IService<Request, Response>
             });
  
         }catch(err: any){
-            this.httpHelper.Response({
-                res,
-                status: "error",
-                message: err.message
-            })
+            next(err)
         }
     }
 }

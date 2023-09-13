@@ -6,10 +6,10 @@ import userAuth from "../../common/middleware/authorization.middleware";
 const shipRouter = Router();
 const shipController = container.resolve(ShipController);
 
-shipRouter.post('/create', userAuth, (req, res)=>shipController.createShip(req, res));
-shipRouter.get('/:id', userAuth, (req, res)=>shipController.fetchShip(req, res));
-shipRouter.get('/company/:company', userAuth, (req, res)=>shipController.fetchShips(req, res));
-shipRouter.delete('/:id', userAuth, (req, res)=>shipController.deleteShip(req, res));
-shipRouter.patch('/:id', userAuth, (req, res)=>shipController.updateShip(req, res));
+shipRouter.post('/create', userAuth, (req, res, next)=>shipController.createShip(req, res, next));
+shipRouter.get('/:id', userAuth, (req, res)=>shipController.fetchShip(req, res, next));
+shipRouter.get('/company/:company', userAuth, (req, res, next)=>shipController.fetchShips(req, res, next));
+shipRouter.delete('/:id', userAuth, (req, res, next)=>shipController.deleteShip(req, res, next));
+shipRouter.patch('/:id', userAuth, (req, res, next)=>shipController.updateShip(req, res, next));
 
 export default shipRouter

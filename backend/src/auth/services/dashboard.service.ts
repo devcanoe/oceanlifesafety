@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import IService from "../../common/interfaces/service.interface";
 import Http from "../../common/helper/http.helper";
 import CompanyRepository from "../../common/database/repository/company.repository";
@@ -9,7 +9,7 @@ import FormRepository from "../../common/database/repository/form.repository";
 import LogRepository from "../../common/database/repository/log.repository";
 
 @injectable()
-export default class DashboardService implements IService<Request, Response> {
+export default class DashboardService implements IService<Request, Response, NextFunction> {
     constructor(
         private httpHelper: Http,
         private companyRepository: CompanyRepository,
@@ -19,7 +19,7 @@ export default class DashboardService implements IService<Request, Response> {
         private logRepository: LogRepository
     ){}
 
-    async execute(req: Request, res: Response) {
+    async execute(req: Request, res: Response, next: NextFunction) {
         try {
 
             const company = await this.companyRepository.fetchData({});
@@ -45,11 +45,7 @@ export default class DashboardService implements IService<Request, Response> {
                 }
             });
         }catch(err: any){
-            this.httpHelper.Response({
-                res,
-                status: "error",
-                message: err.message
-            });
+            next(err)
         }
     }
 }

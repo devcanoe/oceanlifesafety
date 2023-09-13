@@ -24,15 +24,12 @@ export default function InputField(props: IInputfield) {
           name={props.name}
           placeholder={props.placeholder}
           value={props.value}
-          className={styles.input}
+          className={props.error ? styles.error : styles.input}
           onChange={props.onChange}
           onKeyDown={props.onKeyUp}
           disabled={props.disabled}
           required={props.required}
         />
-        {props.error && (
-          <small className={styles.error}>{props.helperText}</small>
-        )}
       </div>
     </>
   );

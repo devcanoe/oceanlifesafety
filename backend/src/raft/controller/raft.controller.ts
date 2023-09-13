@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import DeleteRaftService from "../services/delete-raft.service";
 import GetRaftsService from "../services/getrafts.service";
 import CreateRaftService from "../services/create-raft.service";
@@ -18,23 +18,23 @@ export default class RaftController {
 
     }
 
-    async createRaft(req: Request, res: Response){
-        await this.createRaftService.execute(req, res);
+    async createRaft(req: Request, res: Response, next: NextFunction){
+        await this.createRaftService.execute(req, res, next);
     }
 
-    async deleteRaft(req: Request, res: Response) {
-        await this.deleteRaftService.execute(req, res);
+    async deleteRaft(req: Request, res: Response, next: NextFunction) {
+        await this.deleteRaftService.execute(req, res, next);
     }
 
-    async getRafts(req: Request, res: Response) {
-        await this.getRaftsService.execute(req, res);
+    async getRafts(req: Request, res: Response, next: NextFunction) {
+        await this.getRaftsService.execute(req, res, next);
     }
 
-    async getRaft(req: Request, res: Response) {
-        await this.getRaftService.execute(req, res);
+    async getRaft(req: Request, res: Response, next: NextFunction) {
+        await this.getRaftService.execute(req, res, next);
     }
 
-    async updateRaft(req: Request, res: Response) {
-        await this.updateRaftService.execute(req, res);
+    async updateRaft(req: Request, res: Response, next: NextFunction) {
+        await this.updateRaftService.execute(req, res, next);
     }
 }

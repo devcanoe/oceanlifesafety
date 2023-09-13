@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import CreateShipService from "../services/create.service";
 import DeleteShipService from "../services/deleteship.service";
 import FetchShipService from "../services/fetchship";
@@ -16,23 +16,23 @@ export default class ShipController {
         private updateShipService: UpdateShipService
     ){}
 
-     async createShip(req: Request, res: Response){
-        await this.createShipService.execute(req, res);
+     async createShip(req: Request, res: Response, next: NextFunction){
+        await this.createShipService.execute(req, res, next);
     }
 
-    async fetchShip(req: Request, res: Response){
-        await this.fetchShipService.execute(req, res);
+    async fetchShip(req: Request, res: Response, next: NextFunction){
+        await this.fetchShipService.execute(req, res, next);
     }
    
-    async fetchShips(req: Request, res: Response){
-        await this.fetchShipsService.execute(req, res);
+    async fetchShips(req: Request, res: Response, next: NextFunction){
+        await this.fetchShipsService.execute(req, res, next);
     }
 
-    async deleteShip(req: Request, res: Response){
-        await this.deleteShipService.execute(req, res);
+    async deleteShip(req: Request, res: Response, next: NextFunction){
+        await this.deleteShipService.execute(req, res, next);
     }
 
-    async updateShip(req: Request, res: Response){
-        await this.updateShipService.execute(req, res);
+    async updateShip(req: Request, res: Response, next: NextFunction){
+        await this.updateShipService.execute(req, res, next);
     }
 }

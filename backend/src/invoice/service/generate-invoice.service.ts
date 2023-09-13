@@ -1,12 +1,12 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import IService from "../../common/interfaces/service.interface";
 import InvoiceRepository from "../../common/database/repository/invoice.repository";
 import Http from "../../common/helper/http.helper";
 import { generateReference } from "../../common/utils/generate-string";
 
 @injectable()
-export default class GenerateInvoiceService implements IService<Request, Response>{
+export default class GenerateInvoiceService implements IService<Request, Response, NextFunction>{
     constructor(
         private httpHelper: Http,
         private invoiceRepository: InvoiceRepository
@@ -14,7 +14,7 @@ export default class GenerateInvoiceService implements IService<Request, Respons
 
     }
 
-    async execute(req: Request, res: Response) {
+    async execute(req: Request, res: Response, next: NextFunction) {
         try{
             const { 
                 items, 
@@ -59,11 +59,7 @@ export default class GenerateInvoiceService implements IService<Request, Respons
             });
 
         }catch(err: any){
-            this.httpHelper.Response({
-                res,
-                status: "error",
-                message: err.message
-            })
+            next(err)
         }
     }
 }

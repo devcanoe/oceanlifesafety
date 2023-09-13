@@ -3,6 +3,7 @@ require('dotenv').config();
 import express, {Application, NextFunction, Request, Response} from 'express';
 import { setAppRouter } from './common/router';
 import { startServer } from './common/config/server.config';
+import { errorHanlder } from './common/middleware/error.middleware';
 
 const app: Application = express()
 
@@ -24,6 +25,8 @@ app.use((req: Request , res: Response, next: NextFunction) => {
 
 //Routes
 setAppRouter(app);
+
+app.use(errorHanlder)
 
 export default app;
 

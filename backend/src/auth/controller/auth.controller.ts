@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import LoginService from "../services/login.service";
 import RegisterService from "../services/register.service";
 import DashboardService from "../services/dashboard.service";
@@ -13,15 +13,15 @@ export default class AuthController {
     ){}
 
      //login investor
-     async login(req: Request, res: Response){
-        await this.loginService.execute(req, res);
+     async login(req: Request, res: Response, next: NextFunction){
+        await this.loginService.execute(req, res, next);
     }
 
-    async register(req: Request, res: Response){
-        await this.registerService.execute(req, res);
+    async register(req: Request, res: Response, next: NextFunction){
+        await this.registerService.execute(req, res, next);
     }
 
-    async dashboard(req: Request, res: Response){
-        await this.dashboardService.execute(req, res);
+    async dashboard(req: Request, res: Response, next: NextFunction){
+        await this.dashboardService.execute(req, res, next);
     }
 }

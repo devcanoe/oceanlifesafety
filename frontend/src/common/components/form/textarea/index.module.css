@@ -1,7 +1,14 @@
 /** desktop **/
-.container {
+.container, .error {
   width: 100%;
-  border: 1px solid var(--grey);
   border-radius: var(--s1);
   padding: var(--s1);
+}
+
+.error {
+  border: 1px solid red;
+}
+
+.container {
+  border: 1px solid var(--grey);
 }

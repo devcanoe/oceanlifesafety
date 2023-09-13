@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import CreateCompanyService from "../services/create.service";
 import FetchCompanyService from "../services/fetchcompany.service";
 import FetchCompaniesService from "../services/fetchcompanies.service";
@@ -16,23 +16,23 @@ export default class CompanyController {
         private updateCompanyService: UpdateCompanyService
     ){}
 
-     async createCompany(req: Request, res: Response){
-        await this.createCompanyService.execute(req, res);
+     async createCompany(req: Request, res: Response, next: NextFunction){
+        await this.createCompanyService.execute(req, res, next);
     }
 
-    async fetchCompany(req: Request, res: Response){
-        await this.fetchCompanyService.execute(req, res);
+    async fetchCompany(req: Request, res: Response, next: NextFunction){
+        await this.fetchCompanyService.execute(req, res, next);
     }
    
-    async fetchCompanies(req: Request, res: Response){
-        await this.fetchCompaniesService.execute(req, res);
+    async fetchCompanies(req: Request, res: Response, next: NextFunction){
+        await this.fetchCompaniesService.execute(req, res, next);
     }
 
-    async deleteCompany(req: Request, res: Response){
-        await this.deleteCompanyService.execute(req, res);
+    async deleteCompany(req: Request, res: Response, next: NextFunction){
+        await this.deleteCompanyService.execute(req, res, next);
     }
 
-    async updateCompany(req: Request, res: Response){
-        await this.updateCompanyService.execute(req, res);
+    async updateCompany(req: Request, res: Response, next: NextFunction){
+        await this.updateCompanyService.execute(req, res, next);
     }
 }

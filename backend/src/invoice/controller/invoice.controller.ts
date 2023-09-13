@@ -1,5 +1,5 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import GenerateInvoiceService from "../service/generate-invoice.service";
 import FetchInvoicesService from "../service/fetch-invoices.service";
 import DeleteInvoiceService from "../service/delete-invoice.service";
@@ -16,23 +16,23 @@ export default class InvoiceController {
         private fetchInvoiceService: FetchInvoiceService
     ){}
 
-    async generateInvoice(req: Request, res: Response){
-        await this.generaateInvoiceService.execute(req, res)
+    async generateInvoice(req: Request, res: Response, next: NextFunction){
+        await this.generaateInvoiceService.execute(req, res, next)
     }
     
-    async fetchInvoices(req: Request, res: Response){
-        await this.fetchInvoicesService.execute(req, res)
+    async fetchInvoices(req: Request, res: Response, next: NextFunction){
+        await this.fetchInvoicesService.execute(req, res, next)
     }   
 
-    async fetchInvoice(req: Request, res: Response){
-        await this.fetchInvoiceService.execute(req, res)
+    async fetchInvoice(req: Request, res: Response, next: NextFunction){
+        await this.fetchInvoiceService.execute(req, res, next)
     }   
 
-    async deleteInvoice(req: Request, res: Response) {
-        await this.deleteInvoiceService.execute(req, res)
+    async deleteInvoice(req: Request, res: Response, next: NextFunction) {
+        await this.deleteInvoiceService.execute(req, res, next)
     }
 
-    async deleteInvoiceItem(req: Request, res: Response) {
-        await this.deleteInvoiceItemService.execute(req, res)
+    async deleteInvoiceItem(req: Request, res: Response, next: NextFunction) {
+        await this.deleteInvoiceItemService.execute(req, res, next)
     }
 }

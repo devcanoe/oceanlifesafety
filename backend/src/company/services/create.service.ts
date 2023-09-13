@@ -1,12 +1,13 @@
 import { injectable } from "tsyringe";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import IService from "../../common/interfaces/service.interface";
 import Http from "../../common/helper/http.helper";
 import CompanyRepository from "../../common/database/repository/company.repository";
 import LogRepository from "../../common/database/repository/log.repository";
+import { BadRequestError } from "../../common/error/badrequest.error";
 
 @injectable()
-export default class CreateCompanyService implements IService<Request, Response> {
+export default class CreateCompanyService implements IService<Request, Response, NextFunction> {
     constructor(
         private companyRepository: CompanyRepository,
         private logRepository: LogRepository,
@@ -15,7 +16,7 @@ export default class CreateCompanyService implements IService<Request, Response>
 
     }
 
-    async execute(req: Request, res: Response){
+    async execute(req: Request, res: Response, next: NextFunction){
         try{
         
             const {
@@ -26,7 +27,7 @@ export default class CreateCompanyService implements IService<Request, Response>
             const company = await this.companyRepository.fetchOneData({name});
 
             if(company){
-                throw(new Error("Company name already taken"));
+                throw new BadRequestError("Company name already taken");
             }
 
             const createCompany = await this.companyRepository.addData(req.body);
@@ -44,11 +45,7 @@ export default class CreateCompanyService implements IService<Request, Response>
             })
  
         }catch(err: any){
-            this.httpHelper.Response({
-                res,
-                status: "error",
-                message: err.message
-            })
+            next(err)
         }
     }
 }

@@ -6,10 +6,10 @@ import userAuth from "../../common/middleware/authorization.middleware";
 const companyRouter = Router();
 const companyController = container.resolve(CompanyController);
 
-companyRouter.post('/create', userAuth, (req, res)=>companyController.createCompany(req, res));
-companyRouter.get('/:id', userAuth, (req, res)=>companyController.fetchCompany(req, res));
-companyRouter.get('/', userAuth, (req, res)=>companyController.fetchCompanies(req, res));
-companyRouter.delete('/:id', userAuth, (req, res)=>companyController.deleteCompany(req, res));
-companyRouter.patch('/:id', userAuth, (req, res)=>companyController.updateCompany(req, res));
+companyRouter.post('/create', userAuth, (req, res, next)=>companyController.createCompany(req, res, next));
+companyRouter.get('/:id', userAuth, (req, res, next)=>companyController.fetchCompany(req, res, next));
+companyRouter.get('/', userAuth, (req, res, next)=>companyController.fetchCompanies(req, res, next));
+companyRouter.delete('/:id', userAuth, (req, res, next)=>companyController.deleteCompany(req, res, next));
+companyRouter.patch('/:id', userAuth, (req, res, next)=>companyController.updateCompany(req, res, next));
 
 export default companyRouter

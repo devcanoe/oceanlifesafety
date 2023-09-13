@@ -5,10 +5,10 @@ import InvoiceController from "../controller/invoice.controller";
 const invoiceRouter = Router();
 const invoiceController = container.resolve(InvoiceController);
 
-invoiceRouter.post('/create', (req, res)=>invoiceController.generateInvoice(req, res));
-invoiceRouter.get('/', (req, res)=>invoiceController.fetchInvoices(req, res));
-invoiceRouter.get('/:id', (req, res)=>invoiceController.fetchInvoice(req, res));
-invoiceRouter.delete('/:id', (req, res)=>invoiceController.deleteInvoice(req, res));
-invoiceRouter.delete('/:id/:itemId', (req, res)=>invoiceController.deleteInvoiceItem(req, res));
+invoiceRouter.post('/create', (req, res, next)=>invoiceController.generateInvoice(req, res, next));
+invoiceRouter.get('/', (req, res, next)=>invoiceController.fetchInvoices(req, res, next));
+invoiceRouter.get('/:id', (req, res, next)=>invoiceController.fetchInvoice(req, res, next));
+invoiceRouter.delete('/:id', (req, res, next)=>invoiceController.deleteInvoice(req, res, next));
+invoiceRouter.delete('/:id/:itemId', (req, res, next)=>invoiceController.deleteInvoiceItem(req, res, next));
 
 export default invoiceRouter;
