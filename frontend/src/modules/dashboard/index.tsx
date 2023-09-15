@@ -93,7 +93,7 @@ function DashboardCards(props: IDashboardCards) {
       <section className={styles.cardscontainer}>
         <div className={styles.card}>
           <div className={styles.icons}>
-            <Icon icon="mdi:company" width="30" height="30" color="orange" />
+            <Icon icon="mdi:company" width="30" height="30" color="rgb(2,0,36)" />
           </div>
           <div className={styles.carddetails}>
             <p className={styles.cardp}>Total Companies</p>
@@ -103,7 +103,7 @@ function DashboardCards(props: IDashboardCards) {
         </div>
         <div className={styles.card}>
         <div className={styles.icons}>
-            <Icon icon="tabler:ship" width="30" height="30" color="purple" />
+            <Icon icon="tabler:ship" width="30" height="30" color="rgb(2,0,36)" />
           </div>
           <div className={styles.carddetails}>
             <p className={styles.cardp}>Total Ships</p>
@@ -113,7 +113,7 @@ function DashboardCards(props: IDashboardCards) {
         </div>
         <div className={styles.card}>
         <div className={styles.icons}>
-            <Icon icon="map:rafting" width="30" height="30" color="green" />
+            <Icon icon="map:rafting" width="30" height="30" color="rgb(2,0,36)" />
           </div>
           <div className={styles.carddetails}>
             <p className={styles.cardp}>Total Raft</p>
@@ -123,7 +123,7 @@ function DashboardCards(props: IDashboardCards) {
         </div>
         <div className={styles.card}>
         <div className={styles.icons}>
-            <Icon icon="carbon:document" width="30" height="30" color="blue" />
+            <Icon icon="carbon:document" width="30" height="30" color="dark-blue" />
           </div>
           <div className={styles.carddetails}>
           <p className={styles.cardp}>Total Documents</p>

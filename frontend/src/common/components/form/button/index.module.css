@@ -16,4 +16,21 @@
   background-color: var(--primary-hover);
 }
 
+.removecontainer {
+  border: none;
+  border-radius: 6px;
+  padding: 10px var(--s2);
+  background-color: rgb(247, 58, 58);
+  color: var(--white);
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.removecontainer:hover {
+  background-color:rgb(111, 24, 24);
+}
+
 /** mobile **/

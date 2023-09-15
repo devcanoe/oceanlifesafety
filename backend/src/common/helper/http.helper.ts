@@ -17,7 +17,7 @@ export default class Http {
 
     Response({res, status, message, data}: IResponse) {
 
-        const response: Response = res.json({
+        const response: Response = res.status(200).json({
                                 status,
                                 message,
                                 data

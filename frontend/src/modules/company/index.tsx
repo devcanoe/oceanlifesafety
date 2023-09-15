@@ -28,31 +28,11 @@ import { useAppDispatch } from "@/common/lib/hooks";
 
 export default function CompanyContent() {
   const [id, setId] = useState<string | undefined>();
-
-  const { data, isLoading, isSuccess, isError, refetch } =
-    useGetCompaniesQuery();
-
-  const [deleteCompany, { isLoading: deleteCompanyLoading }] =
-    useDeleteCompanyMutation();
-
-  let rows: any[] = [];
-
-  console.log(isSuccess && data);
-
-  !isLoading &&
-    data?.data.map((company: Company) => {
-      rows.push({
-        id: company._id,
-        name: `${company.name}`,
-        address: `${company.address}`,
-      });
-    });
-
   const [rowSelectionModel, setRowSelectionModel] =
-    useState<GridRowSelectionModel>([]);
+  useState<GridRowSelectionModel>([]);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
-
   const [updateModalStatus, setUpdateModalStatus] = useState<boolean>(false);
+  const [deleteModalStatus, setDeleteModalStatus] = useState<boolean>(false);
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
     visibility: false,
@@ -68,6 +48,25 @@ export default function CompanyContent() {
     visibility: false,
     status: false,
   });
+
+  const { data, isLoading, isSuccess, isError, refetch } =
+    useGetCompaniesQuery();
+
+  const [deleteCompany, { isLoading: deleteCompanyLoading }] =
+    useDeleteCompanyMutation();
+
+  let rows: any[] = [];
+
+  !isLoading &&
+    data?.data.map((company: Company) => {
+      rows.push({
+        id: company._id,
+        name: `${company.name}`,
+        address: `${company.address}`,
+      });
+    });
+
+
 
   const successToastHandler = (args: IHandleMotion) => {
     setSuccessToastStatus(args);
@@ -88,6 +87,11 @@ export default function CompanyContent() {
 
   const updateModalToggleHandler = () => {
     setUpdateModalStatus((state) => !state);
+    refetch();
+  };
+
+  const deleteModalToggleHandler = () => {
+    setDeleteModalStatus((state) => !state);
     refetch();
   };
 
@@ -125,7 +129,6 @@ export default function CompanyContent() {
             style={{ marginRight: "10px" }}
           >
             <Icon icon="ic:baseline-remove-red-eye" />
-            View
           </Link>
           <Link
             href={`#`}
@@ -135,7 +138,7 @@ export default function CompanyContent() {
             className={"red"}
             style={{ marginRight: "10px" }}
           >
-            <Icon icon="ph:trash-bold" /> Delete
+            <Icon icon="ph:trash-bold" /> 
           </Link>
           <Link
             href={`#`}
@@ -146,7 +149,7 @@ export default function CompanyContent() {
             }}
           >
             <Icon icon="uil:pen" />
-            Edit
+            
           </Link>
         </>
       ),

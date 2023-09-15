@@ -343,9 +343,7 @@ export function InvoiceRow() {
                       value={record.description}
                       onChange={(e: any) => {
                         let data: IInvoiceRow[] = [...rows];
-
                         data[index].description = e.target.value;
-
                         setRows(() => data);
                       }}
                     />
@@ -356,9 +354,7 @@ export function InvoiceRow() {
                       value={record.quantity}
                       onChange={(e: any) => {
                         let data: IInvoiceRow[] = [...rows];
-
                         data[index].quantity = e.target.value;
-
                         setRows(() => data);
                       }}
                     />
@@ -385,6 +381,7 @@ export function InvoiceRow() {
                   </div>
                   <div className={styles.part}>
                     <Button
+                      button="delete"
                       icon={<Icon icon="material-symbols:delete" />}
                       onClick={() => deleteRow(record)}
                     />
@@ -440,7 +437,11 @@ export function InvoiceRow() {
             </div>
             <div className={styles.part}></div>
             <div className={styles.part}>
-              <Button   icon={<Icon icon="material-symbols:add" />} onClick={formFormik.handleSubmit} />
+              <Button 
+                button="primary"
+                icon={<Icon icon="material-symbols:add" />} 
+                onClick={formFormik.handleSubmit} 
+              />
             </div>
           </div>
           {/** End of dynamic form */}
@@ -519,6 +520,7 @@ export function InvoiceRow() {
           />
         </div>
         <Button 
+          button="primary"
           label="Generate Invoice " 
           onClick={formik.handleSubmit}
         />

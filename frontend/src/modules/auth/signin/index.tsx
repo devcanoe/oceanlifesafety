@@ -7,10 +7,10 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { setCredentials } from "@/common/lib/slice/authslice";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import ILogin from "@/common/services/interface/auth.interface";
+import { signinValidationSchema } from "./signin.schema";
 
 export default function SigninContent() {
   const dispatch = useAppDispatch();
@@ -35,55 +35,48 @@ export default function SigninContent() {
     setErrorToastStatus(args);
   };
 
-  const validationSchema = yup.object({
-    email: yup
-      .string()
-      .email("Enter a valid email")
-      .required("Email is required"),
-    password: yup
-      .string()
-      .min(8, "Password should be of minimum 8 characters length")
-      .required("Password is required"),
-  });
+  
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: signinValidationSchema,
     onSubmit: (values: ILogin) => {
       const payload = {
         email: values.email,
         password: values.password,
       };
       login(payload)
-        .then((res: any) => {
-          if (res.data.status === "success") {
+        .then(({data, error}: any) => {
+          if (data) {
             successToastHandler({
-              message: res.data.message,
+              message: data.message,
               visibility: true,
               status: true,
             });
             const payload = {
-              user: res.data.data.user,
-              token: res.data.data.token,
+              user: data.data.user,
+              token: data.data.token,
             };
             dispatch(setCredentials(payload));
-            localStorage.setItem("token", res.data.data.token);
-            localStorage.setItem("user", JSON.stringify(res.data.data.user));
+            localStorage.setItem("token", data.data.token);
+            localStorage.setItem("user", JSON.stringify(data.data.user));
             void router.push("/dashboard");
-          } else {
+          } 
+      
+          if(error){
             errorToastHandler({
-              message: res.data.message,
+              message: error.data.message,
               visibility: true,
               status: false,
             });
           }
         })
-        .catch((err: any) => {
+        .catch(() => {
           errorToastHandler({
-            message: err.message,
+            message: "Something went wrong",
             visibility: true,
             status: false,
           });
@@ -117,6 +110,7 @@ export default function SigninContent() {
             helperText={formik.touched.password && formik.errors.password}
           />
           <Button
+            button="primary"
             isLoading={isLoading}
             label={"Sign Into your Account"}
             onClick={formik.handleSubmit}
