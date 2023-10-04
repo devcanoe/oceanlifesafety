@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { container } from 'tsyringe';
 import userAuth from "../../common/middleware/authorization.middleware";
-import CalendarController from "../controller/calendar.controllet";
+import CalendarController from "../controller/calendar.controller";
 
 const calendarRouter = Router();
 const companyController = container.resolve(CalendarController);
