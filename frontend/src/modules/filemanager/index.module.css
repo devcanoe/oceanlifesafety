@@ -1,0 +1,30 @@
+.container {
+    min-height: 100vh;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 9px;
+    display: grid;
+    grid-template-columns: 250px auto;
+    gap: 10px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menuitem {
+    border-radius: 9px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: grey;
+}
+
+.menuitem:hover {
+    background-color: bisque;
+    color: grey;
+}

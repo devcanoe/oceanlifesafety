@@ -18,6 +18,26 @@ const userschema: Schema =   new Schema<User>({
     type: Number,
     required: true
   },
+  date_of_birth: {
+    type: Date,
+    required: true
+  },
+  position: {
+    type: String,
+    required: true
+  },
+  date_hired: {
+    type: Date,
+    required: true
+  },
+  date_fired: {
+    type: Date,
+    required: true
+  },
+  role: {
+    type: String,
+    enum: ["ADMING", "MODERATOR", "STAFF"]
+  },
   password: {
     type: String,
     required: true

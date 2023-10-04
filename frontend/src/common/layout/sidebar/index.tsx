@@ -3,44 +3,50 @@ import { useRouter } from "next/router";
 import { Icon } from "@iconify/react";
 import styles from "./index.module.css";
 import { useAppDispatch, useAppSelector } from "@/common/lib/hooks";
-import { User, selectCurrentUser } from "@/common/lib/slice/authslice";
+import { User, logOut, selectCurrentUser } from "@/common/lib/slice/authslice";
 import { useEffect, useState } from "react";
+import { menuitems } from "./menuitem";
 
 export default function Sidebar() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const user: User = useAppSelector(selectCurrentUser);
 
-  const [username, setUsername] = useState<string>();
-  const [email, setEmail] = useState<string>();
+  const handleLogout = () => {
+    dispatch(logOut({}));
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    router.push("/");
+  };
 
-  useEffect(() => {
-    if (router.isReady) {
-      setUsername(`${user.firstname} ${user.lastname}`);
-      setEmail(`${user.email}`);
-    }
-  }, [router.isReady]);
   return (
     <>
       <aside className={styles.sidebarcontainer}>
+        <div>
         <header className={styles.sidebarheader}>
           <h4>Oceanlifesafety</h4>
         </header>
         <div className={styles.menulist}>
-        <MenuItem
-          url={"/dashboard"}
-          title={"Dashboard"}
-          icon={"material-symbols:dashboard"}
-        />
-        <MenuItem url={"/company"} title={"Company"} icon={"mdi:user-group"} />
-        <MenuItem
-          url={"/invoice"}
-          title={"Invoice"}
-          icon={"majesticons:tickets-line"}
-        />
+        {
+          menuitems.map((menuitem: IMenuItem, index: number) => {
+            return (
+              <>
+                <MenuItem
+                  url={menuitem.url}
+                  title={menuitem.title}
+                  icon={menuitem.icon}
+                />
+              </>
+            )
+          })
+        }
         </div>
-        {/* <MenuItem url={"/customers"} title={"Customers"} icon={"mdi:user"} />
-        <MenuItem url={"/types"} title={"Types"} icon={"mdi:user"} /> */}
+        </div>
+        <footer className={styles.footer}>
+        <div className={styles.logout} onClick={handleLogout}>
+          <Icon icon="material-symbols:logout" />
+          Logout
+        </div>
+        </footer>
       </aside>
     </>
   );
@@ -59,7 +65,7 @@ function MenuItem(props: IMenuItem) {
       <Link
         href={props.url}
         className={
-          props.url === router.pathname
+          router.pathname.includes(props.url)
             ? styles.menuitemactive
             : styles.menuitemcontainer
         }
