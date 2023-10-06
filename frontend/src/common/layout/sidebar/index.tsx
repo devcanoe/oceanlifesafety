@@ -22,30 +22,28 @@ export default function Sidebar() {
     <>
       <aside className={styles.sidebarcontainer}>
         <div>
-        <header className={styles.sidebarheader}>
-          <h4>Oceanlifesafety</h4>
-        </header>
-        <div className={styles.menulist}>
-        {
-          menuitems.map((menuitem: IMenuItem, index: number) => {
-            return (
-              <>
-                <MenuItem
-                  url={menuitem.url}
-                  title={menuitem.title}
-                  icon={menuitem.icon}
-                />
-              </>
-            )
-          })
-        }
-        </div>
+          <header className={styles.sidebarheader}>
+            <h4>Oceanlifesafety</h4>
+          </header>
+          <div className={styles.menulist}>
+            {menuitems.map((menuitem: IMenuItem, index: number) => {
+              return (
+                <>
+                  <MenuItem
+                    url={menuitem.url}
+                    title={menuitem.title}
+                    icon={menuitem.icon}
+                  />
+                </>
+              );
+            })}
+          </div>
         </div>
         <footer className={styles.footer}>
-        <div className={styles.logout} onClick={handleLogout}>
-          <Icon icon="material-symbols:logout" />
-          Logout
-        </div>
+          <div className={styles.logout} onClick={handleLogout}>
+            <Icon icon="material-symbols:logout" />
+            Logout
+          </div>
         </footer>
       </aside>
     </>

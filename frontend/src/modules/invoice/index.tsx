@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 
 export default function InvoiceContent() {
   const router = useRouter();
-  
+
   const { data, isLoading, isSuccess, isError, refetch } =
     useFetchInvoicesQuery();
 
@@ -77,7 +77,7 @@ export default function InvoiceContent() {
   };
 
   const modalToggleHandler = () => {
-    router.push('/invoice/create')
+    router.push("/invoice/create");
     // refetch();
   };
 

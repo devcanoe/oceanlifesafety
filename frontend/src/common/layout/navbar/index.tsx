@@ -29,20 +29,25 @@ export default function Navbar() {
     <>
       <div className={styles.navbarcontainer}>
         <div className={styles.leftside}>
-          <input type={"text"} placeholder={"Search...."} className={styles.searchbar}/>
+          <input
+            type={"text"}
+            placeholder={"Search...."}
+            className={styles.searchbar}
+          />
         </div>
 
         <div>
-        <div className={styles.dropdown}>
-            <span className={styles.profile}><Icon icon="ph:user-bold" width={20} height={20} /></span>
+          <div className={styles.dropdown}>
+            <span className={styles.profile}>
+              <Icon icon="ph:user-bold" width={20} height={20} />
+            </span>
             <div className={styles.dropdowncontent}>
-                <p className={styles.dropdowncontentitem}>Edit profile</p>
-                <p className={styles.dropdowncontentitem}>Change password</p>
-                <p className={styles.dropdowncontentitem}>Logout</p>
+              <p className={styles.dropdowncontentitem}>Edit profile</p>
+              <p className={styles.dropdowncontentitem}>Change password</p>
+              <p className={styles.dropdowncontentitem}>Logout</p>
             </div>
+          </div>
         </div>
-        </div>
-        
       </div>
     </>
   );

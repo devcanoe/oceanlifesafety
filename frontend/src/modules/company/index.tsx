@@ -29,7 +29,7 @@ import { useAppDispatch } from "@/common/lib/hooks";
 export default function CompanyContent() {
   const [id, setId] = useState<string | undefined>();
   const [rowSelectionModel, setRowSelectionModel] =
-  useState<GridRowSelectionModel>([]);
+    useState<GridRowSelectionModel>([]);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
   const [updateModalStatus, setUpdateModalStatus] = useState<boolean>(false);
   const [deleteModalStatus, setDeleteModalStatus] = useState<boolean>(false);
@@ -65,8 +65,6 @@ export default function CompanyContent() {
         address: `${company.address}`,
       });
     });
-
-
 
   const successToastHandler = (args: IHandleMotion) => {
     setSuccessToastStatus(args);
@@ -138,7 +136,7 @@ export default function CompanyContent() {
             className={"red"}
             style={{ marginRight: "10px" }}
           >
-            <Icon icon="ph:trash-bold" /> 
+            <Icon icon="ph:trash-bold" />
           </Link>
           <Link
             href={`#`}
@@ -149,7 +147,6 @@ export default function CompanyContent() {
             }}
           >
             <Icon icon="uil:pen" />
-            
           </Link>
         </>
       ),

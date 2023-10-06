@@ -88,7 +88,7 @@ export function InvoiceRow() {
     tax: yup.number().required("Tax is required"),
     subtotal: yup.number().required("Subtotal is required"),
     notes: yup.string(),
-    terms: yup.string()
+    terms: yup.string(),
   });
 
   const formValidationSchema = yup.object({
@@ -97,7 +97,9 @@ export function InvoiceRow() {
     price: yup.number().min(1).required("Price is required"),
   });
 
-  {/** formik handler for forms */}
+  {
+    /** formik handler for forms */
+  }
   const formik = useFormik({
     initialValues: {
       receiver_name: "",
@@ -117,12 +119,12 @@ export function InvoiceRow() {
       price: 0,
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-     
-    },
+    onSubmit: (values) => {},
   });
 
-  {/** formik handler for table dynamic form input */}
+  {
+    /** formik handler for table dynamic form input */
+  }
   const formFormik = useFormik({
     initialValues: {
       description: "",
@@ -222,21 +224,21 @@ export function InvoiceRow() {
         {/** Start of invoice header */}
         <div className={styles.address}>
           <aside className={styles.receiver}>
-          <InputField
-            type={"text"}
-            name={"receiver_name"}
-            placeholder="Receiver name"
-            value={formik.values.receiver_name}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.receiver_name &&
-              Boolean(formik.errors.receiver_name)
-            }
-            helperText={
-              formik.touched.receiver_name && formik.errors.receiver_name
-            }
-          />
-          <InputField
+            <InputField
+              type={"text"}
+              name={"receiver_name"}
+              placeholder="Receiver name"
+              value={formik.values.receiver_name}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.receiver_name &&
+                Boolean(formik.errors.receiver_name)
+              }
+              helperText={
+                formik.touched.receiver_name && formik.errors.receiver_name
+              }
+            />
+            <InputField
               type={"text"}
               name={"receiver_company"}
               placeholder="Receiver company"
@@ -247,10 +249,11 @@ export function InvoiceRow() {
                 Boolean(formik.errors.receiver_company)
               }
               helperText={
-                formik.touched.receiver_company && formik.errors.receiver_company
+                formik.touched.receiver_company &&
+                formik.errors.receiver_company
               }
-          />
-          <InputField
+            />
+            <InputField
               type={"text"}
               name={"receiver_address"}
               placeholder="Receiver address"
@@ -261,52 +264,52 @@ export function InvoiceRow() {
                 Boolean(formik.errors.receiver_address)
               }
               helperText={
-                formik.touched.receiver_address && formik.errors.receiver_address
+                formik.touched.receiver_address &&
+                formik.errors.receiver_address
               }
-          />
+            />
           </aside>
           <aside className={styles.sender}>
             <InputField
-                type={"text"}
-                name={"sender_name"}
-                placeholder="Sender name"
-                value={formik.values.sender_name}
-                onChange={formik.handleChange}
-                error={
-                  formik.touched.sender_name &&
-                  Boolean(formik.errors.sender_name)
-                }
-                helperText={
-                  formik.touched.sender_name && formik.errors.sender_name
-                }
+              type={"text"}
+              name={"sender_name"}
+              placeholder="Sender name"
+              value={formik.values.sender_name}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.sender_name && Boolean(formik.errors.sender_name)
+              }
+              helperText={
+                formik.touched.sender_name && formik.errors.sender_name
+              }
             />
             <InputField
-               type={"text"}
-               name={"sender_company"}
-               placeholder="Sender company"
-               value={formik.values.sender_company}
-               onChange={formik.handleChange}
-               error={
-                 formik.touched.sender_company &&
-                 Boolean(formik.errors.sender_company)
-               }
-               helperText={
-                 formik.touched.sender_company && formik.errors.sender_company
-               }
+              type={"text"}
+              name={"sender_company"}
+              placeholder="Sender company"
+              value={formik.values.sender_company}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.sender_company &&
+                Boolean(formik.errors.sender_company)
+              }
+              helperText={
+                formik.touched.sender_company && formik.errors.sender_company
+              }
             />
             <InputField
-               type={"text"}
-               name={"sender_address"}
-               placeholder="Sender address"
-               value={formik.values.sender_address}
-               onChange={formik.handleChange}
-               error={
-                 formik.touched.sender_address &&
-                 Boolean(formik.errors.sender_address)
-               }
-               helperText={
-                 formik.touched.sender_address && formik.errors.sender_address
-               }
+              type={"text"}
+              name={"sender_address"}
+              placeholder="Sender address"
+              value={formik.values.sender_address}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.sender_address &&
+                Boolean(formik.errors.sender_address)
+              }
+              helperText={
+                formik.touched.sender_address && formik.errors.sender_address
+              }
             />
           </aside>
         </div>
@@ -329,7 +332,7 @@ export function InvoiceRow() {
             <p>Action</p>
           </div>
         </header>
-        
+
         <div>
           {/** Start for table preview form */}
           {rows.map((record: IInvoiceRow, index: any) => {
@@ -367,7 +370,7 @@ export function InvoiceRow() {
                         let data: IInvoiceRow[] = [...rows];
 
                         data[index].price = e.target.value;
-                        console.log(data)
+                        console.log(data);
                         setRows(() => data);
                       }}
                     />
@@ -405,7 +408,8 @@ export function InvoiceRow() {
                   Boolean(formFormik.errors.description)
                 }
                 helperText={
-                  formFormik.touched.description && formFormik.errors.description
+                  formFormik.touched.description &&
+                  formFormik.errors.description
                 }
               />
             </div>
@@ -417,7 +421,8 @@ export function InvoiceRow() {
                 value={formFormik.values.quantity}
                 onChange={formFormik.handleChange}
                 error={
-                  formFormik.touched.quantity && Boolean(formFormik.errors.quantity)
+                  formFormik.touched.quantity &&
+                  Boolean(formFormik.errors.quantity)
                 }
                 helperText={
                   formFormik.touched.quantity && formFormik.errors.quantity
@@ -431,97 +436,78 @@ export function InvoiceRow() {
                 placeholder="Price"
                 value={formFormik.values.price}
                 onChange={formFormik.handleChange}
-                error={formFormik.touched.price && Boolean(formFormik.errors.price)}
+                error={
+                  formFormik.touched.price && Boolean(formFormik.errors.price)
+                }
                 helperText={formFormik.touched.price && formFormik.errors.price}
               />
             </div>
             <div className={styles.part}></div>
             <div className={styles.part}>
-              <Button 
+              <Button
                 button="primary"
-                icon={<Icon icon="material-symbols:add" />} 
-                onClick={formFormik.handleSubmit} 
+                icon={<Icon icon="material-symbols:add" />}
+                onClick={formFormik.handleSubmit}
               />
             </div>
           </div>
           {/** End of dynamic form */}
         </div>
         {/** End for table form */}
-      
+
         <div className={styles.subfooter}>
           <aside className={styles.subtotal}>
             <p>Subtotal</p>
             <InputField
-               type={"Number"}
-               name={"subtotal"}
-               placeholder="0"
-               value={formik.values.subtotal}
-               onChange={formik.handleChange}
-               error={
-                 formik.touched.sender_name &&
-                 Boolean(formik.errors.subtotal)
-               }
-               helperText={
-                 formik.touched.subtotal && formik.errors.subtotal
-               }
+              type={"Number"}
+              name={"subtotal"}
+              placeholder="0"
+              value={formik.values.subtotal}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.sender_name && Boolean(formik.errors.subtotal)
+              }
+              helperText={formik.touched.subtotal && formik.errors.subtotal}
             />
           </aside>
           <aside className={styles.subtotal}>
             <p>VAT(12%)</p>
             <InputField
-               type={"text"}
-               name={"tax"}
-               placeholder="Sender name"
-               value={formik.values.tax}
-               onChange={formik.handleChange}
-               error={
-                 formik.touched.tax &&
-                 Boolean(formik.errors.tax)
-               }
-               helperText={
-                 formik.touched.tax && formik.errors.tax
-               }
+              type={"text"}
+              name={"tax"}
+              placeholder="Sender name"
+              value={formik.values.tax}
+              onChange={formik.handleChange}
+              error={formik.touched.tax && Boolean(formik.errors.tax)}
+              helperText={formik.touched.tax && formik.errors.tax}
             />
           </aside>
           <aside className={styles.subtotal}>
             <p>Total</p>
-            <InputField
-              type={"text"}
-              placeholder=""
-            />
+            <InputField type={"text"} placeholder="" />
           </aside>
         </div>
         <div className={styles.footer}>
           <small>Notes</small>
-          <TextArea 
-             name={"notes"}
-             value={formik.values.notes}
-             onChange={formik.handleChange}
-             error={
-               formik.touched.notes &&
-               Boolean(formik.errors.notes)
-             }
-             helperText={
-               formik.touched.notes && formik.errors.notes
-             }
+          <TextArea
+            name={"notes"}
+            value={formik.values.notes}
+            onChange={formik.handleChange}
+            error={formik.touched.notes && Boolean(formik.errors.notes)}
+            helperText={formik.touched.notes && formik.errors.notes}
           />
           <small>Terms</small>
           <TextArea
             name={"terms"}
             value={formik.values.terms}
             onChange={formik.handleChange}
-            error={
-              formik.touched.terms &&
-              Boolean(formik.errors.terms)
-            }
-            helperText={
-              formik.touched.terms && formik.errors.terms
-            }
+            error={formik.touched.terms && Boolean(formik.errors.terms)}
+            helperText={formik.touched.terms && formik.errors.terms}
           />
         </div>
-        <Button 
+        <Button
           button="primary"
-          label="Generate Invoice " 
+          label="Generate Invoice "
           onClick={formik.handleSubmit}
         />
       </section>

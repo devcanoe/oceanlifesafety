@@ -44,7 +44,7 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
     position: yup.string().required("position is required"),
     date_of_birth: yup.date().required("dob is required"),
     date_hired: yup.date().required("date hired is required"),
-    date_fired: yup.date()
+    date_fired: yup.date(),
   });
 
   const formik = useFormik({
@@ -58,12 +58,10 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
       position: "",
       date_of_birth: new Date(),
       date_hired: new Date(),
-      date_fired: new Date()
+      date_fired: new Date(),
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any) => {
-     
-    },
+    onSubmit: (values: any) => {},
   });
 
   return (
@@ -89,15 +87,19 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
           error={formik.touched.lastname && Boolean(formik.errors.lastname)}
           helperText={formik.touched.lastname && formik.errors.lastname}
         />
-         <InputField
+        <InputField
           type={"date"}
           placeholder=""
           label="Date of birth"
           name="date_of_birth"
           value={formik.values.date_of_birth}
           onChange={formik.handleChange}
-          error={formik.touched.date_of_birth && Boolean(formik.errors.date_of_birth)}
-          helperText={formik.touched.date_of_birth && formik.errors.date_of_birth}
+          error={
+            formik.touched.date_of_birth && Boolean(formik.errors.date_of_birth)
+          }
+          helperText={
+            formik.touched.date_of_birth && formik.errors.date_of_birth
+          }
         />
         <InputField
           type={"date"}
@@ -141,7 +143,7 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
-         <InputField
+        <InputField
           type={"text"}
           placeholder=""
           label="Password"
@@ -151,7 +153,7 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-         <InputField
+        <InputField
           type={"text"}
           placeholder=""
           label="Position"
@@ -195,7 +197,9 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
         <Button
           isLoading={isLoading}
           label={"Add Employee"}
-          onClick={formik.handleSubmit} button={"primary"}       />
+          onClick={formik.handleSubmit}
+          button={"primary"}
+        />
       </section>
     </>
   );

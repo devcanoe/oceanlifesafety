@@ -8,7 +8,7 @@ interface IButton {
   isLoading?: boolean;
   disabled?: boolean;
   type?: "submit" | "button";
-  button: "primary" | "delete"
+  button: "primary" | "delete";
 }
 
 export default function Button(props: IButton) {
@@ -16,7 +16,9 @@ export default function Button(props: IButton) {
     <>
       <button
         type={props.type}
-        className={props.button === "delete" ? styles.removecontainer : styles.container}
+        className={
+          props.button === "delete" ? styles.removecontainer : styles.container
+        }
         onClick={props.onClick}
         disabled={props.disabled}
       >

@@ -1,90 +1,88 @@
 .container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .calendarlist {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .servicingcontainer {
-    display: flex;
+  display: flex;
 }
 
-.taskheadercontainer, .servicingcontainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+.taskheadercontainer,
+.servicingcontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
 }
 
 .taskheadercontainer {
-    position: relative;
-    justify-content: space-between;
+  position: relative;
+  justify-content: space-between;
 }
 
 .taskheaderrow {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
 }
 
 .taskheadercontainer .taskheaderactions {
-    display: none;
+  display: none;
 }
 
 .taskheaderactions .actionbutton {
-    cursor:pointer;
-    border: none;
-    background-color: transparent;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
 .taskheadercontainer:hover .taskheaderactions {
-    z-index: 2;
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
 }
 
 .taskcontainer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-   
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .taskcontainer .hidedescription {
-    transition: 1.3s;
-    display: none;
+  transition: 1.3s;
+  display: none;
 }
 
 .taskcontainer .showdescription {
-    font-weight: lighter;
-    transition: 1.3s;
-    display: flex;
+  font-weight: lighter;
+  transition: 1.3s;
+  display: flex;
 }
 
-.breakdownservicecontainer, .breakdowntaskcontainer {
-   padding: 10px;
-   border-radius: 9px;
+.breakdownservicecontainer,
+.breakdowntaskcontainer {
+  padding: 10px;
+  border-radius: 9px;
 }
 
 .breakdownservicecontainer {
-    background-color: rgb(6, 168, 221);
-    color: #fff
+  background-color: rgb(6, 168, 221);
+  color: #fff;
 }
 
 .breakdowntaskcontainer {
-    color: #fff;
-    background-color: rgb(1, 110, 218);
+  color: #fff;
+  background-color: rgb(1, 110, 218);
 }
-
-
-

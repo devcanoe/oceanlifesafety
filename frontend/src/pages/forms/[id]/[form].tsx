@@ -8,7 +8,12 @@ export default function UpdateEEBD() {
   return (
     <>
       <DashboardLayout>
-        {router.isReady && <UpdateEEPDContent formId={router.query.form} companyId={router.query.id} />}
+        {router.isReady && (
+          <UpdateEEPDContent
+            formId={router.query.form}
+            companyId={router.query.id}
+          />
+        )}
       </DashboardLayout>
     </>
   );

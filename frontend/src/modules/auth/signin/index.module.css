@@ -1,8 +1,13 @@
 .container {
   height: 100vh;
   width: 100%;
-  background: rgb(2,0,36);
-  background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(7,51,96,1) 65%, rgba(9,64,121,1) 99%);
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(7, 51, 96, 1) 65%,
+    rgba(9, 64, 121, 1) 99%
+  );
   color: var(--black);
   display: flex;
   flex-direction: row;

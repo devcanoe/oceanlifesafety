@@ -35,8 +35,6 @@ export default function SigninContent() {
     setErrorToastStatus(args);
   };
 
-  
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -49,7 +47,7 @@ export default function SigninContent() {
         password: values.password,
       };
       login(payload)
-        .then(({data, error}: any) => {
+        .then(({ data, error }: any) => {
           if (data) {
             successToastHandler({
               message: data.message,
@@ -64,9 +62,9 @@ export default function SigninContent() {
             localStorage.setItem("token", data.data.token);
             localStorage.setItem("user", JSON.stringify(data.data.user));
             void router.push("/dashboard");
-          } 
-      
-          if(error){
+          }
+
+          if (error) {
             errorToastHandler({
               message: error.data.message,
               visibility: true,
@@ -89,7 +87,7 @@ export default function SigninContent() {
       <main className={styles.container}>
         <div className={styles.card}>
           <div className={styles.header}>
-              <h4 className={styles.h4}>SIGN IN</h4>
+            <h4 className={styles.h4}>SIGN IN</h4>
           </div>
           <InputField
             type="email"

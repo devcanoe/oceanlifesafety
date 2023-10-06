@@ -27,7 +27,7 @@ import AddEmployeeContent from "./modals/addemployee";
 export default function EmployeeContent() {
   const [id, setId] = useState<string | undefined>();
   const [rowSelectionModel, setRowSelectionModel] =
-  useState<GridRowSelectionModel>([]);
+    useState<GridRowSelectionModel>([]);
   const [modalStatus, setModalStatus] = useState<boolean>(false);
   const [updateModalStatus, setUpdateModalStatus] = useState<boolean>(false);
   const [deleteModalStatus, setDeleteModalStatus] = useState<boolean>(false);
@@ -54,8 +54,6 @@ export default function EmployeeContent() {
     useDeleteCompanyMutation();
 
   let rows: any[] = [];
-
-
 
   const successToastHandler = (args: IHandleMotion) => {
     setSuccessToastStatus(args);
@@ -129,7 +127,7 @@ export default function EmployeeContent() {
             className={"red"}
             style={{ marginRight: "10px" }}
           >
-            <Icon icon="ph:trash-bold" /> 
+            <Icon icon="ph:trash-bold" />
           </Link>
           <Link
             href={`#`}
@@ -140,7 +138,6 @@ export default function EmployeeContent() {
             }}
           >
             <Icon icon="uil:pen" />
-            
           </Link>
         </>
       ),
@@ -205,12 +202,13 @@ export default function EmployeeContent() {
         }}
       />
       <Popup displayStatus={modalStatus} close={modalToggleHandler}>
-        <AddEmployeeContent close={modalToggleHandler}/>
+        <AddEmployeeContent close={modalToggleHandler} />
       </Popup>
 
-      <Popup displayStatus={updateModalStatus} close={updateModalToggleHandler}>
-       
-      </Popup>
+      <Popup
+        displayStatus={updateModalStatus}
+        close={updateModalToggleHandler}
+      ></Popup>
     </>
   );
 }

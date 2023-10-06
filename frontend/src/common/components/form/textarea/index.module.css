@@ -1,5 +1,6 @@
 /** desktop **/
-.container, .error {
+.container,
+.error {
   width: 100%;
   border-radius: var(--s1);
   padding: var(--s1);

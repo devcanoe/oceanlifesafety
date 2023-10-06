@@ -37,19 +37,17 @@ export default function AddServicingContent({ close }: IAddCompanyContent) {
   const validationSchema = yup.object({
     company: yup.string().required("firstname is required"),
     vessel: yup.string().required("lastname is required"),
-    due_date: yup.date()
+    due_date: yup.date(),
   });
 
   const formik = useFormik({
     initialValues: {
       company: "",
       vessel: "",
-      due_date: new Date()
+      due_date: new Date(),
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any) => {
-     
-    },
+    onSubmit: (values: any) => {},
   });
 
   return (
@@ -75,7 +73,7 @@ export default function AddServicingContent({ close }: IAddCompanyContent) {
           error={formik.touched.vessel && Boolean(formik.errors.vessel)}
           helperText={formik.touched.vessel && formik.errors.vessel}
         />
-         <InputField
+        <InputField
           type={"date"}
           placeholder=""
           label="Due Date"
@@ -109,7 +107,9 @@ export default function AddServicingContent({ close }: IAddCompanyContent) {
         <Button
           isLoading={isLoading}
           label={"Add Servicing"}
-          onClick={formik.handleSubmit} button={"primary"}       />
+          onClick={formik.handleSubmit}
+          button={"primary"}
+        />
       </section>
     </>
   );

@@ -31,7 +31,7 @@ export default function AddTaskContent({ close }: IAddCompanyContent) {
     title: yup.string().required("title is required"),
     description: yup.string().required("description is required"),
     due_date: yup.date().required("due date is required"),
-    due_time: yup.string().required('due time is required')
+    due_time: yup.string().required("due time is required"),
   });
 
   const formik = useFormik({
@@ -39,11 +39,11 @@ export default function AddTaskContent({ close }: IAddCompanyContent) {
       title: "",
       description: "",
       due_date: new Date(),
-      due_time: new Date()
+      due_time: new Date(),
     },
     validationSchema: validationSchema,
     onSubmit: (values: any) => {
-      console.log(values)
+      console.log(values);
     },
   });
 
@@ -67,10 +67,12 @@ export default function AddTaskContent({ close }: IAddCompanyContent) {
           name="description"
           value={formik.values.description}
           onChange={formik.handleChange}
-          error={formik.touched.description && Boolean(formik.errors.description)}
+          error={
+            formik.touched.description && Boolean(formik.errors.description)
+          }
           helperText={formik.touched.description && formik.errors.description}
         />
-         <InputField
+        <InputField
           type={"date"}
           placeholder=""
           label="Due Date"
@@ -90,7 +92,7 @@ export default function AddTaskContent({ close }: IAddCompanyContent) {
           error={formik.touched.due_time && Boolean(formik.errors.due_time)}
           helperText={formik.touched.due_time && formik.errors.due_time}
         />
-        
+
         <SToast
           text={successToastStatus.message}
           severity={"success"}
@@ -115,7 +117,9 @@ export default function AddTaskContent({ close }: IAddCompanyContent) {
         <Button
           isLoading={isLoading}
           label={"Add Task"}
-          onClick={formik.handleSubmit} button={"primary"}       />
+          onClick={formik.handleSubmit}
+          button={"primary"}
+        />
       </section>
     </>
   );

@@ -17,7 +17,7 @@ import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
 
 interface IGenerate {
-  invoiceId: string | undefined
+  invoiceId: string | undefined;
 }
 
 export default function UpdateInvoiceContent(props: IGenerate) {
@@ -29,11 +29,7 @@ export default function UpdateInvoiceContent(props: IGenerate) {
   } = useFetchOneInvoiceQuery({ id: props.invoiceId });
   return (
     <>
-      <section>
-        {isSuccess &&
-        <InvoiceRow data={data?.data?.items}  />
-        }
-      </section>
+      <section>{isSuccess && <InvoiceRow data={data?.data?.items} />}</section>
     </>
   );
 }
@@ -45,7 +41,7 @@ interface IInvoiceRow {
   total?: number;
 }
 
-export function InvoiceRow(props: { data: any}) {
+export function InvoiceRow(props: { data: any }) {
   const router = useRouter();
   const [rows, setRows] = useState<IInvoiceRow[]>(props.data);
   const [tab, setTab] = useState<"CREATE" | "VIEW" | "">("");
@@ -156,7 +152,6 @@ export function InvoiceRow(props: { data: any}) {
             status: true,
           });
           setRows([]);
-      
         } else {
           errorToastHandler({
             message: res.data.message,
@@ -187,145 +182,139 @@ export function InvoiceRow(props: { data: any}) {
   return (
     <>
       <section>
-   
-          <>
-            <header className={styles.container}>
-              <div className={styles.part}>
-                <p>Description</p>
-              </div>
-              <div className={styles.part}>
-                <p>Quantity</p>
-              </div>
-              <div className={styles.part}>
-                <p>Price($)</p>
-              </div>
-              <div className={styles.part}>
-                <p>Sub Total($)</p>
-              </div>
-              <div className={styles.part}>
-                <p>Action</p>
-              </div>
-            </header>
-            <div>
-              {rows.map((record: IInvoiceRow, index: any) => {
-                const sub_total = record.price * record.quantity;
-                return (
-                  <>
-                    <div className={styles.container} key={index}>
-                      <div className={styles.part}>
-                        <InputField
-                          type={"text"}
-                          value={record.description}
-                          onChange={(e: any) => {
-                            console.log(rows)
-                          
-                            let data: IInvoiceRow[] = [...rows];
-                            
-                            data[index].description = e.target.value;
-                            
-                            setRows(() => data);
-                          }}
-                        />
-                      </div>
-                      <div className={styles.part}>
-                        <InputField
-                          type={"number"}
-                          value={record.quantity}
-                          onChange={(e: any) => {
-                            let data: IInvoiceRow[] = [...rows];
-    
-                            data[index].quantity = e.target.value;
-    
-                            setRows(() => data);
-                          }}
-                        />
-                      </div>
-                      <div className={styles.part}>
-                        <InputField
-                          type={"number"}
-                          value={record.price}
-                          onChange={(e: any) => {
-                            let data: IInvoiceRow[] = [...rows];
-    
-                            data[index].price = e.target.value;
-                            console.log(data)
-                            setRows(() => data);
-                          }}
-                        />
-                      </div>
-                      <div className={styles.part}>
-                        <InputField
-                          type={"number"}
-                          value={sub_total}
-                          onChange={(e: any) => {}}
-                        />
-                      </div>
-                      <div className={styles.part}>
-                        <Button
-                          label={"DELETE"}
-                          onClick={() => deleteRow(record)}
-                        />
-                      </div>
+        <>
+          <header className={styles.container}>
+            <div className={styles.part}>
+              <p>Description</p>
+            </div>
+            <div className={styles.part}>
+              <p>Quantity</p>
+            </div>
+            <div className={styles.part}>
+              <p>Price($)</p>
+            </div>
+            <div className={styles.part}>
+              <p>Sub Total($)</p>
+            </div>
+            <div className={styles.part}>
+              <p>Action</p>
+            </div>
+          </header>
+          <div>
+            {rows.map((record: IInvoiceRow, index: any) => {
+              const sub_total = record.price * record.quantity;
+              return (
+                <>
+                  <div className={styles.container} key={index}>
+                    <div className={styles.part}>
+                      <InputField
+                        type={"text"}
+                        value={record.description}
+                        onChange={(e: any) => {
+                          console.log(rows);
+
+                          let data: IInvoiceRow[] = [...rows];
+
+                          data[index].description = e.target.value;
+
+                          setRows(() => data);
+                        }}
+                      />
                     </div>
-                  </>
-                );
-              })}
-              <div className={styles.container}>
-                <div className={styles.part}>
-                  <InputField
-                    type={"text"}
-                    name={"description"}
-                    placeholder="Description"
-                    value={formik.values.description}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.description &&
-                      Boolean(formik.errors.description)
-                    }
-                    helperText={
-                      formik.touched.description && formik.errors.description
-                    }
-                  />
-                </div>
-                <div className={styles.part}>
-                  <InputField
-                    type={"number"}
-                    name={"quantity"}
-                    placeholder="Quantity"
-                    value={formik.values.quantity}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.quantity && Boolean(formik.errors.quantity)
-                    }
-                    helperText={
-                      formik.touched.quantity && formik.errors.quantity
-                    }
-                  />
-                </div>
-                <div className={styles.part}>
-                  <InputField
-                    type={"number"}
-                    name={"price"}
-                    placeholder="Price"
-                    value={formik.values.price}
-                    onChange={formik.handleChange}
-                    error={formik.touched.price && Boolean(formik.errors.price)}
-                    helperText={formik.touched.price && formik.errors.price}
-                  />
-                </div>
-                <div className={styles.part}></div>
-                <div className={styles.part}>
-                  <Button label={"ADD"} onClick={formik.handleSubmit} />
-                </div>
+                    <div className={styles.part}>
+                      <InputField
+                        type={"number"}
+                        value={record.quantity}
+                        onChange={(e: any) => {
+                          let data: IInvoiceRow[] = [...rows];
+
+                          data[index].quantity = e.target.value;
+
+                          setRows(() => data);
+                        }}
+                      />
+                    </div>
+                    <div className={styles.part}>
+                      <InputField
+                        type={"number"}
+                        value={record.price}
+                        onChange={(e: any) => {
+                          let data: IInvoiceRow[] = [...rows];
+
+                          data[index].price = e.target.value;
+                          console.log(data);
+                          setRows(() => data);
+                        }}
+                      />
+                    </div>
+                    <div className={styles.part}>
+                      <InputField
+                        type={"number"}
+                        value={sub_total}
+                        onChange={(e: any) => {}}
+                      />
+                    </div>
+                    <div className={styles.part}>
+                      <Button
+                        label={"DELETE"}
+                        onClick={() => deleteRow(record)}
+                      />
+                    </div>
+                  </div>
+                </>
+              );
+            })}
+            <div className={styles.container}>
+              <div className={styles.part}>
+                <InputField
+                  type={"text"}
+                  name={"description"}
+                  placeholder="Description"
+                  value={formik.values.description}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.description &&
+                    Boolean(formik.errors.description)
+                  }
+                  helperText={
+                    formik.touched.description && formik.errors.description
+                  }
+                />
+              </div>
+              <div className={styles.part}>
+                <InputField
+                  type={"number"}
+                  name={"quantity"}
+                  placeholder="Quantity"
+                  value={formik.values.quantity}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.quantity && Boolean(formik.errors.quantity)
+                  }
+                  helperText={formik.touched.quantity && formik.errors.quantity}
+                />
+              </div>
+              <div className={styles.part}>
+                <InputField
+                  type={"number"}
+                  name={"price"}
+                  placeholder="Price"
+                  value={formik.values.price}
+                  onChange={formik.handleChange}
+                  error={formik.touched.price && Boolean(formik.errors.price)}
+                  helperText={formik.touched.price && formik.errors.price}
+                />
+              </div>
+              <div className={styles.part}></div>
+              <div className={styles.part}>
+                <Button label={"ADD"} onClick={formik.handleSubmit} />
               </div>
             </div>
-          </>
-     
+          </div>
+        </>
 
         <div className={styles.submitbtncontainer}>
-
-           <Button label={"Generate Invoice"} onClick={generateInvoice} />
-          
+          <Button label={"Generate Invoice"} onClick={generateInvoice} />
         </div>
       </section>
       <SToast

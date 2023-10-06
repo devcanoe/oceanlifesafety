@@ -87,7 +87,10 @@ export default function GetFormsContent() {
       type: "actions",
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
-          <Link href={`/forms/${router.query.id}/${params.id}`} style={{ marginRight: "10px" }}>
+          <Link
+            href={`/forms/${router.query.id}/${params.id}`}
+            style={{ marginRight: "10px" }}
+          >
             <Icon icon="ic:baseline-remove-red-eye" /> View
           </Link>
           <Link

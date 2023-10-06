@@ -11,14 +11,18 @@ import Form from "@/common/model/form.model";
 import { useGetAllShipsQuery } from "@/common/services/ship.service";
 import Loader from "@/common/components/display/loader";
 import Ship from "@/common/model/ship.model";
-import { useCreateEEPDMutation, useGetFormQuery, useUpdateFormMutation } from "@/common/services/form.service";
+import {
+  useCreateEEPDMutation,
+  useGetFormQuery,
+  useUpdateFormMutation,
+} from "@/common/services/form.service";
 import SToast from "@/common/components/display/toast/toast";
 import { IHandleMotion } from "@/common/components/display/popup";
 import { useRouter } from "next/router";
 
 interface IUpdateEEPD {
   companyId: string;
-  formId?: string
+  formId?: string;
 }
 
 export default function UpdateEEPDContent(props: IUpdateEEPD) {
@@ -54,7 +58,11 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     id: props.companyId,
   });
 
-  const { data: formData, isLoading: formLoading, isSuccess: formSuccess   } = useGetFormQuery({
+  const {
+    data: formData,
+    isLoading: formLoading,
+    isSuccess: formSuccess,
+  } = useGetFormQuery({
     id: props.formId,
   });
 
@@ -115,15 +123,16 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     last_service_date: yup.date().required("Last service date is required"),
   });
 
-  const [updateForm, { isLoading: formUpdateLoading }] = useUpdateFormMutation()
+  const [updateForm, { isLoading: formUpdateLoading }] =
+    useUpdateFormMutation();
 
   const formik = useFormik({
     initialValues: {
       ship: "",
       location_of_vessel: "",
-      service_date: new Date().toISOString().split('T')[0],
+      service_date: new Date().toISOString().split("T")[0],
       flag_state: "",
-      last_service_date: new Date().toISOString().split('T')[0],
+      last_service_date: new Date().toISOString().split("T")[0],
     },
     validationSchema: validationSchema,
     onSubmit: (values: Form) => {
@@ -131,8 +140,8 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
         id: props.formId,
         body: {
           ...values,
-          specifications: rows
-        }
+          specifications: rows,
+        },
       })
         .then((res: any) => {
           if (res.data.status === "success") {
@@ -161,8 +170,8 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
     },
   });
 
-  useEffect(()=>{
-    if(formSuccess){
+  useEffect(() => {
+    if (formSuccess) {
       setRows(formData?.data?.specifications);
       formik.setValues({
         ship: formData?.data?.ship,
@@ -170,9 +179,9 @@ export default function UpdateEEPDContent(props: IUpdateEEPD) {
         service_date: formData?.data?.service_date,
         flag_state: formData?.data?.flag_state,
         last_service_date: formData?.data?.last_service_date,
-      })
+      });
     }
-  },[formSuccess])
+  }, [formSuccess]);
 
   return (
     <>
