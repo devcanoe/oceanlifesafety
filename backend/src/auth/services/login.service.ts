@@ -38,7 +38,7 @@ export default class LoginService implements IService<Request, Response, NextFun
             }
     
             // //compare encrypted password
-            const checkpassword = await this.encryptionHelper.compareHash(password, user.password);
+            const checkpassword = await this.encryptionHelper.compareHash(password, user?.password ? user.password : '');
         
             if(!checkpassword){
                 throw new BadRequestError("Invalid email/password")

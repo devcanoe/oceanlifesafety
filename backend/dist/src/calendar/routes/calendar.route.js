@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const tsyringe_1 = require("tsyringe");
+const authorization_middleware_1 = __importDefault(require("../../common/middleware/authorization.middleware"));
+const calendar_controller_1 = __importDefault(require("../controller/calendar.controller"));
+const calendarRouter = (0, express_1.Router)();
+const companyController = tsyringe_1.container.resolve(calendar_controller_1.default);
+calendarRouter.post('/create-servicing', authorization_middleware_1.default, (req, res, next) => companyController.addServicing(req, res, next));
+calendarRouter.post('/create-task', authorization_middleware_1.default, (req, res, next) => companyController.addTask(req, res, next));
+calendarRouter.get('/tasks/:id', authorization_middleware_1.default, (req, res, next) => companyController.getTask(req, res, next));
+calendarRouter.get('/', authorization_middleware_1.default, (req, res, next) => companyController.getCalendar(req, res, next));
+calendarRouter.delete('/task/:id', authorization_middleware_1.default, (req, res, next) => companyController.deleteTask(req, res, next));
+calendarRouter.delete('/servicing/:id', authorization_middleware_1.default, (req, res, next) => companyController.deleteServicing(req, res, next));
+calendarRouter.patch('/task/:id', authorization_middleware_1.default, (req, res, next) => companyController.updateTask(req, res, next));
+calendarRouter.patch('/servicing/:id', authorization_middleware_1.default, (req, res, next) => companyController.updateServicing(req, res, next));
+exports.default = calendarRouter;
