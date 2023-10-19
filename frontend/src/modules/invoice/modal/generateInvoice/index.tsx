@@ -1,26 +1,21 @@
 import Button from "@/common/components/form/button";
 import styles from "./index.module.css";
 import InputField from "@/common/components/form/inputfield";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
-import * as yup from "yup";
 import {
   useDeleteInvoiceMutation,
-  useFetchInvoicesQuery,
   useFetchOneInvoiceQuery,
   useGenerateInvoiceMutation,
 } from "@/common/services/invoice.service";
 import { useRouter } from "next/router";
-import { Invoice, InvoiceItem } from "@/common/model/invoice.model";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
 import TextArea from "@/common/components/form/textarea";
-
-interface IGenerate {
-  refetch: () => void;
-  state?: boolean;
-}
+import { formValidationSchema, generateInvoiceSchema } from "./genereateinvoice.schema";
+import IGenerateInvoice from "@/common/services/interface/invoice.interface";
+import { invoice } from "@/common/constants/rate";
 
 export default function GenerateInvoiceContent() {
   return (
@@ -42,7 +37,8 @@ interface IInvoiceRow {
 export function InvoiceRow() {
   const router = useRouter();
   const [rows, setRows] = useState<IInvoiceRow[]>([]);
-  const [tab, setTab] = useState<"CREATE" | "VIEW" | "">("");
+  const [ subTotal, setSubTotal ] = useState<number>(0);
+  const [ tax, setTax ] = useState<number>(0);
 
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
@@ -76,27 +72,6 @@ export function InvoiceRow() {
     setErrorToastStatus(args);
   };
 
-  const validationSchema = yup.object({
-    receiver_name: yup.string().required("Receiver name is required"),
-    receiver_company: yup.string().required("Receiver company is required"),
-    receiver_address: yup.string().required("Receiver address is required"),
-    sender_name: yup.string().required("Sender name is required"),
-    sender_company: yup.string().required("Sender company is required"),
-    sender_address: yup.string().required("Sender address is required"),
-    invoice_date: yup.string().required("Invoice_date is required"),
-    due_date: yup.string().required("Due date is required"),
-    tax: yup.number().required("Tax is required"),
-    subtotal: yup.number().required("Subtotal is required"),
-    notes: yup.string(),
-    terms: yup.string(),
-  });
-
-  const formValidationSchema = yup.object({
-    description: yup.string().required("Description is required"),
-    quantity: yup.number().min(1).required("Quantity is required"),
-    price: yup.number().min(1).required("Price is required"),
-  });
-
   {
     /** formik handler for forms */
   }
@@ -108,23 +83,59 @@ export function InvoiceRow() {
       sender_name: "",
       sender_company: "",
       sender_address: "",
-      invoice_date: Date,
-      due_date: Date,
+      invoice_date: new Date(),
+      due_date: new Date(),
       tax: 0,
-      subtotal: 0,
       notes: "",
       terms: "",
-      description: "",
-      quantity: 0,
-      price: 0,
+      items: []
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {},
+    validationSchema: generateInvoiceSchema,
+    onSubmit: (values: IGenerateInvoice) => {
+      generateInvoiceMutation({
+        items: rows,
+        receiver_name: values.receiver_name, 
+        receiver_company: values.receiver_company, 
+        receiver_address: values.receiver_address,
+        sender_address: values.sender_address,
+        sender_company: values.sender_company,
+        sender_name: values.sender_name,
+        invoice_date: values.invoice_date,
+        due_date: values.due_date,
+        tax,
+        sub_total: subTotal,
+        total: (tax+subTotal),
+        notes: values.notes,
+        terms: values.terms
+      })
+        .then((res: any) => {
+          console.log(res.data)
+          if (res.data.status === "success") {
+            successToastHandler({
+              message: res.data.message,
+              visibility: true,
+              status: true,
+            });
+            setRows([]);
+          } else {
+            errorToastHandler({
+              message: res.data.message,
+              visibility: true,
+              status: false,
+            });
+          }
+        })
+        .catch((err: any) => {
+          console.log(err.message)
+          errorToastHandler({
+            message: err.message,
+            visibility: true,
+            status: false,
+          });
+        });
+    },
   });
 
-  {
-    /** formik handler for table dynamic form input */
-  }
   const formFormik = useFormik({
     initialValues: {
       description: "",
@@ -133,16 +144,23 @@ export function InvoiceRow() {
     },
     validationSchema: formValidationSchema,
     onSubmit: (values) => {
+      const sub_total = values.price * values.quantity
       setRows((state) => [
         ...state,
         {
           description: values.description,
           quantity: values.quantity,
           price: values.price,
-          total: values.price * values.quantity,
+          total: sub_total,
         },
       ]);
-
+      const newsubtotal = subTotal + sub_total
+      setSubTotal((state) => state + sub_total);
+      console.log('total ', newsubtotal)
+      const result = invoice.VAT * newsubtotal;
+      console.log('result ', result)
+      setTax(result);
+      // formik.setFieldValue('tax', (invoice.VAT * subTotal))
       formFormik.setValues({
         description: "",
         quantity: 0,
@@ -151,72 +169,60 @@ export function InvoiceRow() {
     },
   });
 
+
   const deleteRow = (record: IInvoiceRow) => {
+    const sub_total = record.price * record.quantity
     var array = [...rows]; // make a separate copy of the array
     var index = array.indexOf(record);
     if (index !== -1) {
       array.splice(index, 1);
       setRows(array);
     }
+
+    setSubTotal((state) => state - sub_total);
+    console.log('total ', subTotal)
+    if(subTotal === 0){
+      setTax(0)
+    } else {
+      const newsubtotal = subTotal - sub_total
+      const result = invoice.VAT * newsubtotal;
+      console.log('result ', newsubtotal)
+      setTax(result);
+    }
+    
   };
 
-  const deleteInvoiceHandler = (id: string) => {
-    deleteInvoiceMutation({ id })
-      .then((res: any) => {
-        if (res.data.status === "success") {
-          refetch();
-          successToastHandler({
-            message: res.data.message,
-            visibility: true,
-            status: true,
-          });
-        } else {
-          errorToastHandler({
-            message: res.data.message,
-            visibility: true,
-            status: false,
-          });
-        }
-        console.log(res.data.message);
-      })
-      .catch((err: any) => {
-        errorToastHandler({
-          message: err.message,
-          visibility: true,
-          status: false,
-        });
-      });
-  };
+  // const deleteInvoiceHandler = (id: string) => {
+  //   deleteInvoiceMutation({ id })
+  //     .then((res: any) => {
+  //       if (res.data.status === "success") {
+  //         refetch();
+  //         successToastHandler({
+  //           message: res.data.message,
+  //           visibility: true,
+  //           status: true,
+  //         });
+  //       } else {
+  //         errorToastHandler({
+  //           message: res.data.message,
+  //           visibility: true,
+  //           status: false,
+  //         });
+  //       }
+  //       console.log(res.data.message);
+  //     })
+  //     .catch((err: any) => {
+  //       errorToastHandler({
+  //         message: err.message,
+  //         visibility: true,
+  //         status: false,
+  //       });
+  //     });
+  // };
 
-  const generateInvoice = () => {
-    generateInvoiceMutation({
-      items: rows,
-    })
-      .then((res: any) => {
-        if (res.data.status === "success") {
-          close();
-          successToastHandler({
-            message: res.data.message,
-            visibility: true,
-            status: true,
-          });
-          setRows([]);
-        } else {
-          errorToastHandler({
-            message: res.data.message,
-            visibility: true,
-            status: false,
-          });
-        }
-      })
-      .catch((err: any) => {
-        errorToastHandler({
-          message: err.message,
-          visibility: true,
-          status: false,
-        });
-      });
-  };
+  // const generateInvoice = () => {
+   
+  // };
 
   return (
     <>
@@ -336,7 +342,8 @@ export function InvoiceRow() {
         <div>
           {/** Start for table preview form */}
           {rows.map((record: IInvoiceRow, index: any) => {
-            const sub_total = record.price * record.quantity;
+            const sub_total: number = record.price * record.quantity;
+           
             return (
               <>
                 <div className={styles.container} key={index}>
@@ -348,6 +355,7 @@ export function InvoiceRow() {
                         let data: IInvoiceRow[] = [...rows];
                         data[index].description = e.target.value;
                         setRows(() => data);
+
                       }}
                     />
                   </div>
@@ -359,6 +367,11 @@ export function InvoiceRow() {
                         let data: IInvoiceRow[] = [...rows];
                         data[index].quantity = e.target.value;
                         setRows(() => data);
+                        // setSubTotal((state) => state + (record.price * record.quantity));
+                        // const newsubtotal = subTotal - (record.price * record.quantity);
+                        // const result = invoice.VAT * newsubtotal;
+                        // console.log('result ', newsubtotal)
+                        // setTax(result);
                       }}
                     />
                   </div>
@@ -368,10 +381,13 @@ export function InvoiceRow() {
                       value={record.price}
                       onChange={(e: any) => {
                         let data: IInvoiceRow[] = [...rows];
-
                         data[index].price = e.target.value;
-                        console.log(data);
                         setRows(() => data);
+                        // setSubTotal((state) => state + (record.price * record.quantity));
+                        // const newsubtotal = subTotal - (record.price * record.quantity);
+                        // const result = invoice.VAT * newsubtotal;
+                        // console.log('result ', newsubtotal)
+                        // setTax(result);
                       }}
                     />
                   </div>
@@ -380,6 +396,7 @@ export function InvoiceRow() {
                       type={"number"}
                       value={sub_total}
                       onChange={(e: any) => {}}
+                      disabled={true}
                     />
                   </div>
                   <div className={styles.part}>
@@ -462,29 +479,27 @@ export function InvoiceRow() {
               type={"Number"}
               name={"subtotal"}
               placeholder="0"
-              value={formik.values.subtotal}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.sender_name && Boolean(formik.errors.subtotal)
-              }
-              helperText={formik.touched.subtotal && formik.errors.subtotal}
+              value={subTotal}
+              disabled={true}
             />
           </aside>
           <aside className={styles.subtotal}>
             <p>VAT(12%)</p>
             <InputField
               type={"text"}
-              name={"tax"}
-              placeholder="Sender name"
-              value={formik.values.tax}
-              onChange={formik.handleChange}
-              error={formik.touched.tax && Boolean(formik.errors.tax)}
-              helperText={formik.touched.tax && formik.errors.tax}
+              placeholder="tax"
+              value={tax}
+              disabled={true}
             />
           </aside>
           <aside className={styles.subtotal}>
             <p>Total</p>
-            <InputField type={"text"} placeholder="" />
+            <InputField 
+              type={"text"}
+              value={tax+subTotal} 
+              placeholder=""
+              disabled={true}
+            />
           </aside>
         </div>
         <div className={styles.footer}>
@@ -507,7 +522,7 @@ export function InvoiceRow() {
         </div>
         <Button
           button="primary"
-          label="Generate Invoice "
+          label="Generate Invoice"
           onClick={formik.handleSubmit}
         />
       </section>
@@ -535,3 +550,15 @@ export function InvoiceRow() {
     </>
   );
 }
+
+function calculateSubtotal(rows: IInvoiceRow[]) {
+
+  let sub_total = 0;
+
+  rows.map((row: IInvoiceRow)=> {
+    sub_total += (row.total ? row.total : 0)
+  });
+
+  return sub_total
+}
+

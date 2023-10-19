@@ -10,11 +10,11 @@ export const menuitems: IMenuItem[] = [
     url: "/dashboard",
     icon: "material-symbols:dashboard",
   },
-  {
-    title: "Company",
-    url: "/company",
-    icon: "mdi:user-group",
-  },
+  // {
+  //   title: "Company",
+  //   url: "/company",
+  //   icon: "mdi:user-group",
+  // },
   {
     title: "Invoice",
     url: "/invoice",

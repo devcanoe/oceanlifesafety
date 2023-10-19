@@ -4,6 +4,7 @@ import IService from "../../common/interfaces/service.interface";
 import InvoiceRepository from "../../common/database/repository/invoice.repository";
 import Http from "../../common/helper/http.helper";
 import { generateReference } from "../../common/utils/generate-string";
+import { InvoiceItem } from "../../common/database/models/invoice.model";
 
 @injectable()
 export default class GenerateInvoiceService implements IService<Request, Response, NextFunction>{
@@ -26,13 +27,16 @@ export default class GenerateInvoiceService implements IService<Request, Respons
                 sender_name,
                 invoice_date,
                 due_date,
+                sub_total,
+                total,
                 tax,
-                subtotal,
                 notes,
                 terms
             } = req.body;
+       
             
             const generatedInvReference = generateReference("INV");
+           
 
             const createInvoice = await this.invoiceRepository.addData({
                 ref_no: generatedInvReference,
@@ -44,13 +48,14 @@ export default class GenerateInvoiceService implements IService<Request, Respons
                 sender_name,
                 invoice_date,
                 due_date,
-                tax,
+                tax: Number(tax),
                 notes,
                 terms,
-                subtotal,
+                subtotal: sub_total,
+                total,
                 items
             });
-
+           
             this.httpHelper.Response({
                 res,
                 status: "success",

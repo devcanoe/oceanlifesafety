@@ -12,7 +12,15 @@ export default interface Invoice extends Base {
     due_date?: Date;
     tax?: number;
     subtotal?: number;
+    total?: number;
     notes?: string;
     terms?: string;
     items?: any[];
+}
+
+export interface InvoiceItem {
+    total?: number;
+    description?: string;
+    quantity?: number;
+    price?: number;
 }

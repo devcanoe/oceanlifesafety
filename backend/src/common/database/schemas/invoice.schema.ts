@@ -1,11 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
-import Ship from '../models/ship.model';
 import Invoice from '../models/invoice.model';
 
 const invoiceItems: Schema = new Schema({
     description: { type: String },
     quantity: { type: Number },
-    price: {type: Number}
+    price: {type: Number},
+    total: {type: Number}
 });
 
 const invoiceSchema: Schema = new Schema<Invoice>({
@@ -50,6 +50,10 @@ const invoiceSchema: Schema = new Schema<Invoice>({
     required: true
   },
   subtotal: {
+    type: Number,
+    required: true
+  },
+  total: {
     type: Number,
     required: true
   },
