@@ -8,6 +8,7 @@ import { useState } from "react";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import Company from "@/common/model/company.model";
+import { useCreateServiceMutation } from "@/common/services/calendar.service";
 
 interface IAddCompanyContent {
   close: () => void;
@@ -32,7 +33,7 @@ export default function AddServicingContent({ close }: IAddCompanyContent) {
     setErrorToastStatus(args);
   };
 
-  const [create, { isLoading }] = useCreateCompanyMutation();
+  const [createService, { isLoading }] = useCreateServiceMutation();
 
   const validationSchema = yup.object({
     company: yup.string().required("firstname is required"),
@@ -47,7 +48,28 @@ export default function AddServicingContent({ close }: IAddCompanyContent) {
       due_date: new Date(),
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any) => {},
+    onSubmit: (values: any) => {
+      createService({
+        company: values.company,
+        vessel: values.vessel,
+        due_date: values.due_date
+      }).then((res: any)=> {
+        console.log(res.data)
+        successToastHandler({
+          message: res.data.message,
+          visibility: true,
+          status: true,
+        }); 
+
+        close();
+      }).catch((err: any)=> [
+        errorToastHandler({
+          message: 'something unexpected happened',
+          visibility: true,
+          status: false
+        })
+      ])
+    },
   });
 
   return (

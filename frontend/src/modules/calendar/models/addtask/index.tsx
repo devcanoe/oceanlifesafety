@@ -8,6 +8,7 @@ import { useState } from "react";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import Company from "@/common/model/company.model";
+import { useCreateTaskMutation } from "@/common/services/calendar.service";
 
 interface IAddCompanyContent {
   close: () => void;
@@ -25,7 +26,15 @@ export default function AddTaskContent({ close }: IAddCompanyContent) {
     status: false,
   });
 
-  const [create, { isLoading }] = useCreateCompanyMutation();
+  const successToastHandler = (args: IHandleMotion) => {
+    setSuccessToastStatus(args);
+  };
+
+  const errorToastHandler = (args: IHandleMotion) => {
+    setErrorToastStatus(args);
+  };
+
+  const [createTask, { isLoading }] = useCreateTaskMutation();
 
   const validationSchema = yup.object({
     title: yup.string().required("title is required"),
@@ -43,7 +52,26 @@ export default function AddTaskContent({ close }: IAddCompanyContent) {
     },
     validationSchema: validationSchema,
     onSubmit: (values: any) => {
-      console.log(values);
+      createTask({
+        title: values.title,
+        description: values.description,
+        due_date: values.due_date,
+        due_time: values.due_time
+      }).then((res: any)=> {
+        successToastHandler({
+          message: res.data.message,
+          visibility: true,
+          status: true,
+        }) 
+
+        close()
+      }).catch((err: any)=> [
+        errorToastHandler({
+          message: 'something unexpected happened',
+          visibility: true,
+          status: false
+        })
+      ])
     },
   });
 

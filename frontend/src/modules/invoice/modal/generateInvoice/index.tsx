@@ -13,7 +13,10 @@ import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
 import TextArea from "@/common/components/form/textarea";
-import { formValidationSchema, generateInvoiceSchema } from "./genereateinvoice.schema";
+import {
+  formValidationSchema,
+  generateInvoiceSchema,
+} from "./genereateinvoice.schema";
 import IGenerateInvoice from "@/common/services/interface/invoice.interface";
 import { invoice } from "@/common/constants/rate";
 
@@ -37,8 +40,8 @@ interface IInvoiceRow {
 export function InvoiceRow() {
   const router = useRouter();
   const [rows, setRows] = useState<IInvoiceRow[]>([]);
-  const [ subTotal, setSubTotal ] = useState<number>(0);
-  const [ tax, setTax ] = useState<number>(0);
+  const [subTotal, setSubTotal] = useState<number>(0);
+  const [tax, setTax] = useState<number>(0);
 
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
@@ -88,14 +91,14 @@ export function InvoiceRow() {
       tax: 0,
       notes: "",
       terms: "",
-      items: []
+      items: [],
     },
     validationSchema: generateInvoiceSchema,
     onSubmit: (values: IGenerateInvoice) => {
       generateInvoiceMutation({
         items: rows,
-        receiver_name: values.receiver_name, 
-        receiver_company: values.receiver_company, 
+        receiver_name: values.receiver_name,
+        receiver_company: values.receiver_company,
         receiver_address: values.receiver_address,
         sender_address: values.sender_address,
         sender_company: values.sender_company,
@@ -104,12 +107,12 @@ export function InvoiceRow() {
         due_date: values.due_date,
         tax,
         sub_total: subTotal,
-        total: (tax+subTotal),
+        total: tax + subTotal,
         notes: values.notes,
-        terms: values.terms
+        terms: values.terms,
       })
         .then((res: any) => {
-          console.log(res.data)
+          console.log(res.data);
           if (res.data.status === "success") {
             successToastHandler({
               message: res.data.message,
@@ -126,7 +129,7 @@ export function InvoiceRow() {
           }
         })
         .catch((err: any) => {
-          console.log(err.message)
+          console.log(err.message);
           errorToastHandler({
             message: err.message,
             visibility: true,
@@ -144,7 +147,7 @@ export function InvoiceRow() {
     },
     validationSchema: formValidationSchema,
     onSubmit: (values) => {
-      const sub_total = values.price * values.quantity
+      const sub_total = values.price * values.quantity;
       setRows((state) => [
         ...state,
         {
@@ -154,11 +157,11 @@ export function InvoiceRow() {
           total: sub_total,
         },
       ]);
-      const newsubtotal = subTotal + sub_total
+      const newsubtotal = subTotal + sub_total;
       setSubTotal((state) => state + sub_total);
-      console.log('total ', newsubtotal)
+      console.log("total ", newsubtotal);
       const result = invoice.VAT * newsubtotal;
-      console.log('result ', result)
+      console.log("result ", result);
       setTax(result);
       // formik.setFieldValue('tax', (invoice.VAT * subTotal))
       formFormik.setValues({
@@ -169,9 +172,8 @@ export function InvoiceRow() {
     },
   });
 
-
   const deleteRow = (record: IInvoiceRow) => {
-    const sub_total = record.price * record.quantity
+    const sub_total = record.price * record.quantity;
     var array = [...rows]; // make a separate copy of the array
     var index = array.indexOf(record);
     if (index !== -1) {
@@ -180,16 +182,15 @@ export function InvoiceRow() {
     }
 
     setSubTotal((state) => state - sub_total);
-    console.log('total ', subTotal)
-    if(subTotal === 0){
-      setTax(0)
+    console.log("total ", subTotal);
+    if (subTotal === 0) {
+      setTax(0);
     } else {
-      const newsubtotal = subTotal - sub_total
+      const newsubtotal = subTotal - sub_total;
       const result = invoice.VAT * newsubtotal;
-      console.log('result ', newsubtotal)
+      console.log("result ", newsubtotal);
       setTax(result);
     }
-    
   };
 
   // const deleteInvoiceHandler = (id: string) => {
@@ -221,7 +222,7 @@ export function InvoiceRow() {
   // };
 
   // const generateInvoice = () => {
-   
+
   // };
 
   return (
@@ -343,7 +344,7 @@ export function InvoiceRow() {
           {/** Start for table preview form */}
           {rows.map((record: IInvoiceRow, index: any) => {
             const sub_total: number = record.price * record.quantity;
-           
+
             return (
               <>
                 <div className={styles.container} key={index}>
@@ -355,7 +356,6 @@ export function InvoiceRow() {
                         let data: IInvoiceRow[] = [...rows];
                         data[index].description = e.target.value;
                         setRows(() => data);
-
                       }}
                     />
                   </div>
@@ -494,9 +494,9 @@ export function InvoiceRow() {
           </aside>
           <aside className={styles.subtotal}>
             <p>Total</p>
-            <InputField 
+            <InputField
               type={"text"}
-              value={tax+subTotal} 
+              value={tax + subTotal}
               placeholder=""
               disabled={true}
             />
@@ -552,13 +552,11 @@ export function InvoiceRow() {
 }
 
 function calculateSubtotal(rows: IInvoiceRow[]) {
-
   let sub_total = 0;
 
-  rows.map((row: IInvoiceRow)=> {
-    sub_total += (row.total ? row.total : 0)
+  rows.map((row: IInvoiceRow) => {
+    sub_total += row.total ? row.total : 0;
   });
 
-  return sub_total
+  return sub_total;
 }
-

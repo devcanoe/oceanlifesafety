@@ -1,3 +1,3 @@
 export const invoice = {
-    VAT: 0.12
-}
+  VAT: 0.12,
+};

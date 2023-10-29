@@ -1,5 +1,5 @@
 import Loader from "@/common/components/display/loader";
-import Popup, { IHandleMotion } from "@/common/components/display/popup";
+import { IHandleMotion } from "@/common/components/display/popup";
 import Table from "@/common/components/display/table";
 import { Icon } from "@iconify/react";
 import {
@@ -12,11 +12,6 @@ import { useState } from "react";
 import { Navbar } from "../clients";
 import styles from "./index.module.css";
 import SToast from "@/common/components/display/toast/toast";
-import {
-  useDeleteCompanyMutation,
-  useGetCompaniesQuery,
-} from "@/common/services/company.service";
-import GenerateInvoiceContent from "./modal/generateInvoice";
 import {
   useDeleteInvoiceMutation,
   useFetchInvoicesQuery,
@@ -94,7 +89,7 @@ export default function InvoiceContent() {
           visibility: true,
           status: true,
         });
-        // refetch();
+        refetch();
       })
       .catch((err: any) => {
         errorToastHandler({
@@ -106,7 +101,10 @@ export default function InvoiceContent() {
   };
 
   const columns: GridColDef[] = [
-    { field: "reference_no", headerName: "Reference Number", width: 200 },
+    { field: "reference_no", headerName: "Reference Number", width: 300 },
+    { field: "receiver_company", headerName: "Receiver", width: 200 },
+    { field: "due_date", headerName: "Due Date", width: 200 },
+    { field: "total", headerName: "Total", width: 200 },
     {
       field: "action",
       headerName: "Action",
