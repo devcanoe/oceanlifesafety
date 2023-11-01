@@ -4,9 +4,10 @@ import Button from '@/common/components/form/button';
 import { IHandleMotion } from '@/common/components/display/popup';
 import { editprofileValidationSchema } from './editprofile.schema';
 import { useFormik } from 'formik';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFetchUserQuery, useUpdateUserMutation } from '@/common/services/user.service';
 import Loader from '@/common/components/display/loader';
+import SToast from '@/common/components/display/toast/toast';
 
 const EditProfileContent = () => {
 
@@ -165,6 +166,28 @@ const EditProfileContent = () => {
                     label={"Update Profile"}
                     onClick={formik.handleSubmit}
                 />
+
+        <SToast
+          text={successToastStatus.message}
+          severity={"success"}
+          open={successToastStatus.visibility}
+          onClose={function (): void {
+            setSuccessToastStatus({
+              visibility: false,
+            });
+          }}
+        />
+
+        <SToast
+          text={errorToastStatus.message}
+          severity={"error"}
+          open={errorToastStatus.visibility}
+          onClose={function (): void {
+            setErrorToastStatus({
+              visibility: false,
+            });
+          }}
+        />
             </section>
         </>
     )

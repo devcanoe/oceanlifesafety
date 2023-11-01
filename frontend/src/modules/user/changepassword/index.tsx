@@ -7,6 +7,7 @@ import { changepasswordValidationSchema } from './changepassword.schema';
 import { useFormik } from 'formik';
 import Button from '@/common/components/form/button';
 import { useChangePasswordMutation } from '@/common/services/user.service';
+import SToast from '@/common/components/display/toast/toast';
 
 export default function ChangepasswordContent() {
 
@@ -96,6 +97,28 @@ export default function ChangepasswordContent() {
                     label={"Change password"}
                     onClick={formik.handleSubmit}
                 />
+
+        <SToast
+          text={successToastStatus.message}
+          severity={"success"}
+          open={successToastStatus.visibility}
+          onClose={function (): void {
+            setSuccessToastStatus({
+              visibility: false,
+            });
+          }}
+        />
+
+        <SToast
+          text={errorToastStatus.message}
+          severity={"error"}
+          open={errorToastStatus.visibility}
+          onClose={function (): void {
+            setErrorToastStatus({
+              visibility: false,
+            });
+          }}
+        />
             </section>
         </>
     )
