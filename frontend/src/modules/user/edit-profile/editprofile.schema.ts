@@ -10,15 +10,15 @@ export const editprofileValidationSchema = yup.object({
   phone: yup
     .string()
     .required("Phone is required"),
-  date_of_birth: yup
-    .string()
-    .required("Date of birth is required"),
-  date_hired: yup
-    .string()
-    .required("Date hired is required"),
-  date_fired: yup
-    .string()
-    .required("Date fired is required"),
+  // date_of_birth: yup
+  //   .string()
+  //   .required("Date of birth is required"),
+  // date_hired: yup
+  //   .string()
+  //   .required("Date hired is required"),
+  // date_fired: yup
+  //   .string()
+  //   .required("Date fired is required"),
   position: yup
     .string()
     .required("Position is required"),

@@ -4,5 +4,6 @@ export default interface User extends Base {
     firstname?: string;
     lastname?: string;
     email?: string;
-    phone?: number
+    phone?: number;
+    position?: string;
 }

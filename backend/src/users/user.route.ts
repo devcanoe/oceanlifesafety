@@ -8,5 +8,6 @@ const userController = container.resolve(UserController);
 
 // routes for ticket types
 userRouter.get('/', userAuth, (req, res, next)=> userController.getUser(req, res, next));
+userRouter.patch('/', userAuth, (req, res, next)=> userController.updateUser(req, res, next));
 
 export default userRouter

@@ -15,10 +15,10 @@ export const userEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
-    createService: build.mutation<IResponse<Service>, Service>({
+    updateUser: build.mutation<IResponse<User>, User>({
       query: (body) => ({
-        url: `${baseUrl}/create-servicing`,
-        method: "POST",
+        url: `${baseUrl}`,
+        method: "PATCH",
         body,
       }),
     }),
@@ -30,6 +30,6 @@ export const userEndpoint = sungloApi.injectEndpoints({
 
 export const {
   useCreateTaskMutation,
-  useCreateServiceMutation,
+  useUpdateUserMutation,
   useFetchUserQuery
 } = userEndpoint;

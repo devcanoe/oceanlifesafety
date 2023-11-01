@@ -5,12 +5,14 @@ import { IHandleMotion } from '@/common/components/display/popup';
 import { editprofileValidationSchema } from './editprofile.schema';
 import { useFormik } from 'formik';
 import { useCallback, useEffect, useState } from 'react';
-import { useFetchUserQuery } from '@/common/services/user.service';
+import { useFetchUserQuery, useUpdateUserMutation } from '@/common/services/user.service';
 import Loader from '@/common/components/display/loader';
 
 const EditProfileContent = () => {
 
     const { data, isSuccess } = useFetchUserQuery();
+    const [ updateEditProfile, {isLoading}] = useUpdateUserMutation();
+
     console.log('data ', isSuccess && data.data)
     const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
         message: "",
@@ -36,14 +38,38 @@ const EditProfileContent = () => {
             firstname: "",
             lastname: "",
             phone: "",
-            date_of_birth: "2014-02-09",
-            date_hired: "",
-            date_fired: "",
             position: ""
         },
         validationSchema: editprofileValidationSchema,
         onSubmit: (values: any) => {
-         
+            updateEditProfile({
+                position: values.position,
+                phone: values.phone
+            }).then(({data, error}: any)=> {
+                console.log('data ', data);
+                if(data) {
+                    successToastHandler({
+                        message: data.message,
+                        visibility: true,
+                        status: true,
+                    });
+                }
+
+                if (error) {
+                    errorToastHandler({
+                      message: error.data.message,
+                      visibility: true,
+                      status: false,
+                    });
+                  }
+                
+            }).catch(()=> {
+                errorToastHandler({
+                    message: "Something went wrong",
+                    visibility: true,
+                    status: false,
+                  });
+            });
         },
       });
 
@@ -53,6 +79,7 @@ const EditProfileContent = () => {
             formik.setFieldValue('lastname', data.data?.lastname);
             formik.setFieldValue('email', data.data?.email);
             formik.setFieldValue('phone', data.data?.phone);
+            formik.setFieldValue('position', data.data?.position);
         }
       },[isSuccess])
 
@@ -92,7 +119,7 @@ const EditProfileContent = () => {
                     error={formik.touched.phone && Boolean(formik.errors.phone)}
                     helperText={formik.touched.phone && formik.errors.phone}
                 />
-                <InputField
+                {/* <InputField
                     label='Date of Birth'
                     type="date"
                     name={"date_of_birth"}
@@ -101,7 +128,7 @@ const EditProfileContent = () => {
                     onChange={formik.handleChange}
                     error={formik.touched.date_of_birth && Boolean(formik.errors.date_of_birth)}
                     helperText={formik.touched.date_of_birth && formik.errors.date_of_birth}
-                />
+                /> */}
                 <InputField
                     label='Position'
                     type="text"
@@ -112,7 +139,7 @@ const EditProfileContent = () => {
                     error={formik.touched.position && Boolean(formik.errors.position)}
                     helperText={formik.touched.position && formik.errors.position}
                 />
-                <InputField
+                {/* <InputField
                     label='Date Hired'
                     type="date"
                     name={"date_hired"}
@@ -131,11 +158,11 @@ const EditProfileContent = () => {
                     onChange={formik.handleChange}
                     error={formik.touched.date_fired && Boolean(formik.errors.date_fired)}
                     helperText={formik.touched.date_fired && formik.errors.date_fired}
-                />
+                /> */}
 
                 <Button
                     button="primary"
-                    isLoading={false}
+                    isLoading={isLoading}
                     label={"Update Profile"}
                     onClick={formik.handleSubmit}
                 />
