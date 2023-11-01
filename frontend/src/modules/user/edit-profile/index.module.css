@@ -1,0 +1,14 @@
+.container {
+    background-color: #ffffff;
+    width: 70%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.container .col2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}

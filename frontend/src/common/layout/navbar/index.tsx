@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/common/lib/hooks";
 import { User, logOut, selectCurrentUser } from "@/common/lib/slice/authslice";
 import { useEffect, useState } from "react";
 import InputField from "@/common/components/form/inputfield";
+import Link from "next/link";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -42,7 +43,7 @@ export default function Navbar() {
               <Icon icon="ph:user-bold" width={20} height={20} />
             </span>
             <div className={styles.dropdowncontent}>
-              <p className={styles.dropdowncontentitem}>Edit profile</p>
+              <Link href={'/edit-profile'} className={styles.dropdowncontentitem}>Edit profile</Link>
               <p className={styles.dropdowncontentitem}>Change password</p>
               <p className={styles.dropdowncontentitem}>Logout</p>
             </div>

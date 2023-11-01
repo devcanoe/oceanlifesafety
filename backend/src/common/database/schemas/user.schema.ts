@@ -31,8 +31,7 @@ const userschema: Schema =   new Schema<User>({
     required: true
   },
   date_fired: {
-    type: Date,
-    required: true
+    type: Date
   },
   role: {
     type: String,
