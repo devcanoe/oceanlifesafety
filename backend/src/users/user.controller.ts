@@ -17,9 +17,9 @@ export default class UserController {
         try {
 
             const { user } = req.body
-            
+   
             const response = await this.getUserService.execute(user.id)
-
+      
             this.httpHelper.Response({
                 res,
                 status: "success",

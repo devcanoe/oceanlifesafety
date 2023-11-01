@@ -4,10 +4,14 @@ import Button from '@/common/components/form/button';
 import { IHandleMotion } from '@/common/components/display/popup';
 import { editprofileValidationSchema } from './editprofile.schema';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useFetchUserQuery } from '@/common/services/user.service';
+import Loader from '@/common/components/display/loader';
 
 const EditProfileContent = () => {
 
+    const { data, isSuccess } = useFetchUserQuery();
+    console.log('data ', isSuccess && data.data)
     const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
         message: "",
         visibility: false,
@@ -43,9 +47,19 @@ const EditProfileContent = () => {
         },
       });
 
+      useEffect(()=>{
+        if(data){
+            formik.setFieldValue('firstname', data.data?.firstname);
+            formik.setFieldValue('lastname', data.data?.lastname);
+            formik.setFieldValue('email', data.data?.email);
+            formik.setFieldValue('phone', data.data?.phone);
+        }
+      },[isSuccess])
+
     return (
         <>
             <section className={styles.container}>
+                <Loader status={!isSuccess} />
                 <div className={styles.col2}>
                 <InputField
                     label='Firstname'
