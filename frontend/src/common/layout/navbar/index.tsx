@@ -45,7 +45,7 @@ export default function Navbar() {
             <div className={styles.dropdowncontent}>
               <Link href={'/edit-profile'} className={styles.dropdowncontentitem}>Edit profile</Link>
               <Link href={'/changepassword'} className={styles.dropdowncontentitem}>Change password</Link>
-              <p className={styles.dropdowncontentitem}>Logout</p>
+              <p className={styles.dropdowncontentitem} onClick={handleLogout}>Logout</p>
             </div>
           </div>
         </div>

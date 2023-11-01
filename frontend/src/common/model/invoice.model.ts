@@ -9,5 +9,8 @@ export interface InvoiceItem extends Base {
 
 export interface Invoice extends Base {
   ref_no?: string;
+  receiver_company?: string;
+  due_date?: Date;
+  total?: number;
   items?: InvoiceItem[];
 }

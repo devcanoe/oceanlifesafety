@@ -35,6 +35,9 @@ export default function InvoiceContent() {
       rows.push({
         id: invoice._id,
         reference_no: `${invoice.ref_no}`,
+        receiver_company: `${invoice.receiver_company}`,
+        due_date: invoice.due_date,
+        total: invoice.total
       });
     });
 
