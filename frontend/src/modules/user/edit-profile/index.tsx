@@ -13,7 +13,6 @@ const EditProfileContent = () => {
     const { data, isSuccess } = useFetchUserQuery();
     const [ updateEditProfile, {isLoading}] = useUpdateUserMutation();
 
-    console.log('data ', isSuccess && data.data)
     const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
         message: "",
         visibility: false,

@@ -3,6 +3,7 @@ import GetUserService from "./services/get-user.service";
 import { Request, Response, NextFunction } from "express";
 import Http from "../common/helper/http.helper";
 import UpdateUserService from "./services/update-user.service";
+import ChangepasswordService from "./services/changepassword.service";
 
 
 @injectable()
@@ -10,9 +11,27 @@ export default class UserController {
     constructor(
         private getUserService: GetUserService,
         private updateUserService: UpdateUserService,
+        private changePasswordService: ChangepasswordService,
         private httpHelper: Http
     ){
 
+    }
+
+    async changePassword(req: Request, res: Response, next: NextFunction) {
+        try {
+
+            const { user, password, confirmpassword } = req.body
+   
+            await this.changePasswordService.execute(user.id, password, confirmpassword);
+      
+            this.httpHelper.Response({
+                res,
+                status: "success",
+                message: "Successfully change password"
+            })
+        }catch(err){
+            next(err)
+        }
     }
 
     async getUser(req: Request, res: Response, next: NextFunction) {

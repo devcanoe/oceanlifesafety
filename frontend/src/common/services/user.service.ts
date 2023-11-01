@@ -1,17 +1,15 @@
 import { sungloApi } from "../lib/api";
-import { Invoice } from "../model/invoice.model";
-import { Service, Task } from "./interface/calendar.interface";
-import IResponse from "./interface/response.interface";
+import IResponse, { IResponseBase } from "./interface/response.interface";
 import User from "./interface/user.interface";
 
 const baseUrl = "users";
 
 export const userEndpoint = sungloApi.injectEndpoints({
   endpoints: (build) => ({
-    createTask: build.mutation<IResponse<Task>, Task>({
+    changePassword: build.mutation<IResponseBase, {password: string, confirmpassword: string}>({
       query: (body) => ({
-        url: `${baseUrl}/create-task`,
-        method: "POST",
+        url: `${baseUrl}/changepassword`,
+        method: "PATCH",
         body,
       }),
     }),
@@ -29,7 +27,7 @@ export const userEndpoint = sungloApi.injectEndpoints({
 });
 
 export const {
-  useCreateTaskMutation,
+  useChangePasswordMutation,
   useUpdateUserMutation,
   useFetchUserQuery
 } = userEndpoint;
