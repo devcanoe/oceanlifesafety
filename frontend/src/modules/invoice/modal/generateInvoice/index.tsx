@@ -19,6 +19,7 @@ import {
 } from "./genereateinvoice.schema";
 import IGenerateInvoice from "@/common/services/interface/invoice.interface";
 import { invoice } from "@/common/constants/rate";
+import { usePDF } from 'react-to-pdf';
 
 export default function GenerateInvoiceContent() {
   return (
@@ -42,6 +43,7 @@ export function InvoiceRow() {
   const [rows, setRows] = useState<IInvoiceRow[]>([]);
   const [subTotal, setSubTotal] = useState<number>(0);
   const [tax, setTax] = useState<number>(0);
+  const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
 
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
@@ -227,7 +229,8 @@ export function InvoiceRow() {
 
   return (
     <>
-      <section className={styles.card}>
+      <section className={styles.card} ref={targetRef}>
+      <button onClick={() => toPDF()}>Download PDF</button>
         {/** Start of invoice header */}
         <div className={styles.address}>
           <aside className={styles.receiver}>

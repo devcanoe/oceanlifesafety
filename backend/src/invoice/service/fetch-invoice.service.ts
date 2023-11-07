@@ -16,7 +16,7 @@ export default class FetchInvoiceService implements IService<Request, Response, 
             const { id } = req.params;
 
             const data = await this.invoiceRepository.fetchOneData({_id: id});
-
+            console.log(data)
             this.httpHelper.Response({
                 res,
                 status: "success",

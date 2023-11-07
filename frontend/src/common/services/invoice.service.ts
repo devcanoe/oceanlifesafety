@@ -17,7 +17,7 @@ export const invoiceEndpoint = sungloApi.injectEndpoints({
     fetchInvoices: build.query<IResponse<Invoice[]>, void>({
       query: () => `${baseUrl}`,
     }),
-    fetchOneInvoice: build.query<IResponse<Invoice>, { id: string }>({
+    fetchOneInvoice: build.query<IResponse<any>, { id: string }>({
       query: ({ id }) => `${baseUrl}/${id}`,
     }),
     deleteInvoice: build.mutation<IResponseBase, { id: string }>({

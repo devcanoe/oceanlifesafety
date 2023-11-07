@@ -1,0 +1,63 @@
+.container {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header .aside {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.main .tableheader, .tablecontent {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.tableheader {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #3b3b3b;
+}
+
+.tablecontent {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.numbers {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.totals {
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.footer {
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

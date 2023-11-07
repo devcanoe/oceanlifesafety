@@ -1,7 +1,7 @@
 import Button from "@/common/components/form/button";
 import styles from "./index.module.css";
 import InputField from "@/common/components/form/inputfield";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import {
@@ -15,10 +15,14 @@ import { Invoice, InvoiceItem } from "@/common/model/invoice.model";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import { Icon } from "@iconify/react";
+import PDFTemplate from "../pdftemplate";
+import { usePDF } from "react-to-pdf";
 
 interface IGenerate {
   invoiceId: string | undefined;
 }
+
+
 
 export default function UpdateInvoiceContent(props: IGenerate) {
   const {
@@ -27,12 +31,19 @@ export default function UpdateInvoiceContent(props: IGenerate) {
     isSuccess,
     refetch,
   } = useFetchOneInvoiceQuery({ id: props.invoiceId });
+
+  const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
+
+  
   return (
     <>
-      <section>{isSuccess && <InvoiceRow data={data?.data?.items} />}</section>
+      <Button onClick={() => toPDF()} label="Download PDF" button={"primary"}/>
+      
+      <section>{isSuccess && <PDFTemplate forwardedRef={targetRef} data={data?.data}/>}</section>
     </>
   );
 }
+
 
 interface IInvoiceRow {
   description: string;
