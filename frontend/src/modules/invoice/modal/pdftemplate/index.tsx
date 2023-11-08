@@ -10,6 +10,13 @@ const PDFTemplate = ({ forwardedRef, data }: { forwardedRef: React.RefObject<HTM
     return (
         <>
             <section ref={forwardedRef} className={styles.container}>
+                <nav>
+                    <b>Invoice no: </b> {data.ref_no}
+                </nav>
+                <div>
+                    <p><b> Due date: </b>{data.due_date}</p>
+                    <p><b> Invoice date: </b>{data.invoice_date}</p>
+                </div>
                 <header className={styles.header}>
                     <aside className={styles.aside}>
                         <p><b>Receiver Name: </b>{data.receiver_name} </p>
