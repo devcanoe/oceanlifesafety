@@ -55,7 +55,7 @@ export default class GenerateInvoiceService implements IService<Request, Respons
                 total,
                 items
             });
-           
+            console.log(createInvoice)
             this.httpHelper.Response({
                 res,
                 status: "success",

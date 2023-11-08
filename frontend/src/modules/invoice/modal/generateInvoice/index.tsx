@@ -87,8 +87,8 @@ export function InvoiceRow() {
       sender_name: "",
       sender_company: "",
       sender_address: "",
-      invoice_date: new Date(),
-      due_date: new Date(),
+      invoice_date: "",
+      due_date: "",
       tax: 0,
       notes: "",
       terms: "",
@@ -228,14 +228,43 @@ export function InvoiceRow() {
   return (
     <>
       <section className={styles.card}>
-
+      <nav className={styles.date}>
+          <InputField
+              type={"date"}
+              name={"invoice_date"}
+              label="Invoice Date"
+              value={formik.values.invoice_date}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.invoice_date &&
+                Boolean(formik.errors.invoice_date)
+              }
+              helperText={
+                formik.touched.invoice_date && formik.errors.invoice_date
+              }
+            />
+            <InputField
+              type={"date"}
+              name={"due_date"}
+              label="Due date"
+              value={formik.values.due_date}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.due_date &&
+                Boolean(formik.errors.due_date)
+              }
+              helperText={
+                formik.touched.due_date && formik.errors.due_date
+              }
+            />
+          </nav>
         {/** Start of invoice header */}
         <div className={styles.address}>
           <aside className={styles.receiver}>
             <InputField
               type={"text"}
               name={"receiver_name"}
-              placeholder="Receiver name"
+              label="Receiver name"
               value={formik.values.receiver_name}
               onChange={formik.handleChange}
               error={
@@ -249,7 +278,7 @@ export function InvoiceRow() {
             <InputField
               type={"text"}
               name={"receiver_company"}
-              placeholder="Receiver company"
+              label="Receiver company"
               value={formik.values.receiver_company}
               onChange={formik.handleChange}
               error={
@@ -264,7 +293,7 @@ export function InvoiceRow() {
             <InputField
               type={"text"}
               name={"receiver_address"}
-              placeholder="Receiver address"
+              label="Receiver address"
               value={formik.values.receiver_address}
               onChange={formik.handleChange}
               error={
@@ -281,7 +310,7 @@ export function InvoiceRow() {
             <InputField
               type={"text"}
               name={"sender_name"}
-              placeholder="Sender name"
+              label="Sender name"
               value={formik.values.sender_name}
               onChange={formik.handleChange}
               error={
@@ -294,7 +323,7 @@ export function InvoiceRow() {
             <InputField
               type={"text"}
               name={"sender_company"}
-              placeholder="Sender company"
+              label="Sender company"
               value={formik.values.sender_company}
               onChange={formik.handleChange}
               error={
@@ -308,7 +337,7 @@ export function InvoiceRow() {
             <InputField
               type={"text"}
               name={"sender_address"}
-              placeholder="Sender address"
+              label="Sender address"
               value={formik.values.sender_address}
               onChange={formik.handleChange}
               error={
