@@ -43,7 +43,6 @@ export function InvoiceRow() {
   const [rows, setRows] = useState<IInvoiceRow[]>([]);
   const [subTotal, setSubTotal] = useState<number>(0);
   const [tax, setTax] = useState<number>(0);
-  const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
 
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
@@ -131,7 +130,6 @@ export function InvoiceRow() {
           }
         })
         .catch((err: any) => {
-          console.log(err.message);
           errorToastHandler({
             message: err.message,
             visibility: true,
@@ -161,9 +159,9 @@ export function InvoiceRow() {
       ]);
       const newsubtotal = subTotal + sub_total;
       setSubTotal((state) => state + sub_total);
-      console.log("total ", newsubtotal);
+     
       const result = invoice.VAT * newsubtotal;
-      console.log("result ", result);
+  
       setTax(result);
       // formik.setFieldValue('tax', (invoice.VAT * subTotal))
       formFormik.setValues({
@@ -184,13 +182,13 @@ export function InvoiceRow() {
     }
 
     setSubTotal((state) => state - sub_total);
-    console.log("total ", subTotal);
+  
     if (subTotal === 0) {
       setTax(0);
     } else {
       const newsubtotal = subTotal - sub_total;
       const result = invoice.VAT * newsubtotal;
-      console.log("result ", newsubtotal);
+      
       setTax(result);
     }
   };
@@ -229,8 +227,8 @@ export function InvoiceRow() {
 
   return (
     <>
-      <section className={styles.card} ref={targetRef}>
-      <button onClick={() => toPDF()}>Download PDF</button>
+      <section className={styles.card}>
+
         {/** Start of invoice header */}
         <div className={styles.address}>
           <aside className={styles.receiver}>
