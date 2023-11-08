@@ -14,6 +14,13 @@ export const invoiceEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
+    updateInvoice: build.mutation<IResponse<Invoice>, {id: string, body: any}>({
+      query: ({id, body}) => ({
+        url: `${baseUrl}/${id}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
     fetchInvoices: build.query<IResponse<Invoice[]>, void>({
       query: () => `${baseUrl}`,
     }),
@@ -31,6 +38,7 @@ export const invoiceEndpoint = sungloApi.injectEndpoints({
 
 export const {
   useGenerateInvoiceMutation,
+  useUpdateInvoiceMutation,
   useFetchInvoicesQuery,
   useFetchOneInvoiceQuery,
   useDeleteInvoiceMutation,
