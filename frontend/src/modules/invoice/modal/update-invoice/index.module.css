@@ -6,6 +6,28 @@
   gap: 10px;
 }
 
+.date {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.address {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.receiver,
+.sender,
+.subtotal {
+  width: 30%;
+}
+
 .container {
   margin-bottom: 10px;
 }
@@ -33,4 +55,14 @@
 
 .totalcontainer {
   padding: 10px 0px;
+}
+
+.subfooter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.footer {
+  margin-top: 15px;
 }

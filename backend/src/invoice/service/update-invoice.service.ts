@@ -10,12 +10,14 @@ export default class UpdateInvoiceService {
     }
 
     async execute(invoice_id: string, data: any) {
-        return await this.invoiceRepository.updateData({
+        const response = await this.invoiceRepository.updateData({
             _id: invoice_id
         },
         {
             ...data
         }
         )
+        console.log(response)
+        return response;
     }
 }
