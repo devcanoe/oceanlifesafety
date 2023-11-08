@@ -132,17 +132,13 @@ export default function InvoiceContent() {
           >
             <Icon icon="ph:trash-bold" /> Delete
           </Link>
-          {/* <Link
-            href={`#`}
+          <Link
+            href={`/invoice/edit/${params.id}`}
             className={styles.link}
-            onClick={() => {
-              updateModalToggleHandler();
-              setId(params.id.toString());
-            }}
           >
             <Icon icon="uil:pen" />
             Edit
-          </Link> */}
+          </Link>
         </>
       ),
       width: 300,
