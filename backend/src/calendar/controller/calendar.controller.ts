@@ -31,9 +31,9 @@ export default class CalendarController {
     async getHighLight(req: Request, res: Response, next: NextFunction){
         try{
 
-            const { date } = req.body
+            const { date } = req.params;
 
-            const response = await this.getHighlightService.execute(date);
+            const response = await this.getHighlightService.execute(new Date(date));
 
             this.httpHelper.Response({
                 res,

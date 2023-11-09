@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs";
 import { sungloApi } from "../lib/api";
 import { Invoice } from "../model/invoice.model";
 import { Service, Task } from "./interface/calendar.interface";
@@ -21,13 +22,14 @@ export const calendarEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
-    fetchInvoices: build.query<IResponse<Invoice[]>, void>({
-      query: () => `${baseUrl}`,
+    fetchMonthlyHighlight: build.query<IResponse<number[]>, { date: Dayjs}>({
+      query: ({date}) => `${baseUrl}/monthhighlight/${date}`,
     }),
   }),
 });
 
 export const {
   useCreateTaskMutation,
-  useCreateServiceMutation
+  useCreateServiceMutation,
+  useFetchMonthlyHighlightQuery
 } = calendarEndpoint;

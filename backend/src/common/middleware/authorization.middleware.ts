@@ -8,13 +8,14 @@ import { BadRequestError } from "../error/badrequest.error";
 export default async function userAuth(req: Request, res: Response, next: NextFunction) {
     try {
     const authHeader: string | undefined = req.headers.authorization ;
-    console.log(authHeader)
+  
+    console.log('req ' + JSON.stringify(req.body))
     if(!authHeader || !authHeader.split(' ')[1]){
         throw new BadRequestError('Not authorized to take this action')
     }
 
     const accesstoken = authHeader && authHeader.split(' ')[1];
-    console.log(accesstoken)
+    
     const tokenHelper = container.resolve(Token);
     const verifyToken = await tokenHelper.verify(accesstoken);
     // console.log(verifyToken)

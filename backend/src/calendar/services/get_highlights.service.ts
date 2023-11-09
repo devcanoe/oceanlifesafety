@@ -21,7 +21,9 @@ export default class GetHighlightService {
             const day = dateArray && dateArray[2];
 
             arrayMonthlyHighlight.push(Number(day))
-        })
+        });
+
+        console.log(arrayMonthlyHighlight)
 
         return arrayMonthlyHighlight 
     }

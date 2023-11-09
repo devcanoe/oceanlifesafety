@@ -8,37 +8,22 @@ import {
 } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useFetchMonthlyHighlightQuery } from "@/common/services/calendar.service";
 
 export default function CalendarComponent() {
   const requestAbortController = React.useRef<AbortController | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [highlightedDays, setHighlightedDays] = React.useState([1, 2, 15]);
+  
+  const [highlightedDays, setHighlightedDays] = React.useState([]);
+  const [ date, setDate ] = useState<Dayjs | undefined>(dayjs(Date()));
 
-  const fetchHighlightedDays = (date: Dayjs) => {
-    const controller = new AbortController();
-    fakeFetch(date, {
-      signal: controller.signal,
-    })
-      .then(({ daysToHighlight }) => {
-        setHighlightedDays(daysToHighlight);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        // ignore the error if it's caused by `controller.abort`
-        if (error.name !== "AbortError") {
-          throw error;
-        }
-      });
+  const { data, isSuccess, isLoading } = useFetchMonthlyHighlightQuery({ date : date});
 
-    requestAbortController.current = controller;
-  };
-
-  React.useEffect(() => {
-    fetchHighlightedDays(initialValue);
-    // abort request on unmount
-    return () => requestAbortController.current?.abort();
-  }, []);
+  useEffect(()=> {
+    if(isSuccess){
+      setHighlightedDays(data.data)
+    }
+  },[isSuccess])
 
   const handleMonthChange = (date: Dayjs) => {
     if (requestAbortController.current) {
@@ -46,10 +31,9 @@ export default function CalendarComponent() {
       // because it is possible to switch between months pretty quickly
       requestAbortController.current.abort();
     }
-    console.log('month ' + date);
-    setIsLoading(true);
+   
     setHighlightedDays([]);
-    fetchHighlightedDays(date);
+    setDate(date);
   };
 
   return (
