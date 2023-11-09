@@ -10,6 +10,7 @@ calendarRouter.post('/create-servicing', userAuth, (req, res, next)=>companyCont
 calendarRouter.post('/create-task', userAuth, (req, res, next)=>companyController.addTask(req, res, next));
 calendarRouter.get('/tasks/:id', userAuth, (req, res, next)=>companyController.getTask(req, res, next));
 calendarRouter.get('/', userAuth, (req, res, next)=>companyController.getCalendar(req, res, next));
+calendarRouter.get('/month-highlight', userAuth, (req, res, next)=>companyController.getHighLight(req, res, next));
 calendarRouter.delete('/task/:id', userAuth, (req, res, next)=>companyController.deleteTask(req, res, next));
 calendarRouter.delete('/servicing/:id', userAuth, (req, res, next)=>companyController.deleteServicing(req, res, next));
 calendarRouter.patch('/task/:id', userAuth, (req, res, next)=>companyController.updateTask(req, res, next));

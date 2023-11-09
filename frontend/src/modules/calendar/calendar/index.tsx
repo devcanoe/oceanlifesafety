@@ -1,4 +1,3 @@
-import DashboardLayout from "@/common/layout/dashboard";
 import { Badge } from "@mui/material";
 import {
   PickersDayProps,
@@ -47,7 +46,7 @@ export default function CalendarComponent() {
       // because it is possible to switch between months pretty quickly
       requestAbortController.current.abort();
     }
-
+    console.log('month ' + date);
     setIsLoading(true);
     setHighlightedDays([]);
     fetchHighlightedDays(date);
@@ -75,9 +74,7 @@ export default function CalendarComponent() {
   );
 }
 
-function getRandomNumber(min: number, max: number) {
-  return Math.round(Math.random() * (max - min) + min);
-}
+const initialValue = dayjs(new Date().toISOString().split('T')[0]);
 
 /**
  * Mimic fetch with abort controller https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort
@@ -86,7 +83,6 @@ function getRandomNumber(min: number, max: number) {
 function fakeFetch(date: Dayjs, { signal }: { signal: AbortSignal }) {
   return new Promise<{ daysToHighlight: number[] }>((resolve, reject) => {
     const timeout = setTimeout(() => {
-      const daysInMonth = date.daysInMonth();
       const daysToHighlight = [12, 13, 15];
 
       resolve({ daysToHighlight });
@@ -98,8 +94,6 @@ function fakeFetch(date: Dayjs, { signal }: { signal: AbortSignal }) {
     };
   });
 }
-
-const initialValue = dayjs("2022-04-17");
 
 function ServerDay(
   props: PickersDayProps<Dayjs> & { highlightedDays?: number[] }

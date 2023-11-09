@@ -21,8 +21,8 @@ export default class AddTaskService implements IService<Request, Response, NextF
                 type: "TASK",
                 description,
                 title,
-                due_date,
-                due_time
+                due_date: due_date.toISOString().split('T')[0],
+                due_time: due_time.toISOString().split('T')[1]
             });
 
             this.httpHelper.Response({
