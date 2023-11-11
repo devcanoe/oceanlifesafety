@@ -11,19 +11,21 @@ export default class GetHighlightService {
     }
     
     async execute(data: Date){
-        const response = await this.calendarRepository.fetchData({ due_date: data.toISOString().split('T')[0]});
-
+        const date = data.toISOString().split('T')[0]
+        const response = await this.calendarRepository.fetchData({ });
+    
         let arrayMonthlyHighlight: number[] = []
         
         response.map((rows: Calendar)=> {
             const dateString = rows.due_date; // Replace with your date string
             const dateArray = dateString && dateString.split('-');
             const day = dateArray && dateArray[2];
+            const month = dateArray && dateArray[1];
 
-            arrayMonthlyHighlight.push(Number(day))
+            if(month === date.split('-')[1]) {
+                arrayMonthlyHighlight.push(Number(day))
+            }
         });
-
-        console.log(arrayMonthlyHighlight)
 
         return arrayMonthlyHighlight 
     }

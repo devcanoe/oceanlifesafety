@@ -19,7 +19,7 @@ export default class AddServicingService implements IService<Request, Response, 
 
             const addTask = await this.calendarRepository.addData({
                 type: "SERVICING",
-                due_date: due_date.toISOString().split('T')[0],
+                due_date: due_date,
                 vessel,
                 company
             });
