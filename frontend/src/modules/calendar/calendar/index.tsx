@@ -11,12 +11,16 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import React, { useEffect, useState } from "react";
 import { useFetchMonthlyHighlightQuery } from "@/common/services/calendar.service";
 
-export default function CalendarComponent() {
+interface CalendarComponentProps {
+  setCurrentDate: (date: Dayjs) => void
+}
+
+export default function CalendarComponent({ setCurrentDate }: CalendarComponentProps) {
   const requestAbortController = React.useRef<AbortController | null>(null);
   
   const [highlightedDays, setHighlightedDays] = React.useState([]);
   const [ date, setDate ] = useState<Dayjs | undefined>(dayjs(Date()));
-
+  console.log('date ' + date)
   const { data, isSuccess, isLoading } = useFetchMonthlyHighlightQuery({ date : date});
 
   useEffect(()=> {
@@ -31,10 +35,16 @@ export default function CalendarComponent() {
       // because it is possible to switch between months pretty quickly
       requestAbortController.current.abort();
     }
-   
+    console.log('new date '+ date)
     setHighlightedDays([]);
     setDate(date);
+    setCurrentDate(date);
   };
+
+  const handleChange = (event: any) => {
+    console.log(event.$d)
+    setCurrentDate(event.$d)
+  }
 
   return (
     <>
@@ -43,6 +53,7 @@ export default function CalendarComponent() {
           defaultValue={initialValue}
           loading={isLoading}
           onMonthChange={handleMonthChange}
+          onChange={handleChange}
           renderLoading={() => <DayCalendarSkeleton />}
           slots={{
             day: ServerDay,

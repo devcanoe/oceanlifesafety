@@ -1,20 +1,44 @@
 import { ReactNode, useState } from "react";
 import styles from "./index.module.css";
 import { Icon } from "@iconify/react";
+import dayjs, { Dayjs } from "dayjs";
+import { useFetchCalendarQuery } from "@/common/services/calendar.service";
 
-export default function Calendarbreakdown() {
+interface CalendarbreakdownProps {
+  currentDate: Dayjs | undefined
+}
+
+export default function Calendarbreakdown({currentDate}: CalendarbreakdownProps) {
+
+  const { data, isLoading, isSuccess } = useFetchCalendarQuery({ date: currentDate ? currentDate : dayjs(Date())})
+
+    console.log('query ' + !isLoading && data);
   return (
     <>
       <div className={styles.container}>
-        <h5>21th Wednesday 2023</h5>
-        <div className={styles.calendarlist}>
-          <Breakdown type={"task"}>
-            <TaskContent status={false} />
-          </Breakdown>
-          <Breakdown type={"servicing"}>
-            <ServicingContent />
-          </Breakdown>
-        </div>
+        { isSuccess && (
+          <>
+          <h5>{ currentDate?.toString() }</h5>
+          <div className={styles.calendarlist}>
+            { data?.data.map((info: any, index: number)=> {
+              return (
+                <>
+                  <Breakdown type={info.type}>
+                    {info.type === "TASK" && 
+                    <TaskContent status={false} data={info}/>
+                    }
+                    {info.type === "SERVICING" && 
+                      <ServicingContent company={info.company} vessel={info.vessel}/>
+                    } 
+                  
+                  </Breakdown>
+                </>
+              )
+              })
+            }
+          </div>
+          </>
+        )}
       </div>
     </>
   );
@@ -22,7 +46,7 @@ export default function Calendarbreakdown() {
 
 interface IBreakdown {
   children: ReactNode;
-  type: "task" | "servicing";
+  type: "TASK" | "SERVICING";
 }
 
 export function Breakdown({ children, type }: IBreakdown) {
@@ -30,7 +54,7 @@ export function Breakdown({ children, type }: IBreakdown) {
     <>
       <div
         className={
-          type === "servicing"
+          type === "SERVICING"
             ? styles.breakdownservicecontainer
             : styles.breakdowntaskcontainer
         }
@@ -41,11 +65,17 @@ export function Breakdown({ children, type }: IBreakdown) {
   );
 }
 
-export function ServicingContent() {
+export function ServicingContent({
+  company,
+  vessel
+}: {
+  company: string,
+  vessel: string
+}) {
   return (
     <>
       <div className={styles.servicingcontainer}>
-        <p>Company Name </p> | <p> vessel </p>
+        <p>{company} </p> | <p> {vessel} </p>
       </div>
     </>
   );
@@ -53,11 +83,12 @@ export function ServicingContent() {
 
 interface ITaskContent {
   status: boolean;
+  data: any
 }
 
 export function TaskContent(props: ITaskContent) {
   const [showDescription, setShowDescription] = useState<boolean>(true);
-
+  console.log('task '+ JSON.stringify(props.data))
   const toggleHandler = () => {
     setShowDescription((state) => !state);
   };
@@ -76,7 +107,7 @@ export function TaskContent(props: ITaskContent) {
                 <Icon icon="ei:check" color="white" />
               </>
             )}
-            <p>Task Name</p> <p>3:14am</p>
+            <p>{props.data.title}</p> <p>{props.data.due_time}</p>
           </div>
           <div className={styles.taskheaderactions}>
             <button className={styles.actionbutton}>
@@ -92,7 +123,7 @@ export function TaskContent(props: ITaskContent) {
             showDescription ? styles.hidedescription : styles.showdescription
           }
         >
-          some description is here
+          {props.data.description}
         </div>
       </div>
     </>

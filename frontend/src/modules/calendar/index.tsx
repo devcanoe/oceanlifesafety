@@ -6,8 +6,10 @@ import { useState } from "react";
 import Popup from "@/common/components/display/popup";
 import AddTaskContent from "./models/addtask";
 import AddServicingContent from "./models/addservicing";
+import dayjs, { Dayjs } from "dayjs";
 
 export default function CalendarSection() {
+  const [ currentDate, setCurrentDate ] = useState<Dayjs | undefined>();
   const [addTaskModalStatus, setAddTaskModalStatus] = useState<boolean>(false);
   const [addServicingModalStatus, setAddServicingModalStatus] =
     useState<boolean>(false);
@@ -19,6 +21,10 @@ export default function CalendarSection() {
   const createServicingHandler = () => {
     setAddServicingModalStatus((state) => !state);
   };
+
+  const setCurrentDateValue = (date: Dayjs) => {
+    setCurrentDate(date)
+  }
 
   return (
     <>
@@ -44,7 +50,7 @@ export default function CalendarSection() {
             </div>
           </div>
 
-          <CalendarComponent />
+          <CalendarComponent setCurrentDate={setCurrentDateValue} />
 
           <div className={styles.filtercontainer}>
             <h5>Filters</h5>
@@ -57,7 +63,7 @@ export default function CalendarSection() {
           </div>
         </div>
         <div>
-          <Calendarbreakdown />
+          <Calendarbreakdown currentDate={currentDate} />
         </div>
         <Popup displayStatus={addTaskModalStatus} close={createTaskHandler}>
           <AddTaskContent close={createTaskHandler} />

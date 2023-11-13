@@ -25,11 +25,18 @@ export const calendarEndpoint = sungloApi.injectEndpoints({
     fetchMonthlyHighlight: build.query<IResponse<number[]>, { date: Dayjs}>({
       query: ({date}) => `${baseUrl}/monthhighlight/${date}`,
     }),
+    fetchDailyData: build.query<IResponse<number[]>, { date: Dayjs}>({
+      query: ({date}) => `${baseUrl}/monthhighlight/${date}`,
+    }),
+    fetchCalendar: build.query<IResponse<any[]>, { date: Dayjs}>({
+      query: ({date}) => `${baseUrl}/${date}`,
+    }),
   }),
 });
 
 export const {
   useCreateTaskMutation,
   useCreateServiceMutation,
-  useFetchMonthlyHighlightQuery
+  useFetchMonthlyHighlightQuery,
+  useFetchCalendarQuery
 } = calendarEndpoint;
