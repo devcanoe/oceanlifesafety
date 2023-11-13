@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import styles from "./index.module.css";
 import { Icon } from "@iconify/react";
 import dayjs, { Dayjs } from "dayjs";
-import { useCheckTaskMutation, useDeleteTaskMutation, useFetchCalendarQuery } from "@/common/services/calendar.service";
+import { useCheckTaskMutation, useDeleteServiceMutation, useDeleteTaskMutation, useFetchCalendarQuery } from "@/common/services/calendar.service";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 
@@ -14,7 +14,6 @@ export default function Calendarbreakdown({currentDate}: CalendarbreakdownProps)
 
   const { data, isLoading, isSuccess } = useFetchCalendarQuery({ date: currentDate ? currentDate : dayjs(Date())})
 
-    console.log('query ' + !isLoading && data);
   return (
     <>
       <div className={styles.container}>
@@ -30,7 +29,7 @@ export default function Calendarbreakdown({currentDate}: CalendarbreakdownProps)
                     <TaskContent status={false} data={info}/>
                     }
                     {info.type === "SERVICING" && 
-                      <ServicingContent company={info.company} vessel={info.vessel}/>
+                      <ServicingContent id={info._id} company={info.company} vessel={info.vessel}/>
                     }
                   </Breakdown>
                 </>
@@ -68,15 +67,94 @@ export function Breakdown({ children, type }: IBreakdown) {
 
 export function ServicingContent({
   company,
-  vessel
+  vessel,
+  id
 }: {
   company: string,
-  vessel: string
+  vessel: string,
+  id: string
 }) {
+  const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
+    message: "",
+    visibility: false,
+    status: false,
+  });
+  const [errorToastStatus, setErrorToastStatus] = useState<IHandleMotion>({
+    message: "",
+    visibility: false,
+    status: false,
+  });
+
+  const successToastHandler = (args: IHandleMotion) => {
+    setSuccessToastStatus(args);
+  };
+
+  const errorToastHandler = (args: IHandleMotion) => {
+    setErrorToastStatus(args);
+  };
+
+  const [deleteServicing, {isLoading}] = useDeleteServiceMutation();
+
+  const deleteTaskHandler = () => {
+    deleteServicing({
+      id
+    }).then(({ data, error }: any)=> {
+      if (data) {
+        successToastHandler({
+          message: data.message,
+          visibility: true,
+          status: true,
+        });
+      }
+      if (error) {
+        errorToastHandler({
+          message: error.data.message,
+          visibility: true,
+          status: false,
+        });
+      }
+    }).catch((err)=> {
+      errorToastHandler({
+        message: "Something went wrong",
+        visibility: true,
+        status: false,
+      });
+    })
+  }
+
   return (
     <>
       <div className={styles.servicingcontainer}>
-        <p>{company} </p> | <p> {vessel} </p>
+        <div>
+          <p>{company} </p> <p> {vessel} </p>
+        </div>
+
+        <div className={styles.servicingActions}>
+            <button className={styles.actionbutton} onClick={deleteTaskHandler}>
+              <Icon icon="material-symbols:delete-outline" color="white" />
+            </button>
+        </div>
+        <SToast
+          text={successToastStatus.message}
+          severity={"success"}
+          open={successToastStatus.visibility}
+          onClose={function (): void {
+            setSuccessToastStatus({
+              visibility: false,
+            });
+          }}
+        />
+
+        <SToast
+          text={errorToastStatus.message}
+          severity={"error"}
+          open={errorToastStatus.visibility}
+          onClose={function (): void {
+            setErrorToastStatus({
+              visibility: false,
+            });
+          }}
+        />
       </div>
     </>
   );
@@ -193,7 +271,7 @@ export function TaskContent(props: ITaskContent) {
               <Icon icon="material-symbols:check" color="white" />
             </button>
             <button className={styles.actionbutton} onClick={toggleHandler}>
-              <Icon icon="material-symbols:edit" color="white" />
+              <Icon icon="gridicons:dropdown" color="white" height={35} width={35} />
             </button>
           </div>
         </div>

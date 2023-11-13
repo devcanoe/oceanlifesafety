@@ -28,6 +28,12 @@ export const calendarEndpoint = sungloApi.injectEndpoints({
         method: "DELETE"
       }),
     }),
+    deleteService: build.mutation<IResponse<Service>, {id: string}>({
+      query: ({id}) => ({
+        url: `${baseUrl}/servicing/${id}`,
+        method: "DELETE"
+      }),
+    }),
     checkTask: build.mutation<IResponse<Service>, {id: string}>({
       query: ({id}) => ({
         url: `${baseUrl}/task/${id}`,
@@ -52,5 +58,6 @@ export const {
   useFetchMonthlyHighlightQuery,
   useFetchCalendarQuery,
   useDeleteTaskMutation,
+  useDeleteServiceMutation,
   useCheckTaskMutation
 } = calendarEndpoint;
