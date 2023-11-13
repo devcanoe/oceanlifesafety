@@ -29,8 +29,7 @@ export default function Calendarbreakdown({currentDate}: CalendarbreakdownProps)
                     }
                     {info.type === "SERVICING" && 
                       <ServicingContent company={info.company} vessel={info.vessel}/>
-                    } 
-                  
+                    }
                   </Breakdown>
                 </>
               )
