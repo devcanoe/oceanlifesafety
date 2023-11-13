@@ -17,17 +17,27 @@ export default class GetCalendarService implements IService<Request, Response, N
     async execute(req: Request, res: Response, next: NextFunction){
         try{
             const { task, servicing } = req.query;
+            const { date } = req.params;
+            console.log(date)
+            const inputDateString = date
 
+            // Parse the input date string
+            const inputDate = new Date(inputDateString);
+
+            // Format the output date string as "YYYY-MM-DD"
+            const outputDateString = `${inputDate.getFullYear()}-${(inputDate.getMonth() + 1).toString().padStart(2, '0')}-${inputDate.getDate().toString().padStart(2, '0')}`;
+            console.log(outputDateString)
             let result: Calendar[] = [];
 
             if(task) {
-                result = await this.calendarRepository.fetchData({type: "TASK"});
+                result = await this.calendarRepository.fetchData({due_date: outputDateString, type: "TASK"});
             } else if (servicing){
-                result = await this.calendarRepository.fetchData({type: "SERVICING"});
+                result = await this.calendarRepository.fetchData({due_date: outputDateString, type: "SERVICING"});
             } else {
-                result = await this.calendarRepository.fetchData({});
+                result = await this.calendarRepository.fetchData({due_date: outputDateString});
             }
             
+            console.log('result ' + result);
 
             this.httpHelper.Response({
                 res,
