@@ -17,7 +17,9 @@ export default class UpdateTaskService implements IService<Request, Response, Ne
         try{
             const { id } = req.params;
 
-            const updateTask = await this.calendarRepository.updateData({_id: id}, req.body);
+            const updateTask = await this.calendarRepository.updateData({_id: id}, {
+                status: true
+            });
 
             this.httpHelper.Response({
                 res,

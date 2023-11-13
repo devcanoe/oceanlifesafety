@@ -22,6 +22,18 @@ export const calendarEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
+    deleteTask: build.mutation<IResponse<Service>, {id: string}>({
+      query: ({id}) => ({
+        url: `${baseUrl}/task/${id}`,
+        method: "DELETE"
+      }),
+    }),
+    checkTask: build.mutation<IResponse<Service>, {id: string}>({
+      query: ({id}) => ({
+        url: `${baseUrl}/task/${id}`,
+        method: "PATCH"
+      }),
+    }),
     fetchMonthlyHighlight: build.query<IResponse<number[]>, { date: Dayjs}>({
       query: ({date}) => `${baseUrl}/monthhighlight/${date}`,
     }),
@@ -38,5 +50,7 @@ export const {
   useCreateTaskMutation,
   useCreateServiceMutation,
   useFetchMonthlyHighlightQuery,
-  useFetchCalendarQuery
+  useFetchCalendarQuery,
+  useDeleteTaskMutation,
+  useCheckTaskMutation
 } = calendarEndpoint;

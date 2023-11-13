@@ -37,13 +37,18 @@
 }
 
 .taskheadercontainer .taskheaderactions {
-  display: none;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .taskheaderactions .actionbutton {
   cursor: pointer;
   border: none;
   background-color: transparent;
+  height: 40px;
+  width: 40px;
+
 }
 
 .taskheadercontainer:hover .taskheaderactions {
