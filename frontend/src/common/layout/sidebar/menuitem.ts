@@ -30,9 +30,9 @@ export const menuitems: IMenuItem[] = [
     url: "/employee",
     icon: "clarity:employee-group-solid",
   },
-  {
-    title: "File Manager",
-    url: "/filemanager",
-    icon: "icon-park-solid:cloud-storage",
-  },
+  // {
+  //   title: "File Manager",
+  //   url: "/filemanager",
+  //   icon: "icon-park-solid:cloud-storage",
+  // },
 ];
