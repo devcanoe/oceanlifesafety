@@ -17,6 +17,8 @@ import {
   useGetCompaniesQuery,
 } from "@/common/services/company.service";
 import AddEmployeeContent from "./modals/addemployee";
+import { useDeleteUserMutation, useFetchUsersQuery } from "@/common/services/user.service";
+import User from "@/common/services/interface/user.interface";
 
 export default function EmployeeContent() {
   const [id, setId] = useState<string | undefined>();
@@ -42,12 +44,22 @@ export default function EmployeeContent() {
   });
 
   const { data, isLoading, isSuccess, isError, refetch } =
-    useGetCompaniesQuery();
+    useFetchUsersQuery();
 
-  const [deleteCompany, { isLoading: deleteCompanyLoading }] =
-    useDeleteCompanyMutation();
+  const [deleteUser, { isLoading: deleteUserLoading }] =
+    useDeleteUserMutation();
 
   let rows: any[] = [];
+
+  isSuccess && data.data.map((employee: User)=> {
+    rows.push({
+      id: employee._id,
+      firstname: employee.firstname,
+      lastname: employee.lastname,
+      position: employee.position,
+      phone: employee.phone
+    })
+  })
 
   const successToastHandler = (args: IHandleMotion) => {
     setSuccessToastStatus(args);
@@ -76,8 +88,8 @@ export default function EmployeeContent() {
     refetch();
   };
 
-  const deleteCompanyHandler = (id: string) => {
-    deleteCompany({ id })
+  const deleteUserHandler = (id: string) => {
+    deleteUser({ id })
       .then((res: any) => {
         successToastHandler({
           message: res.data.message,
@@ -107,7 +119,7 @@ export default function EmployeeContent() {
       renderCell: (params: GridRenderCellParams<Date>) => (
         <>
           <Link
-            href={`/company/${params.id}`}
+            href={`/employee/${params.id}`}
             className={styles.link}
             style={{ marginRight: "10px" }}
           >
@@ -116,7 +128,7 @@ export default function EmployeeContent() {
           <Link
             href={`#`}
             onClick={() => {
-              deleteCompanyHandler(params.id);
+              deleteUserHandler(params.id);
             }}
             className={"red"}
             style={{ marginRight: "10px" }}

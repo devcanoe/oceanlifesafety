@@ -5,15 +5,19 @@ import Http from "../common/helper/http.helper";
 import UpdateUserService from "./services/update-user.service";
 import ChangepasswordService from "./services/changepassword.service";
 import AddUserService from "./services/add-user.service";
+import GetUsersService from "./services/get-users.service";
+import DeleteUserService from "./services/delete-user.service";
 
 
 @injectable()
 export default class UserController {
     constructor(
         private getUserService: GetUserService,
+        private getUsersService: GetUsersService,
         private updateUserService: UpdateUserService,
         private changePasswordService: ChangepasswordService,
         private addUserService: AddUserService,
+        private deleteUserService: DeleteUserService,
         private httpHelper: Http
     ){
 
@@ -30,6 +34,23 @@ export default class UserController {
                 res,
                 status: "success",
                 message: "Successfully change password"
+            })
+        }catch(err){
+            next(err)
+        }
+    }
+
+    async deleteUser(req: Request, res: Response, next: NextFunction) {
+        try {
+
+            const { id } = req.params
+   
+            await this.deleteUserService.execute(id);
+
+            this.httpHelper.Response({
+                res,
+                status: "success",
+                message: "Successfully deleted user"
             })
         }catch(err){
             next(err)
@@ -61,6 +82,22 @@ export default class UserController {
                 res,
                 status: "success",
                 message: "Successfully get user data",
+                data: response
+            })
+        }catch(err){
+            next(err)
+        }
+    }
+
+    async getUsers(req: Request, res: Response, next: NextFunction) {
+        try {
+   
+            const response = await this.getUsersService.execute()
+      
+            this.httpHelper.Response({
+                res,
+                status: "success",
+                message: "Successfully get users data",
                 data: response
             })
         }catch(err){

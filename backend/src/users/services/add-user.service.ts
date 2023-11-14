@@ -38,8 +38,6 @@ export default class AddUserService {
             password: hashedPassword
         });
 
-        console.log('error ' + args);
-
         return response;
     }
 }
