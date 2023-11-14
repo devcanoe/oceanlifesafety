@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import Http from "../common/helper/http.helper";
 import UpdateUserService from "./services/update-user.service";
 import ChangepasswordService from "./services/changepassword.service";
+import AddUserService from "./services/add-user.service";
 
 
 @injectable()
@@ -12,6 +13,7 @@ export default class UserController {
         private getUserService: GetUserService,
         private updateUserService: UpdateUserService,
         private changePasswordService: ChangepasswordService,
+        private addUserService: AddUserService,
         private httpHelper: Http
     ){
 
@@ -33,6 +35,20 @@ export default class UserController {
             next(err)
         }
     }
+
+    async addUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            await this.addUserService.execute(req.body);
+      
+            this.httpHelper.Response({
+                res,
+                status: "success",
+                message: "Successfully create employee account"
+            })
+        }catch(err){
+            next(err)
+        }
+    }    
 
     async getUser(req: Request, res: Response, next: NextFunction) {
         try {

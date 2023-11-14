@@ -8,6 +8,8 @@ import { useState } from "react";
 import { IHandleMotion } from "@/common/components/display/popup";
 import SToast from "@/common/components/display/toast/toast";
 import Company from "@/common/model/company.model";
+import { useAddUserMutation } from "@/common/services/user.service";
+import User from "@/common/services/interface/user.interface";
 
 interface IAddCompanyContent {
   close: () => void;
@@ -32,7 +34,7 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
     setErrorToastStatus(args);
   };
 
-  const [create, { isLoading }] = useCreateCompanyMutation();
+  const [createUser, { isLoading }] = useAddUserMutation();
 
   const validationSchema = yup.object({
     firstname: yup.string().required("firstname is required"),
@@ -53,7 +55,7 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
       lastname: "",
       address: "",
       email: "",
-      phone: "",
+      phone: 0,
       password: "",
       position: "",
       date_of_birth: new Date(),
@@ -61,7 +63,36 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
       date_fired: new Date(),
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any) => {},
+    onSubmit: (values: User) => {
+      createUser({
+        ...values
+      }).then(({ data, error }: any)=> {
+      
+        if (data) {
+          successToastHandler({
+            message: data.message,
+            visibility: true,
+            status: true,
+          });
+        }
+        if (error) {
+          error.data.errors.map((error: any)=> {
+            errorToastHandler({
+              message: error.message,
+              visibility: true,
+              status: false,
+            });
+          })
+          
+        }
+      }).catch((err: any)=> {
+        errorToastHandler({
+          message: "Something went wrong",
+          visibility: true,
+          status: false,
+        });
+      })
+    },
   });
 
   return (
@@ -144,7 +175,7 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
           helperText={formik.touched.email && formik.errors.email}
         />
         <InputField
-          type={"text"}
+          type={"password"}
           placeholder=""
           label="Password"
           name="password"
@@ -164,7 +195,7 @@ export default function AddEmployeeContent({ close }: IAddCompanyContent) {
           helperText={formik.touched.position && formik.errors.position}
         />
         <InputField
-          type={"text"}
+          type={"phone"}
           placeholder=""
           label="Phone"
           name="phone"

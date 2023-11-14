@@ -10,6 +10,6 @@ export const errorHanlder = (err: Error, req: Request, res: Response, next: Next
     }
     
     res.status(500).send({
-        errors: [{ message: 'Something went wrong' }]
+        errors: [{ message: err.message }]
     });
 }

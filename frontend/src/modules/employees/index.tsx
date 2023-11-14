@@ -1,7 +1,6 @@
 import Loader from "@/common/components/display/loader";
 import Popup, { IHandleMotion } from "@/common/components/display/popup";
 import Table from "@/common/components/display/table";
-import Breadcrumb, { Item } from "@/common/layout/Breadcrumb";
 import { Icon } from "@iconify/react";
 import {
   GridColDef,
@@ -12,16 +11,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { Navbar } from "../clients";
 import styles from "./index.module.css";
-import { useRouter } from "next/router";
 import SToast from "@/common/components/display/toast/toast";
-
 import {
   useDeleteCompanyMutation,
   useGetCompaniesQuery,
 } from "@/common/services/company.service";
-import Company from "@/common/model/company.model";
-
-import { useAppDispatch } from "@/common/lib/hooks";
 import AddEmployeeContent from "./modals/addemployee";
 
 export default function EmployeeContent() {

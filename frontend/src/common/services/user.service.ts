@@ -13,6 +13,13 @@ export const userEndpoint = sungloApi.injectEndpoints({
         body,
       }),
     }),
+    addUser: build.mutation<IResponse<User>, User>({
+      query: (body) => ({
+        url: `${baseUrl}/create`,
+        method: "POST",
+        body,
+      }),
+    }),
     updateUser: build.mutation<IResponse<User>, User>({
       query: (body) => ({
         url: `${baseUrl}`,
@@ -29,5 +36,6 @@ export const userEndpoint = sungloApi.injectEndpoints({
 export const {
   useChangePasswordMutation,
   useUpdateUserMutation,
-  useFetchUserQuery
+  useFetchUserQuery,
+  useAddUserMutation
 } = userEndpoint;

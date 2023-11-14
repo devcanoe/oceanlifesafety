@@ -8,6 +8,7 @@ const userController = container.resolve(UserController);
 
 // routes for ticket types
 userRouter.get('/', userAuth, (req, res, next)=> userController.getUser(req, res, next));
+userRouter.post('/create', userAuth, (req, res, next)=> userController.addUser(req, res, next));
 userRouter.patch('/', userAuth, (req, res, next)=> userController.updateUser(req, res, next));
 userRouter.patch('/changepassword', userAuth, (req, res, next)=> userController.changePassword(req, res, next));
 
