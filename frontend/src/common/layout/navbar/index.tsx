@@ -15,6 +15,7 @@ export default function Navbar({ toggleMenu }: {
   const router = useRouter();
 
   const [username, setUsername] = useState<string>();
+  const [ searchValue, setSearchValue ]= useState<string>("")
 
   const handleLogout = () => {
     dispatch(logOut({}));
@@ -44,6 +45,15 @@ export default function Navbar({ toggleMenu }: {
               type={"text"}
               placeholder={"Search...."}
               className={styles.searchbar}
+              onChange={(e)=> {
+                setSearchValue(e.target.value)
+              }}
+              onKeyDown={(e)=> {
+                console.log(e)
+                if(e.code === "Enter") {
+                  router.push(`/search?search=${searchValue}`)
+                }
+              }}
             />
           
         </div>

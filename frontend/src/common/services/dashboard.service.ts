@@ -7,7 +7,13 @@ export const authEndpoint = sungloApi.injectEndpoints({
     getDashboard: build.query<IResponse<any>, void>({
       query: () => `/dashboard`,
     }),
+    search: build.query<IResponse<any>, {invoice_id: any}>({
+      query: ({invoice_id}) => `/search/${invoice_id}`,
+    }),
   }),
 });
 
-export const { useGetDashboardQuery } = authEndpoint;
+export const { 
+  useGetDashboardQuery,
+  useSearchQuery
+} = authEndpoint;

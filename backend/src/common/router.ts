@@ -25,9 +25,9 @@ export const setAppRouter = (app: Application) => {
     app.use(`${BASE_URL}/dashboard`, dashboardRouter);
     app.use(`${BASE_URL}/calendar`, calendarRouter);
     app.use(`${BASE_URL}/users`, userRouter);
-    app.use("/api/v2", searchRouter.post("/search", userAuth, async (req, res, next)=> {
+    app.use("/api/v2", searchRouter.get("/search/:invoice_id", userAuth, async (req, res, next)=> {
         try {
-            const { invoice_id } = req.body;
+            const { invoice_id } = req.params;
             const invoiceRepository = container.resolve(InvoiceRepository);
 
             let invoices_result: any[] = []
