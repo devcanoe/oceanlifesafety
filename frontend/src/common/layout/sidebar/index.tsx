@@ -7,7 +7,9 @@ import { User, logOut, selectCurrentUser } from "@/common/lib/slice/authslice";
 import { useEffect, useState } from "react";
 import { menuitems } from "./menuitem";
 
-export default function Sidebar() {
+export default function Sidebar({ toggleMenu }: {
+  toggleMenu: () => void
+}) {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -20,8 +22,15 @@ export default function Sidebar() {
 
   return (
     <>
+    <div className={styles.sidebarwrapper}>
+      
       <aside className={styles.sidebarcontainer}>
         <div>
+          <nav className={styles.sidebarnav}>
+            <button onClick={toggleMenu} className={styles.sidebarbutton}>
+              <Icon icon="material-symbols:close" color={'white'} height={50} width={50} />
+            </button>
+          </nav>
           <header className={styles.sidebarheader}>
             <h4>Oceanlifesafety</h4>
           </header>
@@ -32,7 +41,8 @@ export default function Sidebar() {
                   <MenuItem
                     url={menuitem.url}
                     title={menuitem.title}
-                    icon={menuitem.icon}
+                    icon={menuitem.icon} 
+                    toggleMenu={toggleMenu}                  
                   />
                 </>
               );
@@ -46,6 +56,7 @@ export default function Sidebar() {
           </div>
         </footer>
       </aside>
+    </div>
     </>
   );
 }
@@ -54,6 +65,7 @@ interface IMenuItem {
   url: string;
   title: string;
   icon: string;
+  toggleMenu: () => void
 }
 
 function MenuItem(props: IMenuItem) {
@@ -61,6 +73,7 @@ function MenuItem(props: IMenuItem) {
   return (
     <>
       <Link
+        onClick={props.toggleMenu}
         href={props.url}
         className={
           router.pathname.includes(props.url)

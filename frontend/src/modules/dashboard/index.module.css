@@ -4,6 +4,12 @@
   gap: 20px;
 }
 
+.gridcontainer {
+  display: grid;
+  grid-template-columns: auto 2fr;
+  gap: 20px;
+}
+
 .grid2 {
   display: grid;
   grid-template-columns: repeat(1, 1fr);

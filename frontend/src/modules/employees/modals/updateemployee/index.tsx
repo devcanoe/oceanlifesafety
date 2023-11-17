@@ -15,13 +15,14 @@ import {
   useGetOneCompanyQuery,
   useUpdateCompanyMutation,
 } from "@/common/services/company.service";
+import { useFetchUserQuery, useUpdateUserMutation } from "@/common/services/user.service";
 
 interface IUpdateaccountContent {
   id: string | undefined;
   close: () => void;
 }
 
-export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
+export function UpdateEmployeeContent({ id, close }: IUpdateaccountContent) {
   const [successToastStatus, setSuccessToastStatus] = useState<IHandleMotion>({
     message: "",
     visibility: false,
@@ -43,10 +44,10 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
     setErrorToastStatus(args);
   };
 
-  const { data, isLoading, isSuccess } = useGetOneCompanyQuery({ id });
+  const { data, isLoading, isSuccess } = useFetchUserQuery({ id });
 
-  const [updateCompany, { isLoading: companyLoading }] =
-    useUpdateCompanyMutation();
+  const [updateUser, { isLoading: userLoading }] =
+    useUpdateUserMutation();
 
   const validationSchema = yup.object({
     firstname: yup.string().required("firstname is required"),
@@ -55,9 +56,9 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
     email: yup.string().required("email is required"),
     phone: yup.string().required("phone is required"),
     position: yup.string().required("position is required"),
-    date_of_birth: yup.date().required("dob is required"),
-    date_hired: yup.date().required("date hired is required"),
-    date_fired: yup.date(),
+    // date_of_birth: yup.date().required("dob is required"),
+    // date_hired: yup.date().required("date hired is required"),
+    // date_fired: yup.date(),
   });
 
   const formik = useFormik({
@@ -68,17 +69,55 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
       email: "",
       phone: "",
       position: "",
-      date_of_birth: new Date(),
-      date_hired: new Date(),
-      date_fired: new Date(),
+      // date_of_birth: new Date(),
+      // date_hired: new Date(),
+      // date_fired: new Date(),
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any) => {},
+    onSubmit: (values: any) => {
+      updateUser({
+        ...values
+      }).then(({ data, error }: any)=> {
+      
+        if (data) {
+          successToastHandler({
+            message: data.message,
+            visibility: true,
+            status: true,
+          });
+        }
+        if (error) {
+          error.data.errors.map((error: any)=> {
+            errorToastHandler({
+              message: error.message,
+              visibility: true,
+              status: false,
+            });
+          })
+          
+        }
+      }).catch((err: any)=> {
+        errorToastHandler({
+          message: "Something went wrong",
+          visibility: true,
+          status: false,
+        });
+      })
+    },
   });
 
   useEffect(() => {
     if (isSuccess) {
       setLoading(false);
+      formik.setFieldValue('firstname', data.data.firstname)
+      formik.setFieldValue('lastname', data.data.lastname)
+      formik.setFieldValue('email', data.data.email)
+      formik.setFieldValue('address', data.data.address)
+      formik.setFieldValue('phone', data.data.phone)
+      formik.setFieldValue('position', data.data.position)
+      formik.setFieldValue('date_of_birth', data.data?.date_of_birth)
+      formik.setFieldValue('date_hired', data.data.date_hired)
+      formik.setFieldValue('date_fired', data.data.date_fired)
     }
   }, [isSuccess]);
 
@@ -106,7 +145,7 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
           error={formik.touched.lastname && Boolean(formik.errors.lastname)}
           helperText={formik.touched.lastname && formik.errors.lastname}
         />
-        <InputField
+        {/* <InputField
           type={"date"}
           placeholder=""
           label="Date of birth"
@@ -140,7 +179,7 @@ export function UpdateCompanyContent({ id, close }: IUpdateaccountContent) {
           onChange={formik.handleChange}
           error={formik.touched.date_fired && Boolean(formik.errors.date_fired)}
           helperText={formik.touched.date_fired && formik.errors.date_fired}
-        />
+        /> */}
         <InputField
           type={"text"}
           placeholder=""

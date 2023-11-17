@@ -10,6 +10,10 @@ export default class UpdateUserService {
     }
 
     async execute(userId: string, body: any){
-        return await this.userRepository.updateData({_id: userId}, body);
+        const response = await this.userRepository.updateData({_id: userId}, body);
+
+        console.log(response)
+
+        return response;
     }
 }

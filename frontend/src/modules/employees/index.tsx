@@ -19,6 +19,7 @@ import {
 import AddEmployeeContent from "./modals/addemployee";
 import { useDeleteUserMutation, useFetchUsersQuery } from "@/common/services/user.service";
 import User from "@/common/services/interface/user.interface";
+import { UpdateEmployeeContent } from "./modals/updateemployee";
 
 export default function EmployeeContent() {
   const [id, setId] = useState<string | undefined>();
@@ -139,8 +140,8 @@ export default function EmployeeContent() {
             href={`#`}
             className={styles.link}
             onClick={() => {
-              updateModalToggleHandler();
               setId(params.id.toString());
+              updateModalToggleHandler();
             }}
           >
             <Icon icon="uil:pen" />
@@ -214,7 +215,9 @@ export default function EmployeeContent() {
       <Popup
         displayStatus={updateModalStatus}
         close={updateModalToggleHandler}
-      ></Popup>
+      >
+        <UpdateEmployeeContent id={id} close={updateModalToggleHandler}/>
+      </Popup>
     </>
   );
 }

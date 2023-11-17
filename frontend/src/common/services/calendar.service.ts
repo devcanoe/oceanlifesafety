@@ -46,7 +46,7 @@ export const calendarEndpoint = sungloApi.injectEndpoints({
     fetchDailyData: build.query<IResponse<number[]>, { date: Dayjs}>({
       query: ({date}) => `${baseUrl}/monthhighlight/${date}`,
     }),
-    fetchCalendar: build.query<IResponse<any[]>, { date: Dayjs}>({
+    fetchCalendar: build.query<IResponse<any[]>, { date: any}>({
       query: ({date}) => `${baseUrl}/${date}`,
     }),
   }),

@@ -10,6 +10,8 @@ import styles from "./index.module.css";
 import Table from "@/common/components/display/table";
 import { useGetDashboardQuery } from "@/common/services/dashboard.service";
 import Loader from "@/common/components/display/loader";
+import Calendarbreakdown from "../calendar/calenderbreakdown";
+import dayjs from "dayjs";
 
 export default function DashboardContent() {
   // get dashboard data
@@ -39,31 +41,40 @@ export default function DashboardContent() {
       <Loader status={isLoading} />
       {true && (
         <>
+        <section className={styles.gridcontainer}>
+          <div>
           <div className={styles.grid2}>
+              <br />
+              <DashboardCards
+                completedTickets={isSuccess && data.data.company}
+                unassignedTickets={isSuccess && data.data.ship}
+                ongoingTickets={isSuccess && data.data.raft}
+                totalAgents={isSuccess && data.data.form}
+              />
+            </div>
             <br />
-            <DashboardCards
-              completedTickets={isSuccess && data.data.company}
-              unassignedTickets={isSuccess && data.data.ship}
-              ongoingTickets={isSuccess && data.data.raft}
-              totalAgents={isSuccess && data.data.form}
-            />
+            <br />
+            <section>
+              <h3>Activity Log</h3>
+              <br />
+              <Table
+                rows={rows}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={5}
+                rowSelectionModel={rowSelectionModel}
+                onRowSelectionModelChange={(newRowSelectionModel: any) => {
+                  setRowSelectionModel(newRowSelectionModel);
+                }}
+              />
+
+            
+            </section>
           </div>
-          <br />
-          <br />
-          <section>
-            <h3>Activity Log</h3>
-            <br />
-            <Table
-              rows={rows}
-              columns={columns}
-              pageSize={5}
-              rowsPerPageOptions={5}
-              rowSelectionModel={rowSelectionModel}
-              onRowSelectionModelChange={(newRowSelectionModel: any) => {
-                setRowSelectionModel(newRowSelectionModel);
-              }}
-            />
-          </section>
+          <div>
+              <Calendarbreakdown currentDate={dayjs("2023-11-16")}/>
+          </div>
+        </section>
         </>
       )}
     </>

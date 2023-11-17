@@ -33,8 +33,11 @@ export const userEndpoint = sungloApi.injectEndpoints({
         method: "DELETE"
       }),
     }),
-    fetchUsers: build.query<IResponse<User>, void>({
+    fetchUsers: build.query<IResponse<User[]>, void>({
       query: () => `${baseUrl}`,
+    }),
+    fetchUser: build.query<IResponse<User>, {id: string}>({
+      query: ({id}) => `${baseUrl}/${id}`,
     }),
   }),
 });
@@ -43,6 +46,7 @@ export const {
   useChangePasswordMutation,
   useUpdateUserMutation,
   useFetchUsersQuery,
+  useFetchUserQuery,
   useAddUserMutation,
   useDeleteUserMutation
 } = userEndpoint;

@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 import InputField from "@/common/components/form/inputfield";
 import Link from "next/link";
 
-export default function Navbar() {
+export default function Navbar({ toggleMenu }: {
+  toggleMenu: () => void
+}) {
   const dispatch = useAppDispatch();
   const user: User = useAppSelector(selectCurrentUser);
   const router = useRouter();
@@ -30,11 +32,20 @@ export default function Navbar() {
     <>
       <div className={styles.navbarcontainer}>
         <div className={styles.leftside}>
-          <input
-            type={"text"}
-            placeholder={"Search...."}
-            className={styles.searchbar}
-          />
+          <button onClick={toggleMenu} className={styles.navbarbutton}>
+            <Icon icon="material-symbols:menu" 
+              color={'black'} 
+              width={30} 
+              height={30} 
+            />
+          </button>
+          
+            <input
+              type={"text"}
+              placeholder={"Search...."}
+              className={styles.searchbar}
+            />
+          
         </div>
 
         <div>

@@ -14,6 +14,8 @@ export default function Calendarbreakdown({currentDate}: CalendarbreakdownProps)
 
   const { data, isLoading, isSuccess } = useFetchCalendarQuery({ date: currentDate ? currentDate : dayjs(Date())})
 
+  console.log(dayjs(Date()))
+  console.log(isSuccess && data)
   return (
     <>
       <div className={styles.container}>
