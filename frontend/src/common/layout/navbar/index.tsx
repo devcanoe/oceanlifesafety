@@ -49,7 +49,6 @@ export default function Navbar({ toggleMenu }: {
                 setSearchValue(e.target.value)
               }}
               onKeyDown={(e)=> {
-                console.log(e)
                 if(e.code === "Enter") {
                   router.push(`/search?search=${searchValue}`)
                 }
